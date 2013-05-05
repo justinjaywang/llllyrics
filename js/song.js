@@ -7,7 +7,7 @@ var app = angular.module('song', ['mongolab'])
       when('/', {controller:SearchCtrl, templateUrl:'search.html'}).
       when('/view/:songId', {controller:ViewCtrl, templateUrl:'view.html'}).
       when('/edit/:songId', {controller:EditCtrl, templateUrl:'edit.html'}).
-      when('/new', {controller:CreateCtrl, templateUrl:'edit.html'}).
+      when('/new', {controller:AddCtrl, templateUrl:'edit.html'}).
       when('/about', {controller:AboutCtrl, templateUrl:'about.html'}).
       otherwise({redirectTo:'/'});
   });
@@ -55,19 +55,33 @@ app.directive('autoGrow', function() {
   }
 });
 
+app.factory('Page', function() {
+   var title = 'llllyrics / a minimal lyrics viewer';
+   return {
+     title: function() { return title; },
+     setTitle: function(newTitle) { title = newTitle }
+   };
+});
 
 // controllers
-function SearchCtrl($scope, Song) {
+
+function TitleCtrl($scope, Page) {
+  $scope.Page = Page;
+}
+
+function SearchCtrl($scope, Page, Song) {
   $scope.songs = Song.query();
 }
 
-function ViewCtrl($scope, $routeParams, Song) {
+function ViewCtrl($scope, $routeParams, Page, Song) {
   Song.get({id: $routeParams.songId}, function(song) {
     $scope.song = song;
+    Page.setTitle('llllyrics / "' + song.song + '" by ' + song.artist);
   })
+  
 }
 
-function CreateCtrl($scope, $location, $timeout, Song) {
+function AddCtrl($scope, $location, $timeout, Page, Song) {
   $scope.save = function() {
     Song.save($scope.song, function(song) {
       $location.path('/view/' + song._id.$oid);
@@ -79,15 +93,16 @@ function CreateCtrl($scope, $location, $timeout, Song) {
   $timeout( function() {
     $scope.isNew = true;
   }, 200);
-  // $scope.isNew = true;
+  Page.setTitle('llllyrics / add');
 }
 
-function EditCtrl($scope, $location, $routeParams, Song) {
+function EditCtrl($scope, $location, $routeParams, Page, Song) {
   var self = this;
  
   Song.get({id: $routeParams.songId}, function(song) {
     self.original = song;
     $scope.song = new Song(self.original);
+    Page.setTitle('llllyrics / edit "' + song.song + '"');
   });
  
   $scope.isClean = function() {
@@ -109,6 +124,6 @@ function EditCtrl($scope, $location, $routeParams, Song) {
   $scope.isNew = false;
 }
 
-function AboutCtrl($scope) {
-  
+function AboutCtrl($scope, Page) {
+  Page.setTitle('llllyrics / about');
 }

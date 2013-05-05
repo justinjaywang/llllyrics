@@ -5,7 +5,7 @@
 
     <section class="meta-inputs">
       <span class="meta artist" ng-class="{error: myForm.name.$invalid}">
-        <input class="edit" type="text" name="artist" ng-model="song.artist" placeholder="Artist" maxlength="48" required>
+        <input class="edit" type="text" name="artist" ng-model="song.artist" placeholder="Artist" maxlength="48" autofocus="autofocus" required>
       </span>
       <span class="separator">·</span>
       <span class="meta album" ng-class="{error: myForm.name.$invalid}">
@@ -27,10 +27,13 @@
     <div class="btns">
       <a ng-href="#/view/{{song._id.$oid}}" ng-hide="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
       <a ng-href="#/" ng-show="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
-      <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid" class="btn btn-save" ng-hide="(song.song=='delete this song*')"><span class="icon icon-ok"></span><span ng-show="isNew">create</span><span ng-hide="isNew">save changes</span></button>
+      <button ng-click="save()" ng-disabled="isClean() || myForm.$invalid" class="btn btn-save" ng-hide="(song.song=='delete this song*')">
+        <span class="icon icon-plus" ng-show="isNew"><span ng-show="isNew">add this song</span>
+        <span class="icon icon-ok" ng-hide="isNew"><span ng-hide="isNew">save changes</span>
+      </button>
       <button ng-click="destroy()" class="btn btn-delete show-{{!isNew && (song.song=='delete this song*')}}"><span class="icon icon-delete"></span>delete</button>
     </div>
 
   </div>
-  
+
 </form>

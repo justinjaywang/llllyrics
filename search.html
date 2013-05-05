@@ -28,7 +28,7 @@
 </ul>
 
 <ul class="container show-{{(search=='all songs*')}}" id="search-results">
-    <a ng-href="#/" ng-repeat="song in songs | orderBy:'_id' | limitTo:24">
+    <a ng-href="#/" ng-repeat="song in songs | orderBy:'_id'">
       <li>
         <p class="artist-album">
           <span class="artist">{{song.artist}}</span><span class="album" ng-show="(song.album)">&nbsp;·&nbsp;{{song.album}}</span>
