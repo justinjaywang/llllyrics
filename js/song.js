@@ -1,6 +1,7 @@
 'use strict';
 
 // declare app level module
+
 var app = angular.module('song', ['mongolab'])
   .config(function($routeProvider) {
     $routeProvider.
@@ -13,6 +14,7 @@ var app = angular.module('song', ['mongolab'])
   });
 
 // auto grow textarea
+
 app.directive('autoGrow', function() {
   return function(scope, element){
     var h = element[0].offsetHeight,
