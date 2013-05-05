@@ -1,0 +1,398 @@
+/*reset*/
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video,input,input:active{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+
+/*base*/
+
+html {
+  font: 400 150%/1.5em 'helvetica neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  color: #444;
+  background: #eee;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+#content {
+  padding: 3em 0;
+}
+
+/*typography*/
+
+h1, .site-name, .query {
+  font-weight: 700;
+}
+
+a, a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover .song {
+  color: #0f9;
+}
+
+.lyrics, .artist, .album, .separator {
+  font-family: 'PT Serif', georgia, serif;
+}
+
+input[type="text"], textarea, button {
+  -webkit-font-smoothing: inherit;
+  font-smoothing: inherit;
+}
+
+/*header*/
+
+#header-wrapper {
+  background: #fff;
+}
+
+header {
+  padding: 0.5em 0;
+  font-size: 88%;
+}
+
+header h1 {
+  float: left;
+}
+
+nav {
+  font-weight: 700;
+  color: #aaa;
+}
+
+nav a:hover {
+  color: #00f;
+}
+
+nav ul {
+  float: right;
+}
+
+nav ul li {
+  margin-left: 0.75em;
+  display: inline-block;
+}
+
+nav ul li:first-child {
+  margin-left: 0;
+}
+
+/*forms and controls*/
+
+input[type="text"], textarea {
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  outline: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-rendering: inherit;
+  color: inherit;
+  background: inherit;
+}
+
+button {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  background: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.btns {
+  font-size: 150%;
+  font-weight: 500;
+  line-height: 1.5em;
+}
+
+.btns .icon {
+  position: relative;
+  left: -0.2em;
+}
+
+.btns > * {
+  position: relative;
+}
+
+.btns > *:active {
+  top: 0.04em;
+}
+
+/*search*/
+
+#search {
+  font-size: 200%;
+  line-height: 1.5em;
+}
+
+#search-input {
+  padding: 0 0 0.3em 1.3em; /* manual adjust*/
+  margin: 0 0 0.5em;
+  font-family: inherit;
+  font-weight: 500;
+  border-bottom: 0.04em solid #ccc;
+}
+::-webkit-input-placeholder {
+   color: #aaa;
+}
+:-moz-placeholder {
+   color: #aaa;  
+}
+::-moz-placeholder {
+   color: #aaa;  
+}
+:-ms-input-placeholder {  
+   color: #aaa;  
+}
+
+.icon-search {
+  position: absolute;
+  left: -0.32em;
+  color: #aaa;
+}
+
+#search-results li, #no-results {
+  position: relative;
+  width: 100%;
+  padding: 0.3em 0;
+}
+
+#search-results.show-false li {
+  padding: 0;
+}
+
+#no-results p {
+  font-size: 150%;
+  line-height: 1.5em;
+}
+
+#search-results .song, #search-results .artist-album {
+  width: 90%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.icon-right {
+  position: absolute;
+  right: -0.42em;
+  top: 0.7em;
+  font-size: 200%;
+  color: #ccc;
+  opacity: 0;
+  visibility: hidden;
+}
+
+a:hover .icon-right {
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn-add, .btn-add:hover {
+  color: #0f9;
+}
+
+/*lyrics*/
+
+.song {
+  font-family: inherit;
+  font-size: 200%;
+  line-height: 1.2em;
+  font-weight: 500;
+}
+
+.artist-album {
+  display: inline-block;
+}
+
+.artist, .album, .separator {
+  color: #aaa;
+}
+
+#view .meta {
+  padding-right: 20%;
+  margin: 0 0 0.3em;
+}
+
+.btn-edit {
+  color: #aaa;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+.btn-edit:hover {
+  color: #0f9;
+}
+#view .meta:hover .btn-edit {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lyrics {
+  margin: 2em 0;
+}
+
+/*edit*/
+
+.meta-inputs {
+  margin: 0 0 0.26em;
+  /*background: red;*/
+}
+
+#edit .meta {
+  display: inline-block;
+}
+
+#edit .meta.song {
+  width: 80%;
+}
+#edit .meta.artist {
+  width: 24%;
+}
+#edit .meta.album {
+  width: 54%;
+}
+
+#paste {
+  resize: none;
+  overflow: auto;
+  overflow-y: hidden;
+  -webkit-transition: 0.15s;
+  transition: 0.15s;
+}
+
+#edit input:hover, #edit input:focus, #paste:focus, #paste:hover {
+  background: #e7e7e7;
+}
+
+#edit .lyrics {
+  display: block;
+}
+
+.btn-cancel {
+  color: #aaa;
+  margin-right: 0.5em;
+}
+.btn-cancel:hover {
+  color: #0f9;
+}
+
+.btn-save {
+  color: #00f;
+  opacity: 1;
+  visibility: visible;
+}
+button:disabled.btn-save {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.btn-delete, .btn-delete:hover {
+  color: #00f;
+}
+
+/*miscellaneous*/
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+
+.spacer {
+  font-size: 150%;
+  line-height: 1em;
+  position: relative;
+  left: -0.12em; /*manual adjust*/
+  color: #aaa;
+}
+.spacer:before {
+  content: '—';
+}
+
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap !important;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.show-false, #search-results.show-false * {
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+.show-true {
+  height: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+/*responsiveness*/
+
+@media only screen and (max-width: 767px) {
+  html {
+    font-size: 125%;
+  }
+  .container-large {
+    width: 92%;
+  }
+  #view .meta {
+    padding-right: 0;
+  }
+  #edit .meta.song {
+    width: 100%;
+  }
+  #edit .meta.artist {
+    width: 34%;
+  }
+  #edit .meta.album {
+    width: 60%;
+  }
+  #search-results .song, #search-results .artist-album {
+    width: 100%;
+  }
+  .icon-right {
+    display: none;
+  }
+}

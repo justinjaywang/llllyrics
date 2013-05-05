@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" ng-app="song">
+<head>
+  <meta charset="utf-8">
+  <title>llllyrics / a minimal lyrics viewer</title>
+  <link rel="stylesheet" href="css/icons.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href='http://fonts.googleapis.com/css?family=PT+Serif:400' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+  <div id="header-wrapper">
+    <header class="container">
+      <h1 class="clearfix"><a ng-href="#/">llllyrics</a></h1>
+      <nav class="clearfix">
+        <ul>
+          <li><a ng-href="#/new">create</a></li>
+          <li><a ng-href="#/about">about</a></li>
+          <!-- <li><a ng-href="#">other link</a></li> -->
+        </ul>
+      </nav>
+    </header>
+  </div>
+  
+  <div id="content" ng-view></div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js"></script>
+  <script src="js/song.js"></script>
+  <script src="js/mongolab.js"></script>
+
+</body>
+</html>
