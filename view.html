@@ -1,5 +1,4 @@
-
-<article class="container show-{{!!(song._id.$oid)}}" id="view" >
+<article class="container show-{{!!(song._id.$oid)}}" id="view">
   <section class="meta">
     <p class="artist-album">
       <span class="artist">{{song.artist}}</span><span class="album" ng-show="(song.album)">&nbsp;·&nbsp;{{song.album}}</span>
@@ -12,4 +11,12 @@
   <div class="spacer"></div>
   <pre class="lyrics">{{song.lyrics}}</pre>
   <div class="spacer"></div>
+</article>
+
+<article class="container show-{{!!(errorId)}}" id="error">
+  <p>Page not found for song ID <span class="error-id">{{errorId}}</span>.</p>
+  <div class="spacer"></div>
+  <div class="btns">
+    <a ng-href="#/" class="btn btn-home"><span class="icon icon-home"></span>home</a>
+  </div>
 </article>

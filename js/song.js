@@ -8,7 +8,7 @@ var app = angular.module('song', ['mongolab'])
       when('/', {controller:SearchCtrl, templateUrl:'search.html'}).
       when('/view/:songId', {controller:ViewCtrl, templateUrl:'view.html'}).
       when('/edit/:songId', {controller:EditCtrl, templateUrl:'edit.html'}).
-      when('/new', {controller:AddCtrl, templateUrl:'edit.html'}).
+      when('/add', {controller:AddCtrl, templateUrl:'edit.html'}).
       when('/about', {controller:AboutCtrl, templateUrl:'about.html'}).
       otherwise({redirectTo:'/'});
   });
@@ -75,12 +75,14 @@ function SearchCtrl($scope, Page, Song) {
   $scope.songs = Song.query();
 }
 
-function ViewCtrl($scope, $routeParams, Page, Song) {
-  Song.get({id: $routeParams.songId}, function(song) {
+function ViewCtrl($scope, $location, $routeParams, Page, Song) {
+  Song.get({id: $routeParams.songId}, function(song){
     $scope.song = song;
-    Page.setTitle('llllyrics / "' + song.song + '" by ' + song.artist);
-  })
-  
+    Page.setTitle('llllyrics / "' + song.song + '" by ' + song.artist);    
+  }, function(err){
+    Page.setTitle('llllyrics / ' + err.status);
+    $scope.errorId = $routeParams.songId;
+  });
 }
 
 function AddCtrl($scope, $location, $timeout, Page, Song) {
@@ -104,7 +106,10 @@ function EditCtrl($scope, $location, $routeParams, Page, Song) {
   Song.get({id: $routeParams.songId}, function(song) {
     self.original = song;
     $scope.song = new Song(self.original);
-    Page.setTitle('llllyrics / edit "' + song.song + '"');
+    Page.setTitle('llllyrics / edit "' + song.song + '" by ' + song.artist);
+  }, function(err){
+    Page.setTitle('llllyrics / ' + err.status);
+    $scope.errorId = $routeParams.songId;
   });
  
   $scope.isClean = function() {

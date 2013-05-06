@@ -34,7 +34,7 @@ body {
 
 /*typography*/
 
-h1, .site-name, .query {
+h1, .site-name, .query, .error-id {
   font-weight: 700;
 }
 
@@ -168,7 +168,7 @@ button:disabled {
    color: #aaa;  
 }
 
-.icon-search {
+#search .icon-search {
   position: absolute;
   left: -0.32em;
   color: #aaa;
@@ -272,10 +272,10 @@ a:hover .icon-right {
   width: 80%;
 }
 #edit .meta.artist {
-  width: 24%;
+  width: 32%;
 }
 #edit .meta.album {
-  width: 54%;
+  width: 46%;
 }
 
 #paste {
@@ -314,6 +314,17 @@ button:disabled.btn-save {
 
 .btn-delete, .btn-delete:hover {
   color: #00f;
+}
+
+/*404*/
+
+#error p {
+  font-size: 150%;
+  line-height: 1.5em;
+}
+
+.btn-home, .btn-home:hover {
+  color: #0f9;
 }
 
 /*miscellaneous*/
@@ -383,10 +394,10 @@ pre {
     width: 100%;
   }
   #edit .meta.artist {
-    width: 34%;
+    width: 38%;
   }
   #edit .meta.album {
-    width: 60%;
+    width: 56%;
   }
   #search-results .song, #search-results .artist-album {
     width: 100%;
