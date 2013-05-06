@@ -73,6 +73,7 @@ function TitleCtrl($scope, Page) {
 
 function SearchCtrl($scope, Page, Song) {
   $scope.songs = Song.query();
+  Page.setTitle('llllyrics / a minimal lyrics viewer'); 
 }
 
 function ViewCtrl($scope, $location, $routeParams, Page, Song) {
