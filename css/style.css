@@ -316,6 +316,17 @@ button:disabled.btn-save {
   color: #00f;
 }
 
+/*about*/
+
+#about h2, #about p {
+  font-size: 150%;
+  line-height: 1.5em;
+}
+
+#about h2 {
+  font-weight: 700;
+}
+
 /*404*/
 
 #error p {
