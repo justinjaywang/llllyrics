@@ -316,6 +316,14 @@ button:disabled.btn-save {
   color: #00f;
 }
 
+.btn-left {
+  color: #aaa;
+}
+
+.btn-left:hover {
+  color: #0f9;
+}
+
 /*about*/
 
 #about h2, #about p {
@@ -324,7 +332,12 @@ button:disabled.btn-save {
 }
 
 #about h2 {
-  font-weight: 700;
+  font-weight: 500;
+  color: #aaa;
+}
+
+#about {
+  padding: 0 0 3em;
 }
 
 /*404*/
@@ -334,7 +347,7 @@ button:disabled.btn-save {
   line-height: 1.5em;
 }
 
-.btn-home, .btn-home:hover {
+#error .btn-left, #error .btn-left:hover {
   color: #0f9;
 }
 
