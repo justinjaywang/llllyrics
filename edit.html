@@ -26,11 +26,11 @@
     <div class="btns">
       <a ng-href="#/view/{{song._id.$oid}}" ng-hide="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
       <a ng-href="#/" ng-show="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
-      <button ng-click="save()" ng-disabled="isClean() || editForm.$invalid" class="btn btn-save" ng-hide="(song.song=='delete this song*')">
+      <button ng-click="save()" ng-disabled="isClean() || editForm.$invalid" class="btn btn-save" ng-hide="(song.song=='delete this song')">
         <span ng-show="isNew"><span class="icon icon-plus" >add this song</span></span>
         <span ng-show="!isNew"><span class="icon icon-ok" >save changes<span></span>
       </button>
-      <button ng-click="destroy()" class="btn btn-delete show-{{!isNew && (song.song=='delete this song*')}}"><span class="icon icon-delete"></span>delete</button>
+      <button ng-click="destroy()" class="btn btn-delete show-{{!isNew && (song.song=='delete this song')}}"><span class="icon icon-delete"></span>delete</button>
     </div>
 
   </div>
