@@ -405,4 +405,7 @@ pre {
   .icon-right {
     display: none;
   }
+  nav {
+    visibility: hidden;
+  }
 }
