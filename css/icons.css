@@ -54,7 +54,7 @@
  
 .icon-plus:before { content: '\2b'; } /* '+' */
 .icon-home:before { content: '\2302'; } /* '⌂' */
-.icon-pencil:before { content: '\270f'; } /* '✏' */
+.icon-edit:before { content: '\270f'; } /* '✏' */
 .icon-ok:before { content: '\2713'; } /* '✓' */
 .icon-cancel:before { content: '\2715'; } /* '✕' */
 .icon-delete:before { content: '\e729'; } /* '' */
