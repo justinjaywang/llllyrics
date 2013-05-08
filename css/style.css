@@ -34,7 +34,7 @@ body {
 
 /*typography*/
 
-h1, .site-name, .query, .error-id {
+h1, .designer, .query, .error-id {
   font-weight: 700;
 }
 
@@ -326,14 +326,9 @@ button:disabled.btn-save {
 
 /*about*/
 
-#about h2, #about p {
+#about p {
   font-size: 150%;
   line-height: 1.5em;
-}
-
-#about h2 {
-  font-weight: 500;
-  color: #aaa;
 }
 
 #about {

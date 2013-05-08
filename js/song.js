@@ -58,7 +58,7 @@ app.directive('autoGrow', function() {
 });
 
 app.factory('Page', function() {
-   var title = 'llllyrics: a minimal lyrics viewer';
+   var title = 'llllyrics';
    return {
      title: function() { return title; },
      setTitle: function(newTitle) { title = newTitle }
@@ -73,7 +73,7 @@ function TitleCtrl($scope, Page) {
 
 function SearchCtrl($scope, Page, Song) {
   $scope.songs = Song.query();
-  Page.setTitle('llllyrics: a minimal lyrics viewer'); 
+  Page.setTitle('llllyrics '); 
 }
 
 function ViewCtrl($scope, $location, $routeParams, Page, Song) {
