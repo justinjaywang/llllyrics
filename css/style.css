@@ -34,7 +34,7 @@ body {
 
 /*typography*/
 
-h1, .designer, .query, .error-id {
+h1, .query, .description, .error-id {
   font-weight: 700;
 }
 
@@ -333,6 +333,10 @@ button:disabled.btn-save {
 
 #about {
   padding: 0 0 3em;
+}
+
+#about .designer:hover {
+  color: #0f9;
 }
 
 /*404*/
