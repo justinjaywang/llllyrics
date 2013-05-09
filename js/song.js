@@ -2,16 +2,18 @@
 
 // declare app level module
 
-var app = angular.module('song', ['mongolab'])
-  .config(function($routeProvider) {
-    $routeProvider.
-      when('/', {controller:SearchCtrl, templateUrl:'search.html'}).
-      when('/view/:songId', {controller:ViewCtrl, templateUrl:'view.html'}).
-      when('/edit/:songId', {controller:EditCtrl, templateUrl:'edit.html'}).
-      when('/add', {controller:AddCtrl, templateUrl:'edit.html'}).
-      when('/about', {controller:AboutCtrl, templateUrl:'about.html'}).
-      otherwise({redirectTo:'/'});
-  });
+var app = angular.module('song', ['mongolab']);
+
+app.config(function($routeProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
+  $routeProvider.
+    when('/', {controller:SearchCtrl, templateUrl:'/search.html'}).
+    when('/view/:songId', {controller:ViewCtrl, templateUrl:'/view.html'}).
+    when('/edit/:songId', {controller:EditCtrl, templateUrl:'/edit.html'}).
+    when('/add', {controller:AddCtrl, templateUrl:'/edit.html'}).
+    when('/about', {controller:AboutCtrl, templateUrl:'/about.html'}).
+    otherwise({redirectTo:'/'});
+});
 
 // auto grow textarea
 

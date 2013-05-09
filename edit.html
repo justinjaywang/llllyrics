@@ -24,8 +24,8 @@
     <div class="spacer"></div>
 
     <div class="btns">
-      <a ng-href="#/view/{{song._id.$oid}}" ng-hide="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
-      <a ng-href="#/" ng-show="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
+      <a ng-href="/view/{{song._id.$oid}}" ng-hide="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
+      <a ng-href="/" ng-show="isNew" class="btn btn-cancel"><span class="icon icon-cancel"></span>cancel</a>
       <button ng-click="save()" ng-disabled="isClean() || editForm.$invalid" class="btn btn-save" ng-hide="(song.song=='delete this song')">
         <span ng-show="isNew"><span class="icon icon-plus" >add this song</span></span>
         <span ng-show="!isNew"><span class="icon icon-ok" >save changes<span></span>
@@ -41,6 +41,6 @@
   <p>Page not found for song ID <span class="error-id">{{errorId}}</span>.</p>
   <div class="spacer"></div>
   <div class="btns">
-    <a ng-href="#/" class="btn btn-left"><span class="icon icon-left"></span>home</a>
+    <a ng-href="/" class="btn btn-left"><span class="icon icon-left"></span>home</a>
   </div>
 </article>

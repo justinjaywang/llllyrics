@@ -316,11 +316,7 @@ button:disabled.btn-save {
   color: #00f;
 }
 
-.btn-left {
-  color: #aaa;
-}
-
-.btn-left:hover {
+.btn-left, .btn-left:hover {
   color: #0f9;
 }
 
