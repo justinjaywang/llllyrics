@@ -316,10 +316,12 @@ button:disabled.btn-save {
   color: #00f;
 }
 
-.btn-left, .btn-left:hover {
+#view .btn-left {
+  color: #aaa;
+}
+.btn-left, .btn-left:hover, #view .btn-left:hover {
   color: #0f9;
 }
-
 /*about*/
 
 #about p {
