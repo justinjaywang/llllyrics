@@ -348,6 +348,10 @@ button:disabled.btn-save {
   color: #0f9;
 }
 
+#error.show-false {
+  display: none;
+}
+
 /*miscellaneous*/
 
 .clearfix {
