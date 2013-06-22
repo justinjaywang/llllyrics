@@ -149,7 +149,7 @@ button:disabled {
 }
 
 #search-input {
-  padding: 0 0 0.3em 1.3em; /* manual adjust*/
+  padding: 0 0 0.3em 0; /* manual adjust*/
   margin: 0 0 0.5em;
   font-family: inherit;
   font-weight: 500;
@@ -166,12 +166,6 @@ button:disabled {
 }
 :-ms-input-placeholder {  
    color: #aaa;  
-}
-
-#search .icon-search {
-  position: absolute;
-  left: -0.32em;
-  color: #aaa;
 }
 
 #search-results li, #no-results {
