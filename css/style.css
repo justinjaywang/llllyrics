@@ -201,9 +201,13 @@ button:disabled {
   visibility: hidden;
 }
 
-a:hover .icon-right {
+li:hover .icon-right {
   opacity: 1;
   visibility: visible;
+}
+
+li:hover .song {
+  color: #0f9;
 }
 
 .btn-add, .btn-add:hover {
