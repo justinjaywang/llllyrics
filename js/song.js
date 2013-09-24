@@ -17,8 +17,11 @@ app.config(function($routeProvider, $locationProvider) {
 
 // auto grow textarea
 
-app.directive('autoGrow', function() {
-  return function(scope, element){
+app.directive('autoGrow', function($timeout) {
+  return function(scope, element) {
+    // $timeout(function(){
+    //   update();
+    // }, 250);
     var h = element[0].offsetHeight,
       minHeight = h*2,
       extraPadding = h;
@@ -51,10 +54,10 @@ app.directive('autoGrow', function() {
       $shadow.html(val);
  
       element.css('height', Math.max($shadow[0].offsetHeight + extraPadding, minHeight) + 'px');
+      console.log($shadow[0].offsetHeight + extraPadding);
     }
 
-    element.bind('mouseenter focus keyup keydown keypress change', update);
-
+    element.bind('focus keyup keydown keypress change', update);
     update();
   }
 });
