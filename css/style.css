@@ -410,6 +410,9 @@ pre {
   .container-large {
     width: 92%;
   }
+  #content {
+    padding: 1.5em 0 1em;
+  }
   #view .meta {
     padding-right: 0;
   }
