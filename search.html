@@ -13,27 +13,31 @@
 </section>
 
 <ul class="container show-{{(search.length>1)}}" id="search-results">
-    <a ng-href="/view/{{song._id.$oid}}" ng-repeat="song in songs | filter:search | orderBy:'_id' | limitTo:24">
-      <li>
-        <p class="artist-album">
-          <span class="artist">{{song.artist}}</span><span class="album" ng-show="(song.album)">&nbsp;·&nbsp;{{song.album}}</span>
-        </p>
-        <h2 class="song">{{song.song}}</h2>
-        <span class="icon icon-right"></span>
-      </li>
+    <div ng-repeat="song in songs | filter:search | orderBy:'_id' | limitTo:24">
+      <a ng-href="/view/{{song._id.$oid}}">
+        <li>
+          <p class="artist-album">
+            <span class="artist">{{song.artist}}</span><span class="album" ng-show="(song.album)">&nbsp;·&nbsp;{{song.album}}</span>
+          </p>
+          <h2 class="song">{{song.song}}</h2>
+          <span class="icon icon-right"></span>
+        </li>
+      </a>
       <div class="spacer"></div>
-    </a>
+    </div>
 </ul>
 
 <ul class="container show-{{(search=='*')}}" id="search-results">
-    <a ng-href="/view/{{song._id.$oid}}" ng-repeat="song in songs | orderBy:'_id'">
-      <li>
-        <p class="artist-album">
-          <span class="artist">{{song.artist}}</span><span class="album" ng-show="(song.album)">&nbsp;·&nbsp;{{song.album}}</span>
-        </p>
-        <h2 class="song">{{song.song}}</h2>
-        <span class="icon icon-right"></span>
-      </li>
+    <div ng-repeat="song in songs | orderBy:'_id'">
+      <a ng-href="/view/{{song._id.$oid}}">
+        <li>
+          <p class="artist-album">
+            <span class="artist">{{song.artist}}</span><span class="album" ng-show="(song.album)">&nbsp;·&nbsp;{{song.album}}</span>
+          </p>
+          <h2 class="song">{{song.song}}</h2>
+          <span class="icon icon-right"></span>
+        </li>
+      </a>
       <div class="spacer"></div>
-    </a>
+    </div>
 </ul>

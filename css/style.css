@@ -201,12 +201,12 @@ button:disabled {
   visibility: hidden;
 }
 
-li:hover .icon-right {
+#search-results li:hover .icon-right {
   opacity: 1;
   visibility: visible;
 }
 
-li:hover .song {
+#search-results li:hover .song {
   color: #0f9;
 }
 
@@ -370,7 +370,7 @@ button:disabled.btn-save {
   line-height: 1em;
   position: relative;
   left: -0.12em; /*manual adjust*/
-  color: #aaa;
+  color: #ccc;
 }
 .spacer:before {
   content: '—';
@@ -403,12 +403,12 @@ pre {
 
 /*responsiveness*/
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1024px) {
   html {
     font-size: 125%;
   }
-  .container-large {
-    width: 92%;
+  .container {
+    width: 94%;
   }
   #content {
     padding: 1.5em 0 1em;
@@ -431,7 +431,30 @@ pre {
   .icon-right {
     display: none;
   }
-  nav {
+  nav, #view .meta:hover .btn-edit {
     visibility: hidden;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 100%;
+  }
+}
+
+/* print */
+
+@media print {
+  html {
+    font-size: 100%;
+  }
+  #content {
+    padding: 1em 0 0;
+  }
+  header, .spacer, .btns {
+    display: none;
+  }
+  .song, .album, .artist, .lyrics {
+    color: #000;
   }
 }
