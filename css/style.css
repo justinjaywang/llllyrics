@@ -56,6 +56,23 @@ input[type="text"], textarea, button {
   font-smoothing: inherit;
 }
 
+/*selection*/
+
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; 
+  -o-user-select: none;
+  user-select: none;
+}
+.song, .album, .artist, .lyrics {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text; 
+  -o-user-select: text;
+  user-select: text;
+}
+
 /*header*/
 
 #header-wrapper {
@@ -64,7 +81,7 @@ input[type="text"], textarea, button {
 
 header {
   padding: 0.5em 0;
-  font-size: 88%;
+  font-size: 88%; 
 }
 
 header h1 {
@@ -221,9 +238,10 @@ button:disabled {
   font-size: 200%;
   line-height: 1.2em;
   font-weight: 500;
+  /*width: 100%;*/
 }
 
-.artist-album {
+.artist-album, .song {
   display: inline-block;
 }
 
