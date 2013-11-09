@@ -166,7 +166,7 @@ button:disabled {
 }
 
 #search-input {
-  padding: 0 0 0.3em 0; /* manual adjust*/
+  padding: 0 0 0.2em 0; /* manual adjust*/
   margin: 0 0 0.5em;
   font-family: inherit;
   font-weight: 500;
@@ -463,7 +463,7 @@ pre {
     display: none;
   }
   #content {
-    padding: 0.5em 0;
+    padding: 1em 0;
   }
 }
 
