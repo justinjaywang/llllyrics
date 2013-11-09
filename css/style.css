@@ -203,8 +203,7 @@ button:disabled {
 #search-results .song, #search-results .artist-album {
   width: 90%;
   display: inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: wrap;
   overflow: hidden;
 }
 
