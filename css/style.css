@@ -456,7 +456,7 @@ pre {
     font-size: 100%;
   }
   .container {
-    width: calc(100% - 20px);
+    width: calc(100% - 24px);
   }
   header, #view .meta:hover .btn-edit {
     display: none;
