@@ -15,7 +15,7 @@ app.config(function($routeProvider, $locationProvider) {
     otherwise({redirectTo:'/'});
 });
 
-// auto grow textarea
+// auto grow textarea and auto focus
 
 app.directive('autoGrow', function($timeout) {
   return function(scope, element) {
@@ -54,12 +54,25 @@ app.directive('autoGrow', function($timeout) {
       $shadow.html(val);
  
       element.css('height', Math.max($shadow[0].offsetHeight + extraPadding, minHeight) + 'px');
-      console.log($shadow[0].offsetHeight + extraPadding);
     }
 
     element.bind('focus keyup keydown keypress change', update);
     update();
   }
+});
+
+app.directive('focus', function($timeout) {
+  return {
+    link: function(scope, element, attrs) {
+      scope.$watch(attrs.focus, function(val) {
+        if (val) {
+          $timeout(function() { 
+            element[0].focus();
+          }, 200);
+        }
+      }, true);
+    }
+  };
 });
 
 app.factory('Page', function() {
@@ -99,10 +112,12 @@ function AddCtrl($scope, $location, $timeout, Page, Song) {
   }
   
   $scope.isNew = false;
-  
   $timeout( function() {
     $scope.isNew = true;
-  }, 200);
+  }, 150); // add timeout for fade in animation
+
+  $scope.shouldFocus = true;
+
   Page.setTitle('llllyrics / add');
 }
 
@@ -135,6 +150,8 @@ function EditCtrl($scope, $location, $routeParams, Page, Song) {
   }
 
   $scope.isNew = false;
+  
+  $scope.shouldFocus = false;
 }
 
 function AboutCtrl($scope, Page) {

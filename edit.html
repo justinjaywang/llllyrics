@@ -1,10 +1,9 @@
 <form class="container" id="edit" name="editForm">
 
   <div class="show-{{!!(song._id.$oid) || isNew}}">
-
     <section class="meta-inputs">
       <span class="meta artist" ng-class="{error: editForm.name.$invalid}">
-        <input class="edit" type="text" name="artist" ng-model="song.artist" placeholder="Artist" maxlength="48" autofocus="autofocus" required>
+        <input focus="shouldFocus" class="edit" type="text" name="artist" ng-model="song.artist" placeholder="Artist" maxlength="48" required>
       </span>
       <span class="separator">·</span>
       <span class="meta album" ng-class="{error: editForm.name.$invalid}">
@@ -18,7 +17,7 @@
     <div class="spacer"></div>
 
     <span class="lyrics">
-      <textarea auto-grow id="paste" name="lyrics" ng-model="song.lyrics" ng-change="test()" placeholder="Lyrics" required></textarea>
+      <textarea auto-grow id="paste" name="lyrics" ng-model="song.lyrics" placeholder="Lyrics" required></textarea>
     </span>
 
     <div class="spacer"></div>
