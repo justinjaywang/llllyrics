@@ -1,10 +1,10 @@
 <section class="container" id="search">
-  <input id="search-input" type="text" ng-model="search" placeholder="search lyrics" focus="true" autocomplete="off" autocorrect="off" autocapitalize="off">
+  <input id="search-input" type="text" ng-model="searchTerm" placeholder="search lyrics" focus="true" autocomplete="off" autocorrect="off" autocapitalize="off" update-no-results>
 </section>
 
 <section class="container">
-  <div class="show-{{(search.length>1) && !(songs | filter:search).length && !(search=='*')}}" id="no-results">
-    <p>Sorry, no lyrics found for <span class="query">{{search}}</span>.</p>
+  <div class="show-false" id="no-results">
+    <p>Sorry, no lyrics found for <span class="query">{{searchTerm}}</span>.</p>
     <div class="spacer"></div>
     <div class="btns">
       <a ng-href="/add" class="btn btn-add"><span class="icon icon-plus">add them</span></a>
@@ -12,23 +12,8 @@
   </div>
 </section>
 
-<ul class="container show-{{(search.length>1)}}" id="search-results">
-    <div ng-repeat="song in songs | filter:search | orderBy:'_id' | limitTo:24">
-      <a ng-href="/view/{{song._id.$oid}}">
-        <li>
-          <p class="artist-album">
-            <span class="artist">{{song.artist}}</span><span class="album" ng-show="(song.album)">&nbsp;·&nbsp;{{song.album}}</span>
-          </p>
-          <h2 class="song">{{song.song}}</h2>
-          <span class="icon icon-right"></span>
-        </li>
-      </a>
-      <div class="spacer"></div>
-    </div>
-</ul>
-
-<ul class="container show-{{(search=='*')}}" id="search-results">
-    <div ng-repeat="song in songs | orderBy:'_id'">
+<ul class="container show-{{(searchTerm.length>1)}}" id="search-results">
+    <div ng-repeat="song in songs | filter:searchFunction" id="search-result">
       <a ng-href="/view/{{song._id.$oid}}">
         <li>
           <p class="artist-album">

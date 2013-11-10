@@ -56,7 +56,7 @@ app.directive('autoGrow', function($timeout) {
       element.css('height', Math.max($shadow[0].offsetHeight + extraPadding, minHeight) + 'px');
     }
 
-    element.bind('focus keyup keydown keypress change', update);
+    element.bind('focus input', update);
     update();
   }
 });
@@ -75,6 +75,24 @@ app.directive('focus', function($timeout) {
   };
 });
 
+app.directive('updateNoResults', function($timeout) {
+  return function(scope, element) {
+    var update = function() {
+      var searchTerm = element[0].value;
+      var resultsCount = document.querySelectorAll('#search-results > #search-result').length;
+      if (searchTerm.length < 3) {
+        var noResults = false;
+      } else if (resultsCount > 0) { // some results
+        var noResults = false;
+      } else { // no results
+        var noResults = true;
+      }
+      document.getElementById('no-results').className = 'show-' + noResults;
+    }
+    element.bind('input', update);
+  }
+});
+
 app.factory('Page', function() {
    var title = 'llllyrics';
    return {
@@ -91,7 +109,70 @@ function TitleCtrl($scope, Page) {
 
 function SearchCtrl($scope, Page, Song) {
   $scope.songs = Song.query();
-  Page.setTitle('llllyrics '); 
+  Page.setTitle('llllyrics ');
+
+  $scope.searchFunction = function(song) {
+
+    var searchTerm = $scope.searchTerm;
+    if (typeof searchTerm === 'undefined') return false;
+
+    var simplifyReference = function(str) {
+      return str.replace(/[^\w\s]/g, ''); // keep alphanumeric, spaces
+    }
+
+    var simplifySearchTerm = function(str) {
+      return str.replace(/[^\w\s_:"]/g, ''); // keep alphanumeric, spaces, and : _ "
+    }
+
+    var splitSearchTerm = function(str) {
+      return str.match(/[^\s"]+|"([^"]*)"/g); // keep content in double quotes together
+    }
+    
+    if (searchTerm == '*') return true;
+    
+    var searchTermSimple = simplifySearchTerm(searchTerm);
+
+    if (searchTermSimple.length <= 1) return false;
+    else { // longer than 1, start searching
+      var searchTermArray = splitSearchTerm(searchTermSimple.toLowerCase());
+      // console.log(searchTermArray);
+      var l = searchTermArray.length;
+      var artist = simplifyReference(song.artist).toLowerCase();
+      var album = (song.album) ? simplifyReference(song.album).toLowerCase() : null;
+      var title = simplifyReference(song.song).toLowerCase();
+      var lyrics = simplifyReference(song.lyrics).toLowerCase();
+
+      for (var i=0; i<l; i++) {
+        
+        var sOrig = searchTermArray[i];
+
+        if (sOrig.indexOf('artist:') == 0) { // artist search
+          var s = simplifyReference(sOrig.substring(7).replace(/_/g, ' '));
+          var isMatch = (artist.indexOf(s)!=-1);
+        } else if (sOrig.indexOf('album:') == 0) { // album search
+          var s = simplifyReference(sOrig.substring(6).replace(/_/g, ' '));
+          var isMatch = (album) ? (album.indexOf(s)!=-1) : false;
+        } else if (sOrig.indexOf('songtitle:') == 0) { // song title search
+          var s = simplifyReference(sOrig.substring(10).replace(/_/g, ' '));
+          var isMatch = (title.indexOf(s)!=-1);
+        } else if (sOrig.indexOf('lyrics:') == 0) { // lyrics search
+          var s = simplifyReference(sOrig.substring(7).replace(/_/g, ' '));
+          var isMatch = (lyrics.indexOf(s)!=-1);
+        } else { // default search
+          var s = simplifyReference(sOrig); // remove : _ "
+          var isMatch = (album) ? (artist.indexOf(s)!=-1 || album.indexOf(s)!=-1 || title.indexOf(s)!=-1 || lyrics.indexOf(s)!=-1) : (artist.indexOf(s)!=-1 || title.indexOf(s)!=-1 || lyrics.indexOf(s)!=-1);
+        }
+
+        if (!isMatch) return false; // if ever not a match, return false
+        if (i == (l-1)) { // last iteration, has not encountered return false
+          return true;
+        } else {
+          continue;
+        }
+        
+      }
+    }
+  };
 }
 
 function ViewCtrl($scope, $location, $routeParams, Page, Song) {
@@ -150,7 +231,7 @@ function EditCtrl($scope, $location, $routeParams, Page, Song) {
   }
 
   $scope.isNew = false;
-  
+
   $scope.shouldFocus = false;
 }
 
