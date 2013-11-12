@@ -166,8 +166,8 @@ button:disabled {
 }
 
 #search-input {
-  padding: 0 0 0.2em 0; /* manual adjust*/
-  margin: 0 0 0.5em;
+  padding: 0 1em 0.2em 0; /* manual adjust*/
+  margin: 0 0 1.5em;
   font-family: inherit;
   font-weight: 500;
   border-bottom: 0.04em solid #ccc;
@@ -185,13 +185,31 @@ button:disabled {
    color: #aaa;  
 }
 
-#search-results li, #no-results {
+#clear-search {
+  position: absolute;
+  right: -0.75em;
+  top: 0.05em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  font-size: 75%;
+  color: #ccc;
+}
+
+#clear-search:hover {
+  color: #aaa;
+}
+
+#search-results li {
   position: relative;
   width: 100%;
   padding: 0.3em 0;
 }
 
 #search-results.show-false li {
+  padding: 0;
+}
+
+#no-results {
   padding: 0;
 }
 

@@ -15,9 +15,9 @@ app.config(function($routeProvider, $locationProvider) {
     otherwise({redirectTo:'/'});
 });
 
-// auto grow textarea and auto focus
+// directives
 
-app.directive('autoGrow', function($timeout) {
+app.directive('autoGrow', function() {
   return function(scope, element) {
     // $timeout(function(){
     //   update();
@@ -68,28 +68,37 @@ app.directive('focus', function($timeout) {
         if (val) {
           $timeout(function() { 
             element[0].focus();
-          }, 200);
+          }, 250);
         }
       }, true);
     }
   };
 });
 
-app.directive('updateNoResults', function($timeout) {
+app.directive('updateState', function($rootScope, $timeout) {
   return function(scope, element) {
+
     var update = function() {
-      var searchTerm = element[0].value;
-      var resultsCount = document.querySelectorAll('#search-results > #search-result').length;
-      if (searchTerm.length < 3) {
-        var noResults = false;
-      } else if (resultsCount > 0) { // some results
-        var noResults = false;
-      } else { // no results
-        var noResults = true;
+      $rootScope.searchTerm = scope.searchTerm; // update global searchTerm
+      var l = $rootScope.searchTerm.length;
+      var numResults = document.querySelectorAll('#search-results > #search-result').length;
+
+      if ((l > 2) && (numResults == 0)) { // no results
+        document.getElementById('no-results').className = 'show-true';
+      } else { // either some results and or (l < 2)
+        document.getElementById('no-results').className = 'show-false';
       }
-      document.getElementById('no-results').className = 'show-' + noResults;
     }
+
     element.bind('input', update);
+    document.getElementById('no-results').className = 'show-false';
+
+    if ($rootScope.searchTerm.length == 0) { // do normal fade in when empty
+      $timeout(function() { 
+        document.getElementById('search-input').className = 'show-true';
+      }, 200);
+    }
+    
   }
 });
 
@@ -103,11 +112,16 @@ app.factory('Page', function() {
 
 // controllers
 
-function TitleCtrl($scope, Page) {
+function TitleCtrl($scope, $rootScope, Page) {
   $scope.Page = Page;
+  $rootScope.searchTerm = '';
+
+  $rootScope.clearSearch = function() {
+    $rootScope.searchTerm = '';
+  }
 }
 
-function SearchCtrl($scope, Page, Song) {
+function SearchCtrl($scope, $rootScope, Page, Song) {
   $scope.songs = Song.query();
   Page.setTitle('llllyrics ');
 
@@ -128,21 +142,27 @@ function SearchCtrl($scope, Page, Song) {
       return str.match(/[^\s"]+|"([^"]*)"/g); // keep content in double quotes together
     }
     
-    if (searchTerm == '*') return true;
+    if (searchTerm == '*') { // wildcard, show all results
+      document.getElementById('search-input').className = 'show-true';
+      document.getElementById('search-input').focus();
+      document.getElementById('search-results').className = 'show-true';
+      return true;
+    }
+
+    document.getElementById('clear-search').className = (searchTerm.length < 2) ? 'show-false' : 'show-true'; // hide clear-search icon
     
     var searchTermSimple = simplifySearchTerm(searchTerm);
 
-    if (searchTermSimple.length <= 1) return false;
+    if (searchTermSimple.length <= 1) return false; // simplified search term is short, don't return results
     else { // longer than 1, start searching
       var searchTermArray = splitSearchTerm(searchTermSimple.toLowerCase());
-      // console.log(searchTermArray);
       var l = searchTermArray.length;
       var artist = simplifyReference(song.artist).toLowerCase();
       var album = (song.album) ? simplifyReference(song.album).toLowerCase() : null;
       var title = simplifyReference(song.song).toLowerCase();
       var lyrics = simplifyReference(song.lyrics).toLowerCase();
 
-      for (var i=0; i<l; i++) {
+      for (var i=0; i<l; i++) { // for each word, check if match
         
         var sOrig = searchTermArray[i];
 
@@ -164,7 +184,12 @@ function SearchCtrl($scope, Page, Song) {
         }
 
         if (!isMatch) return false; // if ever not a match, return false
-        if (i == (l-1)) { // last iteration, has not encountered return false
+
+        if (i == (l-1)) { // last iteration, has not encountered return false so it is a match
+          document.getElementById('no-results').className = 'show-false'; // remove no-results if still shown
+          document.getElementById('search-input').className = 'show-true'; // show search-input if not already shown
+          document.getElementById('search-input').focus();
+          document.getElementById('search-results').className = 'show-true'; 
           return true;
         } else {
           continue;
@@ -173,6 +198,15 @@ function SearchCtrl($scope, Page, Song) {
       }
     }
   };
+
+  $scope.searchTerm = $rootScope.searchTerm;
+
+  $scope.clearSearchInput = function() {
+    $rootScope.searchTerm = $scope.searchTerm = '';
+    document.getElementById('no-results').className = 'show-false';
+    document.getElementById('clear-search').className = 'show-false';
+    document.getElementById('search-input').focus();
+  }
 }
 
 function ViewCtrl($scope, $location, $routeParams, Page, Song) {
@@ -195,7 +229,7 @@ function AddCtrl($scope, $location, $timeout, Page, Song) {
   $scope.isNew = false;
   $timeout( function() {
     $scope.isNew = true;
-  }, 150); // add timeout for fade in animation
+  }, 200); // add timeout for fade in animation
 
   $scope.shouldFocus = true;
 
