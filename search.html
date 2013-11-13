@@ -1,5 +1,5 @@
 <section class="container" id="search">
-  <input id="search-input" class="show-false" type="text" focus="true" ng-model="searchTerm" placeholder="search lyrics" autocomplete="off" autocorrect="off" autocapitalize="off" update-state>
+  <input id="search-input" class="show-false" type="text" focus="true" ng-model="searchTerm" placeholder="search lyrics" autocomplete="off" autocorrect="off" autocapitalize="off" ng-change="updateState()" feeling-lucky>
   <a href="/" ng-click="clearSearchInput()" class="show-false" id="clear-search">
     <span class="icon icon-cancel"></span>
   </a>

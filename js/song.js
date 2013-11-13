@@ -62,43 +62,109 @@ app.directive('autoGrow', function() {
 });
 
 app.directive('focus', function($timeout) {
-  return {
-    link: function(scope, element, attrs) {
-      scope.$watch(attrs.focus, function(val) {
-        if (val) {
-          $timeout(function() { 
-            element[0].focus();
-          }, 250);
-        }
-      }, true);
-    }
-  };
+  return function(scope, element, attrs) {
+    scope.$watch(attrs.focus, function(val) {
+      if (val) {
+        $timeout(function() { 
+          element[0].focus();
+        }, 250);
+      }
+    }, true);
+  }
 });
 
-app.directive('updateState', function($rootScope, $timeout) {
+app.directive('feelingLucky', function($location, $timeout) {
   return function(scope, element) {
-
-    var update = function() {
-      $rootScope.searchTerm = scope.searchTerm; // update global searchTerm
-      var l = $rootScope.searchTerm.length;
-      var numResults = document.querySelectorAll('#search-results > #search-result').length;
-
-      if ((l > 2) && (numResults == 0)) { // no results
-        document.getElementById('no-results').className = 'show-true';
-      } else { // either some results and or (l < 2)
-        document.getElementById('no-results').className = 'show-false';
+    element.bind('keydown', function(e) {
+      if (e.which === 13) { // enter
+        e.preventDefault();
+        var numResults = document.querySelectorAll('#search-results > #search-result').length;
+        if (numResults) {
+          // set styles on first element
+          var firstItem = document.querySelector('#search-results > #search-result li');
+          var firstIcon = firstItem.querySelector('.icon-right');
+          firstItem.style.color = '#0f9';
+          firstIcon.style.opacity = 1;
+          firstIcon.style.visibility = 'visible';
+          
+          // navigate to relative url
+          var url = firstItem.parentNode.href;
+          var urlRel = url.substring(url.indexOf('/view/'));
+          $timeout(function() { 
+            scope.$apply($location.path(urlRel));
+          }, 100);
+        }
+      } else if (e.which === 27) { // esc
+        e.preventDefault();
+        scope.$apply(scope.clearSearchInput());
       }
-    }
+    });
+  }
+});
 
-    element.bind('input', update);
-    document.getElementById('no-results').className = 'show-false';
+app.directive('removeLater', function() {
+  return function(scope, element, attrs) {
+    element.bind('keydown', function(e) {
 
-    if ($rootScope.searchTerm.length == 0) { // do normal fade in when empty
-      $timeout(function() { 
-        document.getElementById('search-input').className = 'show-true';
-      }, 200);
-    }
-    
+      var incrementIndex = function() {
+        if (scope.selectedIndex < scope.numResults) {
+          scope.selectedIndex++;
+        }
+          // scope.selectedIndex = 0; // reset
+        // } else {
+          // scope.selectedIndex++;
+        // }
+        console.log('selected index: ', scope.selectedIndex);
+      }
+
+      var decrementIndex = function() {
+        if (scope.selectedIndex != 0) {
+          scope.selectedIndex--;
+        }
+          // scope.selectedIndex = scope.numResults; // reset
+        // } else {
+          // scope.selectedIndex--;
+        // }
+        console.log('selected index: ', scope.selectedIndex);
+      }
+      // set numResults
+      scope.numResults = document.querySelectorAll('#search-results > #search-result').length;
+      // console.log('keydown');
+      if (e.which === 13) { // enter
+        // scope.$apply(function() {
+        //   scope.$eval(attrs.ngEnter);
+        // });
+        e.preventDefault();
+      } else if (e.which === 40) { // down
+        if (scope.numResults) {
+          incrementIndex();
+        }
+        // scope.selectedIndex++;
+        // console.log('selected index: ', scope.selectedIndex);
+        console.log('numResults: ', scope.numResults);
+        e.preventDefault();
+      } else if (e.which === 38) { // up
+        if (scope.numResults) {
+          decrementIndex();
+        }
+        // scope.selectedIndex--;
+        // console.log('selected index: ', scope.selectedIndex);
+        console.log('numResults: ', scope.numResults);
+        e.preventDefault();
+      } else if (e.which === 27) { // esc
+        e.preventDefault();
+        scope.$apply(scope.clearSearchInput());
+      } 
+      else {// non-important key {
+        console.log('other key');
+      }
+    });
+    // element.bind('mousedown', function(e) {
+    //   console.log('mousedown');
+    // });
+    element.bind('focus', function(e) {
+      scope.selectedIndex = 0; // reset index
+    });
   }
 });
 
@@ -121,7 +187,7 @@ function TitleCtrl($scope, $rootScope, Page) {
   }
 }
 
-function SearchCtrl($scope, $rootScope, Page, Song) {
+function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
   $scope.songs = Song.query();
   Page.setTitle('llllyrics ');
 
@@ -189,7 +255,7 @@ function SearchCtrl($scope, $rootScope, Page, Song) {
           document.getElementById('no-results').className = 'show-false'; // remove no-results if still shown
           document.getElementById('search-input').className = 'show-true'; // show search-input if not already shown
           document.getElementById('search-input').focus();
-          document.getElementById('search-results').className = 'show-true'; 
+          document.getElementById('search-results').className = 'show-true';
           return true;
         } else {
           continue;
@@ -201,18 +267,36 @@ function SearchCtrl($scope, $rootScope, Page, Song) {
 
   $scope.searchTerm = $rootScope.searchTerm;
 
+  $scope.updateState = function() {
+    $rootScope.searchTerm = $scope.searchTerm; // update global searchTerm
+
+    var l = $rootScope.searchTerm.length;
+    if (l > 2) { // minumum requirement to show
+      document.getElementById('no-results').className = 'show-true';
+    } else {
+      document.getElementById('no-results').className = 'show-false';
+    }
+  }
+
   $scope.clearSearchInput = function() {
     $rootScope.searchTerm = $scope.searchTerm = '';
     document.getElementById('no-results').className = 'show-false';
     document.getElementById('clear-search').className = 'show-false';
     document.getElementById('search-input').focus();
   }
+
+  if ($rootScope.searchTerm.length == 0) { // do normal fade in when empty
+    $timeout(function() { 
+      document.getElementById('search-input').className = 'show-true';
+    }, 200);
+  }
+
 }
 
 function ViewCtrl($scope, $location, $routeParams, Page, Song) {
   Song.get({id: $routeParams.songId}, function(song){
     $scope.song = song;
-    Page.setTitle('llllyrics / "' + song.song + '" by ' + song.artist);    
+    Page.setTitle('"' + song.song + '" by ' + song.artist);    
   }, function(err){
     Page.setTitle('llllyrics / ' + err.status);
     $scope.errorId = $routeParams.songId;
@@ -220,6 +304,9 @@ function ViewCtrl($scope, $location, $routeParams, Page, Song) {
 }
 
 function AddCtrl($scope, $location, $timeout, Page, Song) {
+  $scope.songs = Song.query();
+  Page.setTitle('llllyrics / add');
+
   $scope.save = function() {
     Song.save($scope.song, function(song) {
       $location.path('/view/' + song._id.$oid);
@@ -233,10 +320,10 @@ function AddCtrl($scope, $location, $timeout, Page, Song) {
 
   $scope.shouldFocus = true;
 
-  Page.setTitle('llllyrics / add');
 }
 
 function EditCtrl($scope, $location, $routeParams, Page, Song) {
+  $scope.songs = Song.query();
   var self = this;
  
   Song.get({id: $routeParams.songId}, function(song) {
@@ -267,6 +354,10 @@ function EditCtrl($scope, $location, $routeParams, Page, Song) {
   $scope.isNew = false;
 
   $scope.shouldFocus = false;
+
+  $scope.updateEdit = function() {
+    
+  }
 }
 
 function AboutCtrl($scope, Page) {
