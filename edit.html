@@ -3,11 +3,11 @@
   <div class="show-{{!!(song._id.$oid) || isNew}}">
     <section class="meta-inputs">
       <span class="meta artist" ng-class="{error: editForm.name.$invalid}">
-        <input focus="shouldFocus" class="edit" type="text" name="artist" ng-model="song.artist" placeholder="Artist" maxlength="48" required>
+        <input focus="shouldFocus" class="edit" type="text" name="artist" ng-model="song.artist" placeholder="Artist" maxlength="48" required info-input-handler id="artist-input">
       </span>
       <span class="separator">·</span>
       <span class="meta album" ng-class="{error: editForm.name.$invalid}">
-        <input class="edit" type="text" name="album" ng-model="song.album" placeholder="Album" maxlength="72">
+        <input class="edit" type="text" name="album" ng-model="song.album" placeholder="Album" maxlength="72" id="album-input">
       </span>
       <span class="meta song" ng-class="{error: editForm.name.$invalid}">
         <input class="edit" type="text" name="song" ng-model="song.song" placeholder="Song title" maxlength="72" required>
@@ -15,6 +15,8 @@
     </section>
    
     <div class="spacer"></div>
+
+    <p ng-repeat="song in songs | filter:artistSearchFunction | limitTo: 5 | orderBy:'artist'">{{song.artist}}</p>
 
     <span class="lyrics">
       <textarea auto-grow id="paste" name="lyrics" ng-model="song.lyrics" placeholder="Lyrics" required></textarea>

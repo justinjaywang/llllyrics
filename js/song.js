@@ -19,9 +19,6 @@ app.config(function($routeProvider, $locationProvider) {
 
 app.directive('autoGrow', function() {
   return function(scope, element) {
-    // $timeout(function(){
-    //   update();
-    // }, 250);
     var h = element[0].offsetHeight,
       minHeight = h*2,
       extraPadding = h;
@@ -73,32 +70,73 @@ app.directive('focus', function($timeout) {
   }
 });
 
-app.directive('feelingLucky', function($location, $timeout) {
+app.directive('searchInputHandler', function($timeout) {
   return function(scope, element) {
+    element.bind('focus', function() {
+      scope.updateSearchTerm();
+    });
+  }
+});
+
+app.directive('pageHandler', function($location) {
+  return function(scope, element) {
+
     element.bind('keydown', function(e) {
-      if (e.which === 13) { // enter
+      if ($location.path() != '/') return;
+
+      var searchInput = document.getElementById('search-input');
+      
+      if (e.which === 27) { // esc
         e.preventDefault();
-        var numResults = document.querySelectorAll('#search-results > #search-result').length;
-        if (numResults) {
-          // set styles on first element
-          var firstItem = document.querySelector('#search-results > #search-result li');
-          var firstIcon = firstItem.querySelector('.icon-right');
-          firstItem.style.color = '#0f9';
-          firstIcon.style.opacity = 1;
-          firstIcon.style.visibility = 'visible';
-          
-          // navigate to relative url
-          var url = firstItem.parentNode.href;
-          var urlRel = url.substring(url.indexOf('/view/'));
-          $timeout(function() { 
-            scope.$apply($location.path(urlRel));
-          }, 100);
+        if (searchInput == document.activeElement) {
+          searchInput.blur();
+        } else {
+          searchInput.focus();
         }
-      } else if (e.which === 27) { // esc
-        e.preventDefault();
-        scope.$apply(scope.clearSearchInput());
       }
     });
+
+    element.bind('keypress', function(e) {
+      var l = $location.path();
+
+      if (l == '/add') return;
+
+      if (l.indexOf('/view/') == 0) { // view page
+        if (e.which === 101) { // e
+          scope.$apply($location.path('/edit/' + l.substring('6')));
+          return;
+        }
+      }
+
+      if (document.getElementById('search-input') != document.activeElement) {
+        if (e.which === 43) { // +
+          e.preventDefault();
+          scope.$apply(function() {
+            scope.clearSearch();
+            $location.path('/add');
+          });
+        }
+      }
+    });
+
+  }
+});
+
+app.directive('infoInputHandler', function($location, $timeout) { // to do: remove inputs later as necessary
+  return function(scope, element, attrs) {
+
+    element.bind('keyup', function(e) {
+      // console.log(attrs.ngModel);
+      // console.log('keypress');
+      if (typeof scope.song === 'undefined') return;
+      var artist = scope.song.artist;
+
+      console.log(scope.song.artist);
+    });
+
+    // element.bind('keydown', function(e) {
+      // console.log('keydown');
+    // });
   }
 });
 
@@ -185,11 +223,43 @@ function TitleCtrl($scope, $rootScope, Page) {
   $rootScope.clearSearch = function() {
     $rootScope.searchTerm = '';
   }
+
+  // $rootScope.artistSearchFunction = function(song) {
+  //   console.log($scope.song)
+  //   // console.log(song)
+  //   // console.log('gets to artistSearchFunction')
+  //   // if (typeof song === 'undefined') {
+  //     // console.log('song undefined');
+  //     // return false;
+  //   // }
+  //   // console.log($scope.song) // never gets here
+  //   // if ($scope.song.artist == 'test') {
+  //   //   console.log('gets to true')
+  //   //   return true;
+  //   // } else {
+  //   //   return false;
+  //   // }
+  //   // return false;
+  // }
 }
 
 function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
   $scope.songs = Song.query();
   Page.setTitle('llllyrics ');
+
+  $scope.searchTerm = $rootScope.searchTerm;
+  $scope.hasResults = ($scope.searchTerm != '') ? true : false; // true if there is previous search
+  $scope.showResults = $scope.hasResults;
+  $scope.showNoResults = false;
+
+  $scope.submitSearch = function() {
+    if ($scope.searchTerm.length < 2) return;
+
+    $scope.showResults = true;
+    $scope.showNoResults = true;
+    var numResults = document.querySelectorAll('#search-results > #search-result').length;
+    $scope.hasResults = (numResults) ? true : false;
+  }
 
   $scope.searchFunction = function(song) {
 
@@ -207,19 +277,20 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
     var splitSearchTerm = function(str) {
       return str.match(/[^\s"]+|"([^"]*)"/g); // keep content in double quotes together
     }
-    
-    if (searchTerm == '*') { // wildcard, show all results
+
+    var showInput = function() {
       document.getElementById('search-input').className = 'show-true';
       document.getElementById('search-input').focus();
-      document.getElementById('search-results').className = 'show-true';
+    }
+    
+    if (searchTerm == '*') { // show all results
+      showInput();
       return true;
     }
 
-    document.getElementById('clear-search').className = (searchTerm.length < 2) ? 'show-false' : 'show-true'; // hide clear-search icon
-    
     var searchTermSimple = simplifySearchTerm(searchTerm);
 
-    if (searchTermSimple.length <= 1) return false; // simplified search term is short, don't return results
+    if (searchTermSimple.length < 2) return false; // simplified search term is short, don't return results
     else { // longer than 1, start searching
       var searchTermArray = splitSearchTerm(searchTermSimple.toLowerCase());
       var l = searchTermArray.length;
@@ -252,10 +323,7 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
         if (!isMatch) return false; // if ever not a match, return false
 
         if (i == (l-1)) { // last iteration, has not encountered return false so it is a match
-          document.getElementById('no-results').className = 'show-false'; // remove no-results if still shown
-          document.getElementById('search-input').className = 'show-true'; // show search-input if not already shown
-          document.getElementById('search-input').focus();
-          document.getElementById('search-results').className = 'show-true';
+          showInput();
           return true;
         } else {
           continue;
@@ -263,25 +331,21 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
         
       }
     }
-  };
+  }; // end searchFunction
 
-  $scope.searchTerm = $rootScope.searchTerm;
+  $scope.updateSearchTerm = function() { // gets called on input change
+    var s = $scope.searchTerm;
+    $rootScope.searchTerm = s // update global searchTerm
 
-  $scope.updateState = function() {
-    $rootScope.searchTerm = $scope.searchTerm; // update global searchTerm
-
-    var l = $rootScope.searchTerm.length;
-    if (l > 2) { // minumum requirement to show
-      document.getElementById('no-results').className = 'show-true';
-    } else {
-      document.getElementById('no-results').className = 'show-false';
-    }
+    $scope.showNoResults = false;
+    
+    document.getElementById('clear-search').className = (s.length < 2) ? 'show-false' : 'show-true';
   }
 
   $scope.clearSearchInput = function() {
     $rootScope.searchTerm = $scope.searchTerm = '';
-    document.getElementById('no-results').className = 'show-false';
-    document.getElementById('clear-search').className = 'show-false';
+    $rootScope.showResults = false;
+    $rootScope.showNoResults = false;
     document.getElementById('search-input').focus();
   }
 
@@ -320,6 +384,81 @@ function AddCtrl($scope, $location, $timeout, Page, Song) {
 
   $scope.shouldFocus = true;
 
+  $scope.artistSearchFunction = function(song) {
+
+    var s = $scope.song;
+    if (typeof s === 'undefined') return false;
+    if (typeof s.artist === 'undefined') return false;
+
+    // if (searchTermSimple.length < 2) return false; // simplified search term is short, don't return results
+    // else { // longer than 1, start searching
+      // var sArray = splitSearchTerm((s.artist).toLowerCase());
+      // var l = sArray.length;
+    var a = s.artist.toLowerCase();
+    var artist = (song.artist).toLowerCase();
+      // var album = (song.album) ? (song.album).toLowerCase() : null;
+
+      console.log('s: ', s.artist);
+      // console.log('l: ', l);
+      console.log('artist: ', artist);
+
+    if (artist.indexOf(a) != -1) { // match artist
+      return true;
+    } else {
+      return false;
+    }
+      // console.log('album: ', album);
+      // var title = simplifyReference(song.song).toLowerCase();
+      // var lyrics = simplifyReference(song.lyrics).toLowerCase();
+
+      // for (var i=0; i<l; i++) { // for each word, check if match
+        
+      //   var sOrig = searchTermArray[i];
+
+      //   if (sOrig.indexOf('artist:') == 0) { // artist search
+      //     var s = simplifyReference(sOrig.substring(7).replace(/_/g, ' '));
+      //     var isMatch = (artist.indexOf(s)!=-1);
+      //   } else if (sOrig.indexOf('album:') == 0) { // album search
+      //     var s = simplifyReference(sOrig.substring(6).replace(/_/g, ' '));
+      //     var isMatch = (album) ? (album.indexOf(s)!=-1) : false;
+      //   } else if (sOrig.indexOf('songtitle:') == 0) { // song title search
+      //     var s = simplifyReference(sOrig.substring(10).replace(/_/g, ' '));
+      //     var isMatch = (title.indexOf(s)!=-1);
+      //   } else if (sOrig.indexOf('lyrics:') == 0) { // lyrics search
+      //     var s = simplifyReference(sOrig.substring(7).replace(/_/g, ' '));
+      //     var isMatch = (lyrics.indexOf(s)!=-1);
+      //   } else { // default search
+      //     var s = simplifyReference(sOrig); // remove : _ "
+      //     var isMatch = (album) ? (artist.indexOf(s)!=-1 || album.indexOf(s)!=-1 || title.indexOf(s)!=-1 || lyrics.indexOf(s)!=-1) : (artist.indexOf(s)!=-1 || title.indexOf(s)!=-1 || lyrics.indexOf(s)!=-1);
+      //   }
+
+      //   if (!isMatch) return false; // if ever not a match, return false
+
+      //   if (i == (l-1)) { // last iteration, has not encountered return false so it is a match
+      //     showInput();
+      //     return true;
+      //   } else {
+      //     continue;
+      //   }
+        
+      // }
+
+    // }
+    // console.log(song)
+    // console.log('gets to artistSearchFunction')
+    // if (typeof song === 'undefined') {
+      // console.log('song undefined');
+      // return false;
+    // }
+    // console.log($scope.song) // never gets here
+    // if ($scope.song.artist == 'test') {
+    //   console.log('gets to true')
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    // return false;
+  }
 }
 
 function EditCtrl($scope, $location, $routeParams, Page, Song) {
@@ -352,12 +491,7 @@ function EditCtrl($scope, $location, $routeParams, Page, Song) {
   }
 
   $scope.isNew = false;
-
   $scope.shouldFocus = false;
-
-  $scope.updateEdit = function() {
-    
-  }
 }
 
 function AboutCtrl($scope, Page) {

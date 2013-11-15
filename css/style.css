@@ -166,7 +166,7 @@ button:disabled {
 }
 
 #search-input {
-  padding: 0 1em 0.2em 0; /* manual adjust*/
+  padding: 0 1.25em 0.2em 0; /* manual adjust*/
   margin: 0 0 1.5em;
   font-family: inherit;
   font-weight: 500;
@@ -187,11 +187,10 @@ button:disabled {
 
 #clear-search {
   position: absolute;
-  right: -0.75em;
-  top: 0.05em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  right: 0em;
+  top: 0.3em;
   font-size: 75%;
+  line-height: 1.5em;
   color: #d4d4d4;
 }
 
@@ -227,7 +226,7 @@ button:disabled {
 
 .icon-right {
   position: absolute;
-  right: -0.4em;
+  right: 0;
   top: 0.7em;
   font-size: 200%;
   color: #ccc;
@@ -246,6 +245,10 @@ button:disabled {
 
 .btn-add, .btn-add:hover {
   color: #0f9;
+}
+
+#search-result a li:active {
+  top: 0.04em;
 }
 
 /*lyrics*/
