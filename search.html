@@ -1,5 +1,5 @@
 <section class="container" id="search">
-  <form id="search-form" ng-submit="submitSearch()">
+  <form id="search-form" ng-submit="feelingLucky()">
     <input id="search-input" class="show-false" type="text" focus="true" ng-model="searchTerm" placeholder="search lyrics" autocomplete="off" autocorrect="off" autocapitalize="off" ng-change="updateSearchTerm()" search-input-handler>
     <a href="/" ng-click="clearSearchInput()" class="show-false" id="clear-search">
       <span class="icon icon-cancel"></span>
@@ -8,7 +8,7 @@
 </section>
 
 <section class="container">
-  <ul class="show-{{(showResults && hasResults)}}" id="search-results">
+  <ul class="show-false" id="search-results">
       <div ng-repeat="song in songs | filter:searchFunction" id="search-result">
         <a ng-href="/view/{{song._id.$oid}}">
           <li>
@@ -25,8 +25,9 @@
 </section>
 
 <section class="container">
-  <div class="show-{{(showNoResults && !hasResults)}}" id="no-results">
+  <div class="show-false" id="no-results">
     <p>No lyrics found for <span class="query">{{searchTerm}}</span>.</p>
+    <!-- <p>No lyrics have been found.</p> -->
     <div class="spacer"></div>
     <div class="btns">
       <a ng-href="/add" class="btn btn-add" ng-click="clearSearch()"><span class="icon icon-plus">add them</span></a>

@@ -4,12 +4,12 @@
     <section class="meta-inputs">
       <span class="meta artist" ng-class="{error: editForm.name.$invalid}">
         <input focus="shouldFocus" class="edit" type="text" name="artist" ng-model="song.artist" placeholder="Artist" maxlength="48" required info-type="artist" info-input-handler id="artist-input">
-        <ul id="artistAutocomplete" class="autocomplete show-false"></ul>
+        <ul id="artist-autocomplete" class="autocomplete show-false"></ul>
       </span>
       <span class="separator">·</span>
       <span class="meta album" ng-class="{error: editForm.name.$invalid}">
         <input class="edit" type="text" name="album" ng-model="song.album" placeholder="Album" maxlength="72" info-type="album" info-input-handler id="album-input">
-        <ul id="albumAutocomplete" class="autocomplete show-false"></ul>
+        <ul id="album-autocomplete" class="autocomplete show-false"></ul>
       </span>
       <span class="meta song" ng-class="{error: editForm.name.$invalid}">
         <input class="edit" type="text" name="song" ng-model="song.song" placeholder="Song title" maxlength="72" required id="song-input">

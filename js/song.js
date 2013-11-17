@@ -72,7 +72,7 @@ app.directive('focus', function($timeout) {
 
 app.directive('searchInputHandler', function() {
   return function(scope, element) {
-    element.bind('focus', function() {
+    element.bind('input focus', function() {
       scope.updateSearchTerm();
     });
   }
@@ -123,8 +123,8 @@ app.directive('infoInputHandler', function($timeout, $compile) {
     var type = attrs.infoType;
     var isArtist = (type == 'artist');
     var matches = [];
-    var limitTo = 5;
-    var $ul = (isArtist) ? angular.element(document.getElementById('artistAutocomplete')) : angular.element(document.getElementById('albumAutocomplete'));
+    var limitTo = 3;
+    var $ul = (isArtist) ? angular.element(document.getElementById('artist-autocomplete')) : angular.element(document.getElementById('album-autocomplete'));
     var selectedIndex = 0;
 
     var showAutocomplete = function(e) {
@@ -148,8 +148,10 @@ app.directive('infoInputHandler', function($timeout, $compile) {
       if (typeof scope.song.artist === 'undefined') return;
       if (!isArtist && (scope.song.album === '' || typeof scope.song.album === 'undefined')) return; // album, null case
       if (e.which === 27) return; // esc
+      if (e.which === 9) return; // tab
+      if (e.which === 16) return; // shift
 
-      var charArray = [8,16,18,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,96,97,98,99,100,101,102,103,104,105,186,187,188,189,190,191,191,219,220,221,222];
+      var charArray = [8,37,38,39,40,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,96,97,98,99,100,101,102,103,104,105,186,187,188,189,190,191,191,219,220,221,222];
       var isCharacter = charArray.some(function(element) { return (e.which === element) });
 
       if (isCharacter) { // character, start search
@@ -198,11 +200,11 @@ app.directive('infoInputHandler', function($timeout, $compile) {
 
     };
 
-    var toggleAutocomplete = function($ul, show) {
+    var toggleAutocomplete = function($ul, bool) {
       $ul.html('');
-      if ($ul.hasClass('show-' + !show)) {
-        $ul.removeClass('show-' + !show);
-        $ul.addClass('show-' + show);
+      if ($ul.hasClass('show-' + !bool)) {
+        $ul.removeClass('show-' + !bool);
+        $ul.addClass('show-' + bool);
       }
       return $ul;
     };
@@ -284,31 +286,42 @@ app.factory('Page', function() {
 
 // controllers
 
-function TitleCtrl($scope, $rootScope, Page) {
+function TitleCtrl($scope, $rootScope, $timeout, Page) {
   $scope.Page = Page;
   $rootScope.searchTerm = '';
 
   $rootScope.clearSearch = function() {
     $rootScope.searchTerm = '';
+    var searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      $timeout(function() { 
+        searchInput.focus();
+      }, 150);
+    }
   }
 }
 
-function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
+function SearchCtrl($scope, $location, $rootScope, $timeout, Page, Song) {
   $scope.songs = Song.query();
   Page.setTitle('llllyrics ');
 
   $scope.searchTerm = $rootScope.searchTerm;
-  $scope.hasResults = ($scope.searchTerm != '') ? true : false; // true if there is previous search
-  $scope.showResults = $scope.hasResults;
-  $scope.showNoResults = false;
 
-  $scope.submitSearch = function() {
-    if ($scope.searchTerm.length < 2) return;
+  $scope.showResults = function(bool) {
+    document.getElementById('search-results').className = 'show-' + bool;
+  }
 
-    $scope.showResults = true;
-    $scope.showNoResults = true;
-    var numResults = document.querySelectorAll('#search-results > #search-result').length;
-    $scope.hasResults = (numResults) ? true : false;
+  $scope.showNoResults = function(bool) {
+    document.getElementById('no-results').className = 'show-' + bool;
+  }
+
+  $scope.showInput = function() {
+    document.getElementById('search-input').className = 'show-true';
+    document.getElementById('search-input').focus();
+  }
+
+  $scope.getNumResults = function() {
+    return document.querySelectorAll('#search-results > #search-result').length;
   }
 
   $scope.searchFunction = function(song) {
@@ -318,30 +331,23 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
     var simplifyReference = function(str) {
       return str.replace(/[^\w\s]/g, ''); // keep alphanumeric, spaces
     }
-
     var simplifySearchTerm = function(str) {
       return str.replace(/[^\w\s_:"]/g, ''); // keep alphanumeric, spaces, and : _ "
     }
-
     var splitSearchTerm = function(str) {
       return str.match(/[^\s"]+|"([^"]*)"/g); // keep content in double quotes together
     }
 
-    var showInput = function() {
-      document.getElementById('search-input').className = 'show-true';
-      document.getElementById('search-input').focus();
-    }
-    
     if (searchTerm == '*') { // show all results
-      showInput();
+      $scope.showResults(true);
+      $scope.showNoResults(false);
+      $scope.showInput();
       return true;
     }
 
     var searchTermSimple = simplifySearchTerm(searchTerm);
-
-    if (searchTermSimple.length < 2) return false; // simplified search term is short, don't return results
+    if (searchTermSimple.length < 1) return false;
     else { // longer than 1, start searching
-
       var searchTermArray = splitSearchTerm(searchTermSimple.toLowerCase());
       var l = searchTermArray.length;
       var artist = simplifyReference(song.artist).toLowerCase();
@@ -350,9 +356,6 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
       var lyrics = simplifyReference(song.lyrics).toLowerCase();
 
       var matchesAll = searchTermArray.every(function(sOrig, i) { // check if match on all words
-
-        if (i == (l-1)) showInput(); // show search input on last iteration
-
         if (sOrig.indexOf('artist:') == 0) { // artist search
           var s = simplifyReference(sOrig.substring(7).replace(/_/g, ' '));
           var isMatch = (artist.indexOf(s)!=-1);
@@ -369,12 +372,15 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
           var s = simplifyReference(sOrig); // remove : _ "
           var isMatch = (album) ? (artist.indexOf(s)!=-1 || album.indexOf(s)!=-1 || title.indexOf(s)!=-1 || lyrics.indexOf(s)!=-1) : (artist.indexOf(s)!=-1 || title.indexOf(s)!=-1 || lyrics.indexOf(s)!=-1);
         }
-
         if (!isMatch) return false; // if ever not a match, return false
+        if (i == (l-1)) { // last iteration
+          $scope.showResults(true);
+          $scope.showNoResults(false);
+          $scope.showInput();
+        }
         return true;
-
       });
-
+      
       return matchesAll;
     }
   }; // end searchFunction
@@ -383,16 +389,37 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
     var s = $scope.searchTerm;
     $rootScope.searchTerm = s // update global searchTerm
 
-    $scope.showNoResults = false;
-    
-    document.getElementById('clear-search').className = (s.length < 2) ? 'show-false' : 'show-true';
+    document.getElementById('clear-search').className = (s.length < 1) ? 'show-false' : 'show-true';
+    if (s.length < 1) {
+      $scope.showResults(false);
+      $scope.showNoResults(false);
+      return;
+    };
+
+    var numResults = $scope.getNumResults();
+    if (numResults == 0 && $scope.postBuffer) {
+      $scope.showResults(false);
+      $scope.showNoResults(true);
+    }
   }
 
   $scope.clearSearchInput = function() {
     $rootScope.searchTerm = $scope.searchTerm = '';
-    $rootScope.showResults = false;
-    $rootScope.showNoResults = false;
+    $scope.showNoResults(false);
+    document.getElementById('clear-search').className = 'show-false';
     document.getElementById('search-input').focus();
+  }
+
+  $scope.feelingLucky = function() {
+    var numResults = $scope.getNumResults();
+    if (numResults == 0) return;
+
+    var li = document.querySelector('#search-results > #search-result li');
+    var href = li.parentNode.href; // get url of anchor
+    var urlRel = href.substring(href.indexOf('/view/'));
+    $timeout(function() { 
+      $location.path(urlRel); // and navigate
+    }, 100);
   }
 
   if ($rootScope.searchTerm.length == 0) { // do normal fade in when empty
@@ -400,6 +427,11 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
       document.getElementById('search-input').className = 'show-true';
     }, 200);
   }
+
+  $scope.postBuffer = false;
+  $timeout(function() { 
+    $scope.postBuffer = true;
+  }, 5000);
 
 }
 
