@@ -130,29 +130,12 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
   return function(scope, element, attrs) {
     var type = attrs.infoType;
     var isArtist = (type == 'artist');
+    var matches = [];
+    var limitTo = 5;
     var $ul = (isArtist) ? angular.element(document.getElementById('artistAutocomplete')) : angular.element(document.getElementById('albumAutocomplete'));
     var selectedIndex = 0;
 
     var showAutocomplete = function(e) {
-
-      // var $ul = identifyUl();
-      $ul = toggleAutocomplete($ul, false);
-
-      // if (typeof scope.song === 'undefined') return;
-      // if (typeof scope.song.artist === 'undefined') return;
-      // // to do: add album undefined case
-      if (typeof scope.song === 'undefined') { // to do: remove later if unnecessary
-        console.log('scope.song undefined in showAutocomplete');
-        return;
-      }
-
-      if (typeof scope.song.artist === 'undefined') return;
-      if (!isArtist && (scope.song.album === '' || typeof scope.song.album === 'undefined')) return; // album, null case
-      if (e.which === 27) return; // esc
-
-      // var charArray = [16,18,32,38,40,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,96,97,98,99,100,101,102,103,104,105,186,187,188,189,190,191,191,219,220,221,222];
-      // var isCharacter = charArray.some(function(element) { return (e.which === element) });
-      // // if (!isCharacter) return;
 
       var updateMatches = function(matches, currKey) {
         var matched = false;
@@ -167,40 +150,56 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
         return matches;
       };
 
-      var matches = []; // initialize
-      var limitTo = 5;
-      var artistQuery = scope.song.artist;
+      $ul = toggleAutocomplete($ul, false);
 
-      // populate matches
-      if (isArtist) {
-        scope.songs.forEach(function(element) {
-          var artist = element.artist;
-          var isMatch = (artist.toLowerCase().indexOf(artistQuery.toLowerCase())!=-1);
-          if (isMatch) matches = updateMatches(matches, artist);
-        });
-      } else if (typeof artistQuery !== 'undefined') { // album, if artistQuery is not empty
-        var albumQuery = scope.song.album;
-        scope.songs.forEach(function(element) { // album
-          if (typeof element.album === 'undefined') return; // skip songs with undefined albums
-
-          var artist = element.artist;
-          var album = element.album;
-          var isArtistMatch = (artist == artistQuery);
-          var isAlbumMatch = (album.toLowerCase().indexOf(albumQuery.toLowerCase())!=-1);
-          var isMatch = (isArtistMatch && isAlbumMatch);
-
-          if (isMatch) matches = updateMatches(matches, album);
-        });
+      if (typeof scope.song === 'undefined') { // to do: remove later if unnecessary
+        console.log('scope.song undefined in showAutocomplete');
+        return;
       }
 
-      // sort matches
-      matches.sort(function(a, b) {
-        return b.count - a.count;
-      });
+      if (typeof scope.song.artist === 'undefined') return;
+      if (!isArtist && (scope.song.album === '' || typeof scope.song.album === 'undefined')) return; // album, null case
+      if (e.which === 27) return; // esc
 
-      // truncate matches
-      matches.length = limitTo;
+      var charArray = [8,16,18,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,96,97,98,99,100,101,102,103,104,105,186,187,188,189,190,191,191,219,220,221,222];
+      var isCharacter = charArray.some(function(element) { return (e.which === element) });
 
+      if (isCharacter) { // character, start search
+
+        matches = []; // initialize
+        var artistQuery = scope.song.artist;
+
+        // populate matches
+        if (isArtist) {
+          scope.songs.forEach(function(element) {
+            var artist = element.artist;
+            var isMatch = (artist.toLowerCase().indexOf(artistQuery.toLowerCase())!=-1);
+            if (isMatch) matches = updateMatches(matches, artist);
+          });
+        } else if (typeof artistQuery !== 'undefined') { // album, if artistQuery is not empty
+          var albumQuery = scope.song.album;
+          scope.songs.forEach(function(element) { // album
+            if (typeof element.album === 'undefined') return; // skip songs with undefined albums
+
+            var artist = element.artist;
+            var album = element.album;
+            var isArtistMatch = (artist == artistQuery);
+            var isAlbumMatch = (album.toLowerCase().indexOf(albumQuery.toLowerCase())!=-1);
+            var isMatch = (isArtistMatch && isAlbumMatch);
+
+            if (isMatch) matches = updateMatches(matches, album);
+          });
+        }
+
+        // sort matches
+        matches.sort(function(a, b) {
+          return b.count - a.count;
+        });
+
+        // truncate matches
+        matches.length = limitTo;
+      }
+      
       // append matches
       $ul = toggleAutocomplete($ul, true); // show autocomplete
       matches.forEach(function(element, index) {
@@ -209,8 +208,6 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
         $ul.append($compile($li)(scope));
       });
 
-      // console.log('show ul')
-      // selectedIndex = 0;
     };
 
     var toggleAutocomplete = function($ul, show) {
@@ -255,7 +252,7 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
       scope.$apply(function() {
         $timeout(function() { 
           nextInput.focus();
-        }, 150);
+        }, 50);
         if (isArtist) {
           scope.song.artist = $ul.children()[selectedIndex].innerText;
         } else {
