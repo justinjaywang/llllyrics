@@ -75,18 +75,11 @@ app.directive('searchInputHandler', function() {
     element.bind('focus', function() {
       scope.updateSearchTerm();
     });
-
-    // element.bind('keydown', function(e) {
-    //   if (e.which === 40) { // down
-    //       e.preventDefault();
-    //     }
-    //   });
   }
 });
 
 app.directive('pageHandler', function($location) {
   return function(scope, element) {
-
     element.bind('keydown', function(e) {
       if ($location.path() != '/') return;
 
@@ -122,7 +115,6 @@ app.directive('pageHandler', function($location) {
         }
       }
     }); // end keydown
-
   }
 });
 
@@ -258,13 +250,11 @@ app.directive('infoInputHandler', function($timeout, $compile) {
     element.bind('focus', function() {
       selectedIndex = 0; // reset index
     });
-
   }
 });
 
 app.directive('changeInput', function($timeout) {
   return function(scope, element, attrs) {
-
     var selectItem = function() {
       var isArtist = (attrs.infoType == 'artist');
       var nextInput = (isArtist) ? document.getElementById('album-input') : document.getElementById('song-input');
@@ -280,7 +270,6 @@ app.directive('changeInput', function($timeout) {
         }
       });
     };
-
     element.bind('mousedown', selectItem);
   }
 });
@@ -323,7 +312,6 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
   }
 
   $scope.searchFunction = function(song) {
-
     var searchTerm = $scope.searchTerm;
     if (typeof searchTerm === 'undefined') return false;
 
