@@ -126,7 +126,7 @@ app.directive('pageHandler', function($location) {
   }
 });
 
-app.directive('infoInputHandler', function($location, $timeout, $compile) { // to do: remove inputs later as necessary
+app.directive('infoInputHandler', function($timeout, $compile) {
   return function(scope, element, attrs) {
     var type = attrs.infoType;
     var isArtist = (type == 'artist');
@@ -152,11 +152,7 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
 
       $ul = toggleAutocomplete($ul, false);
 
-      if (typeof scope.song === 'undefined') { // to do: remove later if unnecessary
-        console.log('scope.song undefined in showAutocomplete');
-        return;
-      }
-
+      if (typeof scope.song === 'undefined') return;
       if (typeof scope.song.artist === 'undefined') return;
       if (!isArtist && (scope.song.album === '' || typeof scope.song.album === 'undefined')) return; // album, null case
       if (e.which === 27) return; // esc
@@ -176,9 +172,9 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
             var isMatch = (artist.toLowerCase().indexOf(artistQuery.toLowerCase())!=-1);
             if (isMatch) matches = updateMatches(matches, artist);
           });
-        } else if (typeof artistQuery !== 'undefined') { // album, if artistQuery is not empty
+        } else if (typeof artistQuery !== 'undefined') { // album, if artist exists
           var albumQuery = scope.song.album;
-          scope.songs.forEach(function(element) { // album
+          scope.songs.forEach(function(element) {
             if (typeof element.album === 'undefined') return; // skip songs with undefined albums
 
             var artist = element.artist;
@@ -228,18 +224,11 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
       if (k === 40) { // down
         e.preventDefault();
         if (selectedIndex >= ($ul.children().length-1)) return;
-        // updateItemStyle(selectedIndex, ++selectedIndex);
         selectedIndex++;
-        // console.log(selectedIndex);
-        // console.log('down')
       } else if (k === 38) { // up
         e.preventDefault();
-        // increment if possible
         if (selectedIndex == 0) return;
-        // updateItemStyle(selectedIndex, --selectedIndex);
         selectedIndex--;
-        // console.log(selectedIndex);
-        // console.log('up')
       } else if ((k === 9) || (k === 13)) { // tab or enter
         e.preventDefault();
         selectIndex();
@@ -260,13 +249,6 @@ app.directive('infoInputHandler', function($location, $timeout, $compile) { // t
         }
       });
     };
-
-    var updateItemStyle = function(oldIndex, newIndex) {
-      // console.log('old: ', oldIndex);
-      // console.log('new: ', newIndex);
-      $ul.children()[oldIndex].className = '';
-      $ul.children()[newIndex].className = 'selected';
-    }
 
     element.bind('keydown', preventDefaults);
     element.bind('keyup', showAutocomplete);
@@ -297,76 +279,9 @@ app.directive('changeInput', function($timeout) {
           scope.song.album = element[0].innerText;
         }
       });
-
     };
 
     element.bind('mousedown', selectItem);
-  }
-});
-
-app.directive('removeLater', function() { // to do: remove
-  return function(scope, element, attrs) {
-    element.bind('keydown', function(e) {
-
-      var incrementIndex = function() {
-        if (scope.selectedIndex < scope.numResults) {
-          scope.selectedIndex++;
-        }
-          // scope.selectedIndex = 0; // reset
-        // } else {
-          // scope.selectedIndex++;
-        // }
-        console.log('selected index: ', scope.selectedIndex);
-      }
-
-      var decrementIndex = function() {
-        if (scope.selectedIndex != 0) {
-          scope.selectedIndex--;
-        }
-          // scope.selectedIndex = scope.numResults; // reset
-        // } else {
-          // scope.selectedIndex--;
-        // }
-        console.log('selected index: ', scope.selectedIndex);
-      }
-      // set numResults
-      scope.numResults = document.querySelectorAll('#search-results > #search-result').length;
-      // console.log('keydown');
-      if (e.which === 13) { // enter
-        // scope.$apply(function() {
-        //   scope.$eval(attrs.ngEnter);
-        // });
-        e.preventDefault();
-      } else if (e.which === 40) { // down
-        if (scope.numResults) {
-          incrementIndex();
-        }
-        // scope.selectedIndex++;
-        // console.log('selected index: ', scope.selectedIndex);
-        console.log('numResults: ', scope.numResults);
-        e.preventDefault();
-      } else if (e.which === 38) { // up
-        if (scope.numResults) {
-          decrementIndex();
-        }
-        // scope.selectedIndex--;
-        // console.log('selected index: ', scope.selectedIndex);
-        console.log('numResults: ', scope.numResults);
-        e.preventDefault();
-      } else if (e.which === 27) { // esc
-        e.preventDefault();
-        scope.$apply(scope.clearSearchInput());
-      } 
-      else {// non-important key {
-        console.log('other key');
-      }
-    });
-    // element.bind('mousedown', function(e) {
-    //   console.log('mousedown');
-    // });
-    element.bind('focus', function(e) {
-      scope.selectedIndex = 0; // reset index
-    });
   }
 });
 
@@ -387,14 +302,6 @@ function TitleCtrl($scope, $rootScope, Page) {
   $rootScope.clearSearch = function() {
     $rootScope.searchTerm = '';
   }
-
-  // $rootScope.changeInput = function(newInput) {
-  //   // console.log('testFunction!')
-  //   // console.log(newInput);
-  //   console.log($scope.song.artist);
-  //   // $scope.song.artist = newInput;
-  //   console.log(newInput);
-  // };
 }
 
 function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
@@ -454,7 +361,6 @@ function SearchCtrl($scope, $rootScope, $timeout, Page, Song) {
       var title = simplifyReference(song.song).toLowerCase();
       var lyrics = simplifyReference(song.lyrics).toLowerCase();
 
-      // to do: convert to forEach or every
       var matchesAll = searchTermArray.every(function(sOrig, i) { // check if match on all words
 
         if (i == (l-1)) showInput(); // show search input on last iteration
@@ -535,14 +441,6 @@ function AddCtrl($scope, $location, $timeout, Page, Song) {
   }, 200); // add timeout for fade in animation
 
   $scope.shouldFocus = true;
-
-  // $scope.changeInput = function(newInput) {
-  //   // console.log('testFunction!')
-  //   // console.log(newInput);
-  //   // console.log($scope.song.artist);
-  //   $scope.song.artist = newInput;
-  // };
-
 }
 
 function EditCtrl($scope, $location, $routeParams, Page, Song) {
