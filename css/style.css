@@ -444,8 +444,8 @@ pre {
 
 * {
   box-sizing: border-box;
-  -webkit-transition: opacity 0.2s;
-  transition: opacity 0.2s;
+  -webkit-transition: opacity 0.15s;
+  transition: opacity 0.15s;
 }
 
 .show-false, #search-results.show-false * {
