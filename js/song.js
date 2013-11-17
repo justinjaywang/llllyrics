@@ -82,9 +82,7 @@ app.directive('pageHandler', function($location) {
   return function(scope, element) {
     element.bind('keydown', function(e) {
       if ($location.path() != '/') return;
-
       var searchInput = document.getElementById('search-input');
-      
       if (e.which === 27) { // esc
         e.preventDefault();
         if (searchInput == document.activeElement) {
@@ -97,7 +95,6 @@ app.directive('pageHandler', function($location) {
 
     element.bind('keypress', function(e) {
       var l = $location.path();
-
       if (l == '/add') return;
       if (l.indexOf('/view/') == 0) { // view page
         if (e.which === 101) { // e
@@ -126,9 +123,10 @@ app.directive('infoInputHandler', function($timeout, $compile) {
     var limitTo = 3;
     var $ul = (isArtist) ? angular.element(document.getElementById('artist-autocomplete')) : angular.element(document.getElementById('album-autocomplete'));
     var selectedIndex = 0;
+    var prevKeyup = null;
+    var currKeyup = null;
 
     var showAutocomplete = function(e) {
-
       var updateMatches = function(matches, currKey) {
         var matched = false;
         matched = matches.some(function(element) {
@@ -144,12 +142,16 @@ app.directive('infoInputHandler', function($timeout, $compile) {
 
       $ul = toggleAutocomplete($ul, false);
 
+      prevKeyup = (currKeyup) ? currKeyup : e.which;
+      currKeyup = e.which;
+      if (e.which === 27) return; // esc
+      if (e.which === 9) return; // tab
+      if (e.which === 16 && prevKeyup === 9) return; // shift + tab
+
       if (typeof scope.song === 'undefined') return;
       if (typeof scope.song.artist === 'undefined') return;
       if (!isArtist && (scope.song.album === '' || typeof scope.song.album === 'undefined')) return; // album, null case
-      if (e.which === 27) return; // esc
-      if (e.which === 9) return; // tab
-      if (e.which === 16) return; // shift
+      
 
       var charArray = [8,37,38,39,40,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,96,97,98,99,100,101,102,103,104,105,186,187,188,189,190,191,191,219,220,221,222];
       var isCharacter = charArray.some(function(element) { return (e.which === element) });
