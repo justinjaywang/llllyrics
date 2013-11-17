@@ -13,7 +13,7 @@ html {
 
 body {
   color: #444;
-  background: #f6f6f6;
+  background: #f5f5f5;
   width: 100%;
   height: 100%;
   padding: 0;
@@ -44,7 +44,12 @@ a, a:hover {
 }
 
 a:hover .song {
-  color: #0f9;
+  color: rgb(0,245,147);
+}
+
+a:active {
+  position: relative;
+  top: 0.04em;
 }
 
 .lyrics, .artist, .album, .separator {
@@ -90,11 +95,7 @@ header h1 {
 
 nav {
   font-weight: 700;
-  color: #aaa;
-}
-
-nav a:hover {
-  color: #00f;
+  color: #999;
 }
 
 nav ul {
@@ -108,6 +109,10 @@ nav ul li {
 
 nav ul li:first-child {
   margin-left: 0;
+}
+
+header h1 a:active, nav a:active {
+  top: 0.06em;
 }
 
 /*forms and controls*/
@@ -173,16 +178,16 @@ button:disabled {
   border-bottom: 0.04em solid #ccc;
 }
 ::-webkit-input-placeholder {
-   color: #aaa;
+   color: #999;
 }
 :-moz-placeholder {
-   color: #aaa;  
+   color: #999;  
 }
 ::-moz-placeholder {
-   color: #aaa;  
+   color: #999;  
 }
 :-ms-input-placeholder {  
-   color: #aaa;  
+   color: #999;  
 }
 
 #clear-search {
@@ -191,11 +196,11 @@ button:disabled {
   top: 0.3em;
   font-size: 75%;
   line-height: 1.5em;
-  color: #d4d4d4;
+  color: #ccc;
 }
 
 #clear-search:hover {
-  color: #aaa;
+  color: #999;
 }
 
 #search-results li {
@@ -240,11 +245,11 @@ button:disabled {
 }
 
 #search-results li:hover .song {
-  color: #0f9;
+  color: rgb(0,245,147);
 }
 
 .btn-add, .btn-add:hover {
-  color: #0f9;
+  color: rgb(0,245,147);
 }
 
 #search-result a li:active {
@@ -258,7 +263,6 @@ button:disabled {
   font-size: 200%;
   line-height: 1.2em;
   font-weight: 500;
-  /*width: 100%;*/
 }
 
 .artist-album, .song {
@@ -266,7 +270,7 @@ button:disabled {
 }
 
 .artist, .album, .separator {
-  color: #aaa;
+  color: #999;
 }
 
 #view .meta {
@@ -275,7 +279,7 @@ button:disabled {
 }
 
 .btn-edit {
-  color: #aaa;
+  color: #999;
   position: absolute;
   right: 0;
   top: 0;
@@ -283,7 +287,10 @@ button:disabled {
   visibility: hidden;
 }
 .btn-edit:hover {
-  color: #0f9;
+  color: rgb(0,245,147);
+}
+.btn-edit:active {
+  position: absolute;
 }
 #view .meta:hover .btn-edit {
   opacity: 1;
@@ -307,18 +314,16 @@ button:disabled {
 #edit .meta.song {
   width: 80%;
 }
-#edit .meta.artist, #artistAutocomplete {
+#edit .meta.artist, #artist-autocomplete {
   width: 32%;
 }
-#edit .meta.album, #albumAutocomplete {
+#edit .meta.album, #album-autocomplete {
   width: 46%;
 }
 
 .autocomplete {
   position: absolute;
   background: #eee;
-  /*background: rgba(229,229,229,0.9);*/
-  color: #444;
   z-index: 1;
 }
 
@@ -327,9 +332,9 @@ button:disabled {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
 .autocomplete li:hover, .autocomplete li.selected {
   background: #ddd;
+  color: #444;
   cursor: pointer;
 }
 
@@ -350,15 +355,15 @@ button:disabled {
 }
 
 .btn-cancel {
-  color: #aaa;
+  color: #999;
   margin-right: 0.5em;
 }
 .btn-cancel:hover {
-  color: #0f9;
+  color: rgb(0,245,147);
 }
 
 .btn-save {
-  color: #00f;
+  color: rgb(0,0,245);
   opacity: 1;
   visibility: visible;
 }
@@ -368,14 +373,14 @@ button:disabled.btn-save {
 }
 
 .btn-delete, .btn-delete:hover {
-  color: #00f;
+  color: rgb(0,0,245);
 }
 
 #view .btn-left {
-  color: #aaa;
+  color: #999;
 }
 .btn-left, .btn-left:hover, #view .btn-left:hover {
-  color: #0f9;
+  color: rgb(0,245,147);
 }
 
 /*about*/
@@ -390,7 +395,7 @@ button:disabled.btn-save {
 }
 
 #about .designer:hover {
-  color: #0f9;
+  color: rgb(0,245,147);
 }
 
 /*404*/
@@ -401,7 +406,7 @@ button:disabled.btn-save {
 }
 
 #error .btn-left, #error .btn-left:hover {
-  color: #0f9;
+  color: rgb(0,245,147);
 }
 
 #error.show-false {
@@ -477,10 +482,10 @@ pre {
   #edit .meta.song {
     width: 100%;
   }
-  #edit .meta.artist {
+  #edit .meta.artist, #artist-autocomplete {
     width: 38%;
   }
-  #edit .meta.album {
+  #edit .meta.album, #album-autocomplete {
     width: 56%;
   }
   #search-results .song, #search-results .artist-album {
