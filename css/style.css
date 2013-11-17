@@ -307,11 +307,30 @@ button:disabled {
 #edit .meta.song {
   width: 80%;
 }
-#edit .meta.artist {
+#edit .meta.artist, #artistAutocomplete {
   width: 32%;
 }
-#edit .meta.album {
+#edit .meta.album, #albumAutocomplete {
   width: 46%;
+}
+
+.autocomplete {
+  position: absolute;
+  background: #eee;
+  /*background: rgba(229,229,229,0.9);*/
+  color: #444;
+  z-index: 1;
+}
+
+.autocomplete li {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.autocomplete li:hover, .autocomplete li.selected {
+  background: #ddd;
+  cursor: pointer;
 }
 
 #paste {
@@ -358,6 +377,7 @@ button:disabled.btn-save {
 .btn-left, .btn-left:hover, #view .btn-left:hover {
   color: #0f9;
 }
+
 /*about*/
 
 #about p {
