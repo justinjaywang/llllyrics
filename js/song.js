@@ -414,7 +414,11 @@ function SearchCtrl($scope, $location, $rootScope, $timeout, Page, Song) {
 
   $scope.feelingLucky = function() {
     var numResults = $scope.getNumResults();
-    if (numResults == 0) return;
+    if (numResults == 0) {
+      $location.path('/add');
+      $scope.clearSearch();
+      return;
+    }
 
     var li = document.querySelector('#search-results > #search-result li');
     var href = li.parentNode.href; // get url of anchor
