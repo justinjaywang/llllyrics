@@ -34,7 +34,7 @@ body {
 
 /*typography*/
 
-h1, .query, .description, .error-id {
+h1, .query, .title, .error-id {
   font-weight: 700;
 }
 

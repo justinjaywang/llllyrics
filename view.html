@@ -13,12 +13,12 @@
   <pre class="lyrics">{{song.lyrics}}</pre>
   <div class="spacer"></div>
   <div class="btns">
-    <a ng-href="/" class="btn btn-left"><span class="icon icon-left"></span>home</a>
+    <a ng-href="/" class="btn btn-left"><span class="icon icon-left"></span>return</a>
   </div>
 </article>
 
 <article class="container show-{{!!(errorId)}}" id="error">
-  <p>Page not found for song ID <span class="error-id">{{errorId}}</span>.</p>
+  <p>No page found for song ID <span class="error-id">{{errorId}}</span>.</p>
   <div class="spacer"></div>
   <div class="btns">
     <a ng-href="/" class="btn btn-left" ng-click="clearSearch()"><span class="icon icon-left"></span>home</a>
