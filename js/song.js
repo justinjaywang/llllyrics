@@ -439,6 +439,8 @@ function SearchCtrl($scope, $location, $rootScope, $timeout, Page, Song) {
     document.getElementById('clear-search').className = (s.length < 1) ? 'show-false' : 'show-true';
     if (s.length < 1) {
       $scope.showResults(false);
+    };
+    if (s.length < 2) {
       $scope.showNoResults(false);
       return;
     };
