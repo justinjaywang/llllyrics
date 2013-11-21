@@ -547,6 +547,11 @@ function EditCtrl($scope, $location, $routeParams, Page, Song) {
   $scope.shouldFocus = false;
 }
 
-function AboutCtrl($scope, Page) {
+function AboutCtrl($scope, $timeout, Page) {
   Page.setTitle('llllyrics / about');
+
+  $scope.isNew = false;
+  $timeout( function() {
+    $scope.isNew = true;
+  }, 200); // add timeout for fade in animation
 }
