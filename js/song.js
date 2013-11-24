@@ -484,7 +484,7 @@ function SearchCtrl($scope, $location, $rootScope, $timeout, Page, Song) {
   $scope.postBuffer = false;
   $timeout(function() { 
     $scope.postBuffer = true;
-  }, 3000);
+  }, 2000);
 
 }
 
