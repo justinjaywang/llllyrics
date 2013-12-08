@@ -487,9 +487,9 @@ pre {
 
 /*responsiveness*/
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 719px) {
   html {
-    font-size: 125%;
+    font-size: 108.333%;
   }
   .container {
     width: 94%;
@@ -519,21 +519,6 @@ pre {
     display: none;
   }
   
-}
-
-@media only screen and (max-width: 600px) {
-  html {
-    font-size: 100%;
-  }
-  .container {
-    width: calc(100% - 24px);
-  }
-  header, #view .meta:hover .btn-edit {
-    display: none;
-  }
-  #content {
-    padding: 1em 0;
-  }
 }
 
 /* print */
