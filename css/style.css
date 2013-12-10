@@ -413,10 +413,15 @@ button:disabled.btn-save {
 .query-example, .key-shortcut {
   background: #eee;
   font-family: monospace;
+  padding: 0.1em 0.4em;
+  -webkit-border-radius: 0.2em;
+  -moz-border-radius: 0.2em;
+  border-radius: 0.2em;
 }
 
 .key-separator {
-  margin: 0 0.3em;
+  margin: 0 0.3em 0 0.15em;
+  color: #999;
 }
 
 /*404*/
