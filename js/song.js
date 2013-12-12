@@ -120,25 +120,25 @@ app.directive('pageHandler', function($location) {
 
     element.bind('keypress', function(e) {
       var l = $location.path();
-      if (document.activeElement.tagName == 'BODY') { // no inputs or textareas are in focus
-        if (e.which === 43) { // +
-          e.preventDefault();
-          scope.$apply(function() {
-            scope.clearSearch();
-            $location.path('/add');
-          });
-        }
-        if (e.which === 104) { // h
-          e.preventDefault();
-          scope.$apply(function() {
-            scope.clearSearch();
-            $location.path('/');
-          });
-        }
-        if (e.which === 114) { // r
-          e.preventDefault();
-          scope.$apply($location.path('/'));
-        }
+      if (document.activeElement.tagName != 'BODY') return; // input or textarea in focus
+
+      if (e.which === 43) { // +
+        e.preventDefault();
+        scope.$apply(function() {
+          scope.clearSearch();
+          $location.path('/add');
+        });
+      }
+      if (e.which === 104) { // h
+        e.preventDefault();
+        scope.$apply(function() {
+          scope.clearSearch();
+          $location.path('/');
+        });
+      }
+      if (e.which === 114) { // r
+        e.preventDefault();
+        scope.$apply($location.path('/'));
       }
       if (l.indexOf('/view/') == 0) { // view page
         if (e.which === 101) { // e
