@@ -161,7 +161,7 @@ app.directive('infoInputHandler', function($timeout, $compile) {
     var type = attrs.infoType,
       isArtist = (type == 'artist'),
       matches = [],
-      limitTo = 3,
+      limitTo = 5,
       $ul = (isArtist) ? angular.element(document.getElementById('artist-autocomplete')) : angular.element(document.getElementById('album-autocomplete')),
       selectedIndex = 0,
       prevKeyup = null,

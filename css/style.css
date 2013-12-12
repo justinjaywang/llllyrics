@@ -332,8 +332,8 @@ button:disabled {
   text-overflow: ellipsis;
 }
 .autocomplete li:hover, .autocomplete li.selected {
-  background: #ddd;
-  color: #3b3b3b;
+  background: rgb(0,245,147);
+  color: #fff;
   cursor: pointer;
 }
 
