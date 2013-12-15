@@ -32,6 +32,12 @@ body {
   padding: 3.2em 0 1.6em;
 }
 
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 /*typography*/
 
 h1, .query, .title, .error-id {
@@ -50,6 +56,13 @@ a:hover .song {
 a:active {
   position: relative;
   top: 0.04em;
+}
+
+p {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 .lyrics, .artist, .album, .separator, .question-answer {
@@ -179,10 +192,10 @@ button:disabled {
 ::-webkit-input-placeholder {
    color: #999;
 }
-:-moz-placeholder {
+input:-moz-placeholder {
    color: #999;  
 }
-::-moz-placeholder {
+input::-moz-placeholder {
    color: #999;  
 }
 :-ms-input-placeholder {  
