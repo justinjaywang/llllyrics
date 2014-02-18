@@ -237,8 +237,6 @@ input::-moz-placeholder {
 #search-results .song, #search-results .artist-album {
   width: 90%;
   display: inline-block;
-  white-space: wrap;
-  overflow: hidden;
 }
 
 .icon-right {
@@ -283,6 +281,8 @@ input::-moz-placeholder {
 
 .artist, .album, .separator {
   color: #999;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #view .meta {
