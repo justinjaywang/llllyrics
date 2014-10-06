@@ -81,11 +81,11 @@ gulp.task('rootStatics', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.views, ['views']);
   gulp.watch(paths.unminifiedScripts, ['unminifiedScripts']);
-  gulp.watch(paths.scripts, ['scripts']);
+  // gulp.watch(paths.scripts, ['scripts']);
   gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.statics, ['statics']);
   gulp.watch(paths.rootStatics, ['rootStatics']);
 });
 
 // default task
-gulp.task('default', ['views', 'unminifiedScripts', 'scripts', 'styles', 'statics', 'rootStatics', 'watch']);
+gulp.task('default', ['views', 'unminifiedScripts', /*'scripts', */'styles', 'statics', 'rootStatics', 'watch']);
