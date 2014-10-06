@@ -1,0 +1,26 @@
+{
+  "name": "llllyrics",
+  "version": "2.0.0",
+  "description": "collaboratively edited lyrics",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justinjaywang/llllyrics.git"
+  },
+  "author": "@justinjaywang",
+  "homepage": "https://github.com/justinjaywang/llllyrics",
+  "scripts": {
+    "start": "http-server build -p 8000"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-angular-htmlify": "^0.4.0",
+    "gulp-concat": "^2.4.1",
+    "gulp-htmlmin": "^0.2.0",
+    "gulp-minify-css": "^0.3.10",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1",
+    "gulp-util": "^3.0.1",
+    "gulp-watch": "^1.0.7",
+    "http-server": "^0.7.1"
+  }
+}
