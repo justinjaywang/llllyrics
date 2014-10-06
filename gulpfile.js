@@ -80,7 +80,7 @@ gulp.task('rootStatics', function() {
 // rerun on file changes
 gulp.task('watch', function() {
   gulp.watch(paths.views, ['views']);
-  gulp.watch(paths.scripts, ['unminifiedScripts']);
+  gulp.watch(paths.unminifiedScripts, ['unminifiedScripts']);
   gulp.watch(paths.scripts, ['scripts']);
   gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.statics, ['statics']);
