@@ -180,7 +180,7 @@ button:disabled {
 }
 
 #search-input {
-  padding: 0 1.25em 0.2em 0; /* manual adjust*/
+  padding: 0 1.25em 0.25em 0; /* manual adjust*/
   margin: 0 0 1.6em;
   font-family: inherit;
   font-weight: 500;
@@ -188,6 +188,7 @@ button:disabled {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  line-height: normal;
 }
 ::-webkit-input-placeholder {
    color: #999;
@@ -538,7 +539,6 @@ pre {
   .icon-right {
     display: none;
   }
-  
 }
 
 /* print */
