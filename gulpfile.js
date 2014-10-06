@@ -9,18 +9,20 @@ var rename    = require('gulp-rename');
 var minifycss = require('gulp-minify-css');
 
 var paths = {};
-paths.views       = 'source/**/*.html';
-paths.scripts     = 'source/scripts/**/*.js';
-paths.styles      = 'source/styles/*.css';
-paths.statics     = 'source/statics/**/*';
-paths.rootStatics = 'source/root-statics/**/*';
+paths.views             = 'source/**/*.html';
+paths.unminifiedScripts = 'source/unminified-scripts/**/*.js';
+paths.scripts           = 'source/scripts/**/*.js';
+paths.styles            = 'source/styles/*.css';
+paths.statics           = 'source/statics/**/*';
+paths.rootStatics       = 'source/root-statics/**/*';
 
 var dest = {};
-dest.views       = 'build';
-dest.scripts     = 'build/assets';
-dest.styles      = 'build/assets';
-dest.statics     = 'build/assets';
-dest.rootStatics = 'build';
+dest.views             = 'build';
+dest.unminifiedScripts = 'build/assets';
+dest.scripts           = 'build/assets';
+dest.styles            = 'build/assets';
+dest.statics           = 'build/assets';
+dest.rootStatics       = 'build';
 
 // minify HTML views
 gulp.task('views', function() {
@@ -31,7 +33,15 @@ gulp.task('views', function() {
     .on('error', util.log);
 });
 
-// minify and copy all non-vendor JavaScript
+// copy all non-vendor Angular JavaScript
+gulp.task('unminifiedScripts', function() {
+  return gulp.src(paths.unminifiedScripts)
+    .pipe(concat('song.js'))
+    .pipe(gulp.dest(dest.unminifiedScripts))
+    .on('error', util.log);
+});
+
+// minify and copy remaining JavaScript
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts)
     .pipe(concat('all.js'))
@@ -70,6 +80,7 @@ gulp.task('rootStatics', function() {
 // rerun on file changes
 gulp.task('watch', function() {
   gulp.watch(paths.views, ['views']);
+  gulp.watch(paths.scripts, ['unminifiedScripts']);
   gulp.watch(paths.scripts, ['scripts']);
   gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.statics, ['statics']);
@@ -77,4 +88,4 @@ gulp.task('watch', function() {
 });
 
 // default task
-gulp.task('default', ['views', 'scripts', 'styles', 'statics', 'rootStatics', 'watch']);
+gulp.task('default', ['views', 'unminifiedScripts', 'scripts', 'styles', 'statics', 'rootStatics', 'watch']);
