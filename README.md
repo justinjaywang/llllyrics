@@ -1,9 +1,10 @@
 # llllyrics
 
-![Album screenshot](screenshots/album.png)
+![Album screenshot](https://raw.githubusercontent.com/justinjaywang/images/master/screenshots--llllyrics/album.png)
 
 ### Next steps
 
-- Write script to scrape song lyrics to build up database
-- Spread the word
-- Database stats easter eggs
+- Better, less ghetto search
+- Zen mode, or play mode
+- Line wrap bug for album on view page
+- Database stats
