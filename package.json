@@ -1,6 +1,6 @@
 {
   "name": "llllyrics",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "collaboratively edited lyrics",
   "repository": {
     "type": "git",
@@ -12,10 +12,12 @@
     "start": "http-server build -p 8000"
   },
   "devDependencies": {
+    "bower": "^1.3.12",
     "gulp": "^3.8.8",
     "gulp-angular-htmlify": "^0.4.0",
     "gulp-concat": "^2.4.1",
     "gulp-htmlmin": "^0.2.0",
+    "gulp-less": "^1.3.6",
     "gulp-minify-css": "^0.3.10",
     "gulp-rename": "^1.2.0",
     "gulp-uglify": "^1.0.1",

@@ -6,19 +6,20 @@ var htmlify   = require('gulp-angular-htmlify');
 var concat    = require('gulp-concat');
 var uglify    = require('gulp-uglify');
 var rename    = require('gulp-rename');
+var less      = require('gulp-less');
 var minifycss = require('gulp-minify-css');
 
 var paths = {};
 paths.views             = 'source/**/*.html';
-paths.unminifiedScripts = 'source/unminified-scripts/**/*.js';
+// paths.unminifiedScripts = 'source/unminified-scripts/**/*.js';
 paths.scripts           = 'source/scripts/**/*.js';
-paths.styles            = 'source/styles/*.css';
+paths.styles            = 'source/styles/all.less';
 paths.statics           = 'source/statics/**/*';
 paths.rootStatics       = 'source/root-statics/**/*';
 
 var dest = {};
 dest.views             = 'build';
-dest.unminifiedScripts = 'build/assets';
+// dest.unminifiedScripts = 'build/assets';
 dest.scripts           = 'build/assets';
 dest.styles            = 'build/assets';
 dest.statics           = 'build/assets';
@@ -55,7 +56,7 @@ gulp.task('scripts', function() {
 // concat and minify CSS
 gulp.task('styles', function () {
   return gulp.src(paths.styles)
-    .pipe(concat('all.css'))
+    .pipe(less())
     .pipe(gulp.dest(dest.styles))
     .pipe(minifycss())
     .pipe(rename({extname: '.min.css'}))
@@ -80,12 +81,20 @@ gulp.task('rootStatics', function() {
 // rerun on file changes
 gulp.task('watch', function() {
   gulp.watch(paths.views, ['views']);
-  gulp.watch(paths.unminifiedScripts, ['unminifiedScripts']);
-  // gulp.watch(paths.scripts, ['scripts']);
-  gulp.watch(paths.styles, ['styles']);
+  // gulp.watch(paths.unminifiedScripts, ['unminifiedScripts']);
+  gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch(['source/styles/**/*.less'], ['styles']);
   gulp.watch(paths.statics, ['statics']);
   gulp.watch(paths.rootStatics, ['rootStatics']);
 });
 
 // default task
-gulp.task('default', ['views', 'unminifiedScripts', /*'scripts', */'styles', 'statics', 'rootStatics', 'watch']);
+gulp.task('default', [
+  'views',
+  // 'unminifiedScripts',
+  'scripts',
+  'styles',
+  'statics',
+  'rootStatics',
+  'watch'
+]);
