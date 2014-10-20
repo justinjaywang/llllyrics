@@ -1,10 +1,12 @@
 # llllyrics
 
-![Album screenshot](https://raw.githubusercontent.com/justinjaywang/images/master/screenshots--llllyrics/album.png)
+## v2.0
 
-### Next steps
+### Tasks
 
-- Better, less ghetto search
-- Zen mode, or play mode
+- Update Angular version and use Bower to manage
 - Line wrap bug for album on view page
+- Better, less ghetto, more efficient search
+- Play mode, maybe
+- Themes, maybe
 - Database stats
