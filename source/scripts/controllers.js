@@ -23,27 +23,67 @@ controllers.controller('TitleCtrl', ['$scope', '$location', '$timeout', 'Page',
     // });
   }]);
 
-controllers.controller('SearchCtrl', ['$scope', '$location', 'Page',
-  function($scope, $location, Page) {
-    Page.setTitle('llllyrics / Search');
+controllers.controller('SearchCtrl', ['$scope', '$location', 'Page', 'Songs',
+  function($scope, $location, Page, Songs) {
+    // $scope.songs = Songs.query();
+    Songs.query().$promise.then(function(songs) {
+      $scope.songs = songs;
+    });
+    Page.setTitle('llllyrics / search'); // TEMP
   }]);
 
-controllers.controller('ViewCtrl', ['$scope', '$location', 'Page',
-  function($scope, $location, Page) {
-    Page.setTitle('llllyrics / View');
+controllers.controller('ViewCtrl', ['$scope', '$location', '$routeParams', 'Page', 'Songs',
+  function($scope, $location, $routeParams, Page, Songs) {
+    Songs.get({id: $routeParams.songId}, function(song){
+      $scope.song = song;
+      Page.setTitle('"' + song.song + '" by ' + song.artist);    
+    }, function(err){
+      Page.setTitle('llllyrics / ' + err.status);
+      $scope.errorId = $routeParams.songId;
+    });
   }]);
 
-controllers.controller('AddCtrl', ['$scope', '$location', 'Page',
-  function($scope, $location, Page) {
-    Page.setTitle('llllyrics / Add');
+controllers.controller('AddCtrl', ['$scope', '$location', 'Page', 'Songs',
+  function($scope, $location, Page, Songs) {
+    $scope.songs = Songs.query();
+    $scope.save = function() {
+      Songs.save($scope.songs, function(song) {
+        $location.path('/view/' + song._id.$oid);
+      });
+    }
+    Page.setTitle('llllyrics / add');
   }]);
 
-controllers.controller('EditCtrl', ['$scope', '$location', 'Page',
-  function($scope, $location, Page) {
-    Page.setTitle('llllyrics / Edit');
+controllers.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Page', 'Songs',
+  function($scope, $location, $routeParams, Page, Songs) {
+    $scope.songs = Songs.query();
+    var self = this;
+
+    Songs.get({id: $routeParams.songId}, function(song) {
+      self.original = song;
+      $scope.song = new Songs(self.original);
+      Page.setTitle('llllyrics / edit "' + song.song + '" by ' + song.artist);
+    }, function(err){
+      Page.setTitle('llllyrics / ' + err.status);
+      $scope.errorId = $routeParams.songId;
+    });
+    
+    $scope.isClean = function() {
+      return angular.equals(self.original, $scope.song);
+    }
+    $scope.destroy = function() {
+      self.original.destroy(function() {
+        $location.path('/');
+      });
+    }
+    $scope.save = function() {
+      $scope.song.update(function(song) {
+        $location.path('/view/' + song._id.$oid);
+      });
+    }
   }]);
 
 controllers.controller('AboutCtrl', ['$scope', '$location', 'Page',
   function($scope, $location, Page) {
-    Page.setTitle('llllyrics / About');
+    Page.setTitle('llllyrics / about');
   }]);
