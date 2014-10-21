@@ -28,6 +28,16 @@ controllers.controller('SearchCtrl', ['$scope', '$location', 'Page', 'Songs',
     // $scope.songs = Songs.query();
     Songs.query().$promise.then(function(songs) {
       $scope.songs = songs;
+      // $scope.updateUrl = function() {
+      //   var path = $location.path();
+      //   $location.url(path + '?q=' + $scope.searchQuery);
+      // };
+      // $scope.$watch(function() { return $location.url(); }, function(url) {
+      //   if (url) {
+      //     $scope.searchQuery = $location.updateUrl().q
+      //     $scope.updateUrl();
+      //   }
+      // });
     });
     Page.setTitle('llllyrics / search'); // TEMP
   }]);

@@ -1,7 +1,8 @@
 <h1>search</h1>
 
-<input type="text" ng-model="searchText" focus="true" placeholder="Search">
+<!-- <input type="text" ng-model="searchQuery" ng-change="updateUrl()" focus="true" placeholder="Search"> -->
+<input type="text" ng-model="searchQuery" focus="true" placeholder="Search">
 
-<ul ng-repeat="song in filteredSongs = (songs | filter:searchText | limitTo:12)">
+<ul ng-repeat="song in filteredSongs = (songs | filter:searchQuery | limitTo:12)">
   <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}}</a></li>
 </ul>
