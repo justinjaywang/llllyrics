@@ -1,11 +1,28 @@
 <h1>search</h1>
 
-<input type="text" ng-model="q[searchType]" ng-model-options="{debounce: {'default': 500}}" ng-change="updateUrl()" placeholder="Search">
+<!-- <input type="text" ng-model="q[searchType]" ng-model-options="{debounce: {'default': 500}}" ng-change="updateSearchResults()" placeholder="Search"> -->
+<input type="text" ng-model="q" ng-model-options="{debounce: {'default': 500}}" ng-change="updateSearchResults()" placeholder="Search">
 <!-- <input type="text" ng-model="searchQuery" focus="true" placeholder="Search"> -->
 
 {{model}}
 
 <!-- <ul ng-repeat="song in songs | filter:q | limitTo: 12 as filteredSongs track by song._id.$oid"> -->
-<ul ng-repeat="song in songs | filter:q as filteredSongs track by song._id.$oid">
-  <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}}</a></li>
+<ul class="results" ng-repeat="song in songs | filter:q | limitTo: 12 as filteredSongs track by song._id.$oid" ng-show="(searchType === '$')">
+  <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
+</ul>
+
+<ul class="results results--artist" ng-repeat="song in songs | filter:q | limitTo: 12 as filteredSongs track by song._id.$oid" ng-show="(searchType === 'artist')">
+  <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
+</ul>
+
+<ul class="results results--album" ng-repeat="song in songs | filter:q | limitTo: 12 as filteredSongs track by song._id.$oid" ng-show="(searchType === 'album')">
+  <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
+</ul>
+
+<ul class="results results--songtitle" ng-repeat="song in songs | filter:q | limitTo: 12 as filteredSongs track by song._id.$oid" ng-show="(searchType === 'song')">
+  <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
+</ul>
+
+<ul class="results results--lyrics" ng-repeat="song in songs | filter:q | limitTo: 12 as filteredSongs track by song._id.$oid" ng-show="(searchType === 'lyrics')">
+  <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
 </ul>

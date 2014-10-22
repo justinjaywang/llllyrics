@@ -4,3 +4,4 @@
 
 var directives = angular.module('directives', []);
 
+// lowerCamelCase

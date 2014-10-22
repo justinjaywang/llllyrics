@@ -25,44 +25,66 @@ controllers.controller('TitleCtrl', ['$scope', '$location', '$timeout', 'Page',
 
 controllers.controller('SearchCtrl', ['$scope', '$location', 'Page', 'Song',
   function($scope, $location, Page, Song) {
-    // instantiate search type
-    $scope.searchType = '$';
-    // define query model
-    $scope.q = {$: '', artist: '', album: '', song: '', lyrics: ''};
+    // define functions
+    // $scope.resetQ = function() {
+    //   $scope.q = {$: '', artist: '', album: '', song: '', lyrics: ''};
+    // };
+    $scope.changeSearchType = function(type) {
+      $scope.searchType = type;
+      console.log('searchType: ' + type); // TEMP
+      // $scope.resetQ();
+    };
+    // define regular expressions
+    var artistRegex = /^(artist|a):/i;
+    var albumRegex = /^album:/i;
+    var songtitleRegex = /^(songtitle|song|s):/i;
+    var lyricsRegex = /^(lyrics|l):/i;
 
+    // instantiate search type
+    $scope.changeSearchType('$');
+
+    // query database
     Song.query(function(songs) {
+      console.log('successful query'); // TEMP
       $scope.songs = songs;
     }, function(err) {
-      console.log('error in query');
+      console.log('query failed'); // TEMP
     });
-    $scope.changeSearchType = function(t) {
-      $scope.searchType = t;
-    };
-    $scope.updateUrl = function() {
+
+    $scope.updateSearchResults = function() {
       console.log($scope.q);
-      // if (typeof $scope.q === undefined) return;
-      // var q = $scope.q;
-      // console.log(q)
-      // var artistPrefix = 'artist:';
-      // var albumPrefix = 'album:';
-      // var songtitlePrefix = 'songtitle:';
-      // var lyricsPrefix = 'lyrics:';
-      // if (q === '') {
-      //   // empty search
-      //   // $scope.songs = [];
-      // } else if (q.indexOf(artistPrefix) === 0) {
-      //   // artist search
-      //   var qArtist = q.substring(artistPrefix.length);
-      // } else if (q.indexOf(albumPrefix) === 0) {
-      //   // album search
-      //   var qAlbum = q.substring(albumPrefix.length);
-      // } else if (q.indexOf(songtitlePrefix) === 0) {
-      //   // song title search
-      //   var qSongtitle = q.substring(songtitlePrefix.length);
-      // } else if (q.indexOf(lyricsPrefix) === 0) {
-      //   // lyrics search
-      //   var qLyrics = q.substring(lyricsPrefix.length);
-      // }
+      if (typeof $scope.q === undefined) {
+        console.log('$scope.q undefined'); // TEMP
+        return;
+      }
+      var q = $scope.q;
+      // console.log(q); // TEMP
+      if (q === '') {
+        // empty search
+        // $scope.songs = [];
+        $scope.changeSearchType('$');
+      } else if (q.match(artistRegex)) {
+        // artist search
+        console.log('artist search');
+        $scope.changeSearchType('artist');
+      } else if (q.match(albumRegex)) {
+        // album search
+        console.log('album search');
+        $scope.changeSearchType('album');
+
+      } else if (q.match(songtitleRegex)) {
+        // song title search
+        console.log('songtitle search');
+        $scope.changeSearchType('song');
+
+      } else if (q.match(lyricsRegex)) {
+        // lyrics search
+        console.log('lyrics search');
+        $scope.changeSearchType('lyrics');
+      } else {
+        // regular search
+        $scope.changeSearchType('$');
+      }
     }
     // Song.query().$promise.then(function(songs) {
     //   $scope.songs = songs;

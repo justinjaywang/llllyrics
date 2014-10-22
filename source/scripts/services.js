@@ -27,8 +27,10 @@ services.factory('Song', ['$resource',
       }, 
       {
         get: { method: 'GET', params: {'fo': 1}, cache: 1},
+        // query: { method: 'GET', params: {'l': 40}, isArray: 1, cache: 1 },
+        query: { method: 'GET', params: {'l': 12}, isArray: 1, cache: 1 },
         // query: { method: 'GET', params: {'l': 1000, 'f': {'lyrics': 0}}, isArray: 1, cache: 1 },
-        query: { method: 'GET', params: {'l': 40}, isArray: 1, cache: 1 },
+        // queryArtist: { method: 'GET', params: {'l': 40, 'f': {'album': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
         update: { method: 'PUT' }
       }
     );
