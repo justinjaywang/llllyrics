@@ -16,22 +16,27 @@ services.factory('Page', [
 var dbUrl = 'https://api.mongolab.com/api/1/databases/lyrics/collections';
 var apiKey = 'JVmmdZYza2puepYKIJWfgvgYAzP8nAZm';
 
-services.factory('Songs', ['$resource',
+// https://api.mongolab.com/api/1/databases/lyrics/collections/lyrics?apiKey=JVmmdZYza2puepYKIJWfgvgYAzP8nAZm
+// https://api.mongolab.com/api/1/databases/lyrics/collections/lyrics?apiKey=JVmmdZYza2puepYKIJWfgvgYAzP8nAZm&q={%22artist%22:%22HAIM%22}
+
+services.factory('Song', ['$resource',
   function($resource) {
-    var Songs = $resource(dbUrl + '/lyrics/:id',
-      { apiKey: apiKey }, {
-        update: { method: 'PUT' }
+    var Song = $resource(dbUrl + '/lyrics/:id',
+      { apiKey: apiKey }, 
+      {
+        update: { method: 'PUT' },
+        query: { method: 'GET', params: {'l': 12}, isArray: true, cache: true }
       }
     );
 
-    Songs.prototype.update = function(cb) {
+    Song.prototype.update = function(cb) {
       return Song.update({id: this._id.$oid},
       angular.extend({}, this, {_id:undefined}), cb);
     };
 
-    Songs.prototype.destroy = function(cb) {
+    Song.prototype.destroy = function(cb) {
       return Song.remove({id: this._id.$oid}, cb);
     };
 
-    return Songs;
+    return Song;
   }]);
