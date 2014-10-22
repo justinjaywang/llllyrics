@@ -33,15 +33,10 @@ services.factory('Song', ['$resource',
       }
     );
 
-    Song.prototype.query = function(cb) {
-      console.log('query')
-    }
-
     Song.prototype.update = function(cb) {
       return Song.update({id: this._id.$oid},
       angular.extend({}, this, {_id:undefined}), cb);
     };
-
     Song.prototype.destroy = function(cb) {
       return Song.remove({id: this._id.$oid}, cb);
     };
