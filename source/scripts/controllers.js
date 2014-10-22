@@ -4,11 +4,16 @@
 
 var controllers = angular.module('controllers', []);
 
-// controllers.controller('EmptyCtrl', ['$scope',
+// controllers.controller('EmptyCtrl', [
+//   '$scope',
 //   function($scope) {
 //   }]);
 
-controllers.controller('TitleCtrl', ['$scope', '$location', '$timeout', 'Page',
+controllers.controller('TitleCtrl', [
+  '$scope',
+  '$location',
+  '$timeout',
+  'Page',
   function($scope, $location, $timeout, Page) {
     $scope.Page = Page;
     // $scope.parameters = {};
@@ -23,22 +28,32 @@ controllers.controller('TitleCtrl', ['$scope', '$location', '$timeout', 'Page',
     // });
   }]);
 
-controllers.controller('SearchCtrl', ['$scope', '$location', 'Page', 'Song',
+controllers.controller('SearchCtrl', [
+  '$scope',
+  '$location',
+  'Page',
+  'Song',
   function($scope, $location, Page, Song) {
-    // define functions
-    // $scope.resetQ = function() {
-    //   $scope.q = {$: '', artist: '', album: '', song: '', lyrics: ''};
-    // };
+    // define helper functions
     $scope.changeSearchType = function(type) {
       $scope.searchType = type;
       console.log('searchType: ' + type); // TEMP
-      // $scope.resetQ();
     };
+
     // define regular expressions
-    var artistRegex = /^(artist|a):/i;
-    var albumRegex = /^album:/i;
-    var songtitleRegex = /^(songtitle|song|s):/i;
-    var lyricsRegex = /^(lyrics|l):/i;
+    var regexes = {};
+    regexes.artist = /^(artist|a):/i;
+    regexes.album = /^(album|b):/i;
+    regexes.song = /^(song|s):/i;
+    regexes.lyrics = /^(lyrics|l):/i;
+
+    // define search type strings
+    $scope.searchTypes = {};
+    $scope.searchTypes.all = '$';
+    $scope.searchTypes.artist = 'artist';
+    $scope.searchTypes.album = 'album';
+    $scope.searchTypes.song = 'song';
+    $scope.searchTypes.lyrics = 'lyrics';
 
     // instantiate search type
     $scope.changeSearchType('$');
@@ -51,41 +66,43 @@ controllers.controller('SearchCtrl', ['$scope', '$location', 'Page', 'Song',
       console.log('query failed'); // TEMP
     });
 
-    $scope.updateSearchResults = function() {
-      console.log($scope.q);
-      if (typeof $scope.q === undefined) {
+    // other functions
+    $scope.updateResults = function() {
+      console.log('\n')
+      // console.log($scope.searchInput);
+      if (angular.isUndefined($scope.searchInput)) {
         console.log('$scope.q undefined'); // TEMP
         return;
       }
-      var q = $scope.q;
+      var searchInput = $scope.searchInput;
       // console.log(q); // TEMP
-      if (q === '') {
+      if (searchInput === '') {
         // empty search
         // $scope.songs = [];
-        $scope.changeSearchType('$');
-      } else if (q.match(artistRegex)) {
+        $scope.changeSearchType($scope.searchTypes.all);
+      } else if (searchInput.match(regexes.artist)) {
         // artist search
-        console.log('artist search');
-        $scope.changeSearchType('artist');
-      } else if (q.match(albumRegex)) {
+        // console.log('artist search');
+        $scope.changeSearchType($scope.searchTypes.artist);
+      } else if (searchInput.match(regexes.album)) {
         // album search
-        console.log('album search');
-        $scope.changeSearchType('album');
+        // console.log('album search');
+        $scope.changeSearchType($scope.searchTypes.album);
 
-      } else if (q.match(songtitleRegex)) {
+      } else if (searchInput.match(regexes.song)) {
         // song title search
-        console.log('songtitle search');
-        $scope.changeSearchType('song');
+        // console.log('song search');
+        $scope.changeSearchType($scope.searchTypes.song);
 
-      } else if (q.match(lyricsRegex)) {
+      } else if (searchInput.match(regexes.lyrics)) {
         // lyrics search
-        console.log('lyrics search');
-        $scope.changeSearchType('lyrics');
+        // console.log('lyrics search');
+        $scope.changeSearchType($scope.searchTypes.lyrics);
       } else {
         // regular search
-        $scope.changeSearchType('$');
+        $scope.changeSearchType($scope.searchTypes.all);
       }
-    }
+    };
     // Song.query().$promise.then(function(songs) {
     //   $scope.songs = songs;
     //   // $scope.updateUrl = function() {
@@ -99,10 +116,58 @@ controllers.controller('SearchCtrl', ['$scope', '$location', 'Page', 'Song',
     //   //   }
     //   // });
     // });
+
+    // filter helper functions
+    $scope.formatInput = function(searchInput, searchType) {
+      switch(searchType) {
+        case $scope.searchTypes.all:
+          return angular.lowercase(searchInput);
+          break;
+        case $scope.searchTypes.artist:
+          return angular.lowercase(searchInput);
+          break;
+        case $scope.searchTypes.album:
+          return angular.lowercase(searchInput);
+          break;
+        case $scope.searchTypes.song:
+          return angular.lowercase(searchInput);
+          break;
+        case $scope.searchTypes.lyrics:
+          return angular.lowercase(searchInput);
+          break;
+        default:
+          return angular.lowercase(searchInput);
+      }
+    };
+    $scope.formatData = function(data) {
+      return angular.lowercase(data);
+    };
+    $scope.isMatch = function(data, q) {
+      return data.match(q);
+    };
+
+    // filter functions
+    $scope.filterSearch = function(searchInput, searchType) {
+      var q = $scope.formatInput(searchInput, searchType);
+      return function(song) {
+        var artistData = $scope.formatData(song.artist);
+        var albumData = $scope.formatData(song.album);
+        var songData = $scope.formatData(song.song);
+        var lyricsData = $scope.formatData(song.lyrics);
+        return $scope.isMatch(artistData, q) || $scope.isMatch(albumData, q) || $scope.isMatch(songData, q) || $scope.isMatch(lyricsData, q);
+      };
+    };
+    
+    // set search page title
     Page.setTitle('llllyrics / search'); // TEMP
   }]);
 
-controllers.controller('ViewCtrl', ['$scope', '$location', '$routeParams', 'Page', 'Song',
+controllers.controller('ViewCtrl', [
+  '$scope',
+  '$location',
+  '$routeParams',
+  'Page',
+  'Song',
   function($scope, $location, $routeParams, Page, Song) {
     Song.get({id: $routeParams.songId}, function(song){
       $scope.song = song;
@@ -113,7 +178,11 @@ controllers.controller('ViewCtrl', ['$scope', '$location', '$routeParams', 'Page
     });
   }]);
 
-controllers.controller('AddCtrl', ['$scope', '$location', 'Page', 'Song',
+controllers.controller('AddCtrl', [
+  '$scope',
+  '$location',
+  'Page',
+  'Song',
   function($scope, $location, Page, Song) {
     $scope.songs = Song.query();
     $scope.save = function() {
@@ -124,7 +193,12 @@ controllers.controller('AddCtrl', ['$scope', '$location', 'Page', 'Song',
     Page.setTitle('llllyrics / add');
   }]);
 
-controllers.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Page', 'Song',
+controllers.controller('EditCtrl', [
+  '$scope',
+  '$location',
+  '$routeParams',
+  'Page',
+  'Song',
   function($scope, $location, $routeParams, Page, Song) {
     $scope.songs = Song.query();
     var self = this;
@@ -153,7 +227,10 @@ controllers.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Page
     }
   }]);
 
-controllers.controller('AboutCtrl', ['$scope', '$location', 'Page',
+controllers.controller('AboutCtrl', [
+  '$scope',
+  '$location',
+  'Page',
   function($scope, $location, Page) {
     Page.setTitle('llllyrics / about');
   }]);
