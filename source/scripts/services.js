@@ -22,12 +22,20 @@ var apiKey = 'JVmmdZYza2puepYKIJWfgvgYAzP8nAZm';
 services.factory('Song', ['$resource',
   function($resource) {
     var Song = $resource(dbUrl + '/lyrics/:id',
-      { apiKey: apiKey }, 
+      { 
+        apiKey: apiKey 
+      }, 
       {
-        update: { method: 'PUT' },
-        query: { method: 'GET', params: {'l': 12}, isArray: true, cache: true }
+        get: { method: 'GET', params: {'fo': 1}, cache: 1},
+        // query: { method: 'GET', params: {'l': 12, 'f': {'lyrics': 0}}, isArray: 1, cache: 1 },
+        query: { method: 'GET', params: {'l': 12}, isArray: 1, cache: 1 },
+        update: { method: 'PUT' }
       }
     );
+
+    Song.prototype.query = function(cb) {
+      console.log('query')
+    }
 
     Song.prototype.update = function(cb) {
       return Song.update({id: this._id.$oid},
