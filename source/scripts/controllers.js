@@ -25,12 +25,45 @@ controllers.controller('TitleCtrl', ['$scope', '$location', '$timeout', 'Page',
 
 controllers.controller('SearchCtrl', ['$scope', '$location', 'Page', 'Song',
   function($scope, $location, Page, Song) {
-    // $scope.songs = Song.query();
+    // instantiate search type
+    $scope.searchType = '$';
+    // define query model
+    $scope.q = {$: '', artist: '', album: '', song: '', lyrics: ''};
+
     Song.query(function(songs) {
       $scope.songs = songs;
     }, function(err) {
-      console.log('error in query :(');
+      console.log('error in query');
     });
+    $scope.changeSearchType = function(t) {
+      $scope.searchType = t;
+    };
+    $scope.updateUrl = function() {
+      console.log($scope.q);
+      // if (typeof $scope.q === undefined) return;
+      // var q = $scope.q;
+      // console.log(q)
+      // var artistPrefix = 'artist:';
+      // var albumPrefix = 'album:';
+      // var songtitlePrefix = 'songtitle:';
+      // var lyricsPrefix = 'lyrics:';
+      // if (q === '') {
+      //   // empty search
+      //   // $scope.songs = [];
+      // } else if (q.indexOf(artistPrefix) === 0) {
+      //   // artist search
+      //   var qArtist = q.substring(artistPrefix.length);
+      // } else if (q.indexOf(albumPrefix) === 0) {
+      //   // album search
+      //   var qAlbum = q.substring(albumPrefix.length);
+      // } else if (q.indexOf(songtitlePrefix) === 0) {
+      //   // song title search
+      //   var qSongtitle = q.substring(songtitlePrefix.length);
+      // } else if (q.indexOf(lyricsPrefix) === 0) {
+      //   // lyrics search
+      //   var qLyrics = q.substring(lyricsPrefix.length);
+      // }
+    }
     // Song.query().$promise.then(function(songs) {
     //   $scope.songs = songs;
     //   // $scope.updateUrl = function() {
@@ -53,8 +86,8 @@ controllers.controller('ViewCtrl', ['$scope', '$location', '$routeParams', 'Page
       $scope.song = song;
       Page.setTitle('"' + song.song + '" by ' + song.artist);    
     }, function(err){
-      Page.setTitle('llllyrics / ' + err.status);
       $scope.errorId = $routeParams.songId;
+      Page.setTitle('llllyrics / ' + err.status);
     });
   }]);
 
@@ -79,8 +112,8 @@ controllers.controller('EditCtrl', ['$scope', '$location', '$routeParams', 'Page
       $scope.song = new Song(self.original);
       Page.setTitle('llllyrics / edit "' + song.song + '" by ' + song.artist);
     }, function(err){
-      Page.setTitle('llllyrics / ' + err.status);
       $scope.errorId = $routeParams.songId;
+      Page.setTitle('llllyrics / ' + err.status);
     });
     
     $scope.isClean = function() {

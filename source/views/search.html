@@ -1,8 +1,11 @@
 <h1>search</h1>
 
-<!-- <input type="text" ng-model="searchQuery" ng-change="updateUrl()" focus="true" placeholder="Search"> -->
-<input type="text" ng-model="searchQuery" focus="true" placeholder="Search">
+<input type="text" ng-model="q[searchType]" ng-model-options="{debounce: {'default': 500}}" ng-change="updateUrl()" placeholder="Search">
+<!-- <input type="text" ng-model="searchQuery" focus="true" placeholder="Search"> -->
 
-<ul ng-repeat="song in songs | filter:searchQuery | limitTo: 12 as filteredSongs track by song._id.$oid">
+{{model}}
+
+<!-- <ul ng-repeat="song in songs | filter:q | limitTo: 12 as filteredSongs track by song._id.$oid"> -->
+<ul ng-repeat="song in songs | filter:q as filteredSongs track by song._id.$oid">
   <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}}</a></li>
 </ul>
