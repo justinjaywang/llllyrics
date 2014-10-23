@@ -26,18 +26,20 @@ services.factory('Song', ['$resource',
         apiKey: apiKey 
       }, 
       {
-        get: { method: 'GET', params: {'fo': 1}, cache: 1},
-        // query: { method: 'GET', params: {'l': 40}, isArray: 1, cache: 1 },
-        query: { method: 'GET', params: {'l': 12}, isArray: 1, cache: 1 },
-        // query: { method: 'GET', params: {'l': 1000, 'f': {'lyrics': 0}}, isArray: 1, cache: 1 },
+        get: { method: 'GET', params: {'fo': 1}, cache: 0},
+        query: { method: 'GET', params: {'l': 100}, isArray: 1, cache: 1 },
+        // query: { method: 'GET', params: {'l': 100, 'f': {'lyrics': 0}}, isArray: 1, cache: 1 },
         // queryArtist: { method: 'GET', params: {'l': 40, 'f': {'album': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
+        queryArtist: { method: 'GET', params: {'l': 100, 'f': {'album': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
+        queryAlbum: { method: 'GET', params: {'l': 100, 'f': {'artist': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
         update: { method: 'PUT' }
       }
     );
 
     Song.prototype.update = function(cb) {
-      return Song.update({id: this._id.$oid},
-      angular.extend({}, this, {_id:undefined}), cb);
+      // return Song.update({id: this._id.$oid},
+      // angular.extend({}, this, {_id:undefined}), cb);
+      return Song.update({id: this._id.$oid}, this, cb);
     };
     Song.prototype.destroy = function(cb) {
       return Song.remove({id: this._id.$oid}, cb);

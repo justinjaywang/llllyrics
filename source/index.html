@@ -20,7 +20,7 @@
     <meta property="og:description" content="Collaboratively edited lyrics.">
     <meta property="og:image" content="http://llllyrics.com/fb.png">
   </head>
-  <body class="page">
+  <body class="page" ng-class="{isSearchPage: isActiveCtrl('SearchCtrl'), isViewPage: isActiveCtrl('ViewCtrl'), isEditPage: isActiveCtrl('EditCtrl'), isAddPage: isActiveCtrl('AddCtrl'), isAboutPage: isActiveCtrl('AboutCtrl')}">
     <header class="page-header" ng-include="'views/partial--header.html'"></header>
     <main class="page-main" ng-view></main>
     <!-- <div id="header-wrapper">

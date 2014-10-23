@@ -16,4 +16,12 @@
   <p class="article-lyrics article-lyrics--edit">
     <textarea name="lyrics" ng-model="song.lyrics" required placeholder="Lyrics"></textarea>
   </p>
+  <div>
+    <a ng-href="/view/{{song._id.$oid}}">cancel</a>
+    <a ng-href="/">cancel</a>
+    <button ng-click="save()">
+      <span>save changes/add</span>
+    </button>
+    <button ng-click="destroy()">delete</button>
+  </div>
 </form>
