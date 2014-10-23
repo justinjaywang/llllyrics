@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="llllyricsApp" ng-controller="TitleCtrl">
+<html lang="en" ng-app="llllyrics" ng-controller="TitleCtrl">
   <head>
     <base href="/">
     <meta charset="utf-8">
@@ -21,8 +21,9 @@
     <meta property="og:image" content="http://llllyrics.com/fb.png">
   </head>
   <body class="page" ng-class="{isSearchPage: isActiveCtrl('SearchCtrl'), isViewPage: isActiveCtrl('ViewCtrl'), isEditPage: isActiveCtrl('EditCtrl'), isAddPage: isActiveCtrl('AddCtrl'), isAboutPage: isActiveCtrl('AboutCtrl')}">
-    <header class="page-header" ng-include="'views/partial--header.html'"></header>
-    <main class="page-main container" ng-view></main>
+    <!-- <header class="page-header" ng-include="'views/partial--header.html'"></header> -->
+    <!-- <main class="page-main container" ng-view></main> -->
+    <ng-view></ng-view>
     <!-- <div id="header-wrapper">
       <header class="container">
         <h1 class="clearfix"><a ng-href="/" ng-click="clearSearch()">llllyrics</a></h1>

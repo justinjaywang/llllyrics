@@ -34,6 +34,13 @@ controllers.controller('TitleCtrl', [
     // });
   }]);
 
+// controllers.controller('HeaderCtrl', [
+//   '$scope',
+//   '$routeParams',
+//   function($scope, $routeParams) {
+//     $scope.songId = $routeParams.songId;
+//   }]);
+
 controllers.controller('SearchCtrl', [
   '$scope',
   '$location',
@@ -164,7 +171,10 @@ controllers.controller('SearchCtrl', [
       var lyricsData = formatData(song.lyrics);
       switch (searchType) {
         case $scope.searchTypes.all:
-          return isMatch(artistData, q) || isMatch(albumData, q) || isMatch(songData, q) || isMatch(lyricsData, q);
+          return isMatch(artistData, q) 
+            || isMatch(albumData, q) 
+            || isMatch(songData, q) 
+            || isMatch(lyricsData, q);
           break;
         case $scope.searchTypes.artist:
           return isMatch(artistData, q);

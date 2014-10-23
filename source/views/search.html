@@ -1,29 +1,35 @@
-<h1>
-  <input class="input input--search" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 0}}" ng-change="updateResults()" placeholder="search lyrics" autofocus="autofocus">
-</h1>
+<header class="page-header" ng-include="'views/partial--header.html'"></header>
 
-<section class="searchResults">
+<main class="page-main container">
 
-  <ul class="searchResults-list" ng-show="(searchType === searchTypes.all)">
-    <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.all) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
-  </ul>
+  <h1>
+    <input class="input input--search" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 0}}" ng-change="updateResults()" placeholder="search lyrics" autofocus="autofocus">
+  </h1>
 
-  <ul class="searchResults-list searchResults-list--artist" ng-show="(searchType === searchTypes.artist)">
-    <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.artist) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
-  </ul>
+  <section class="searchResults">
 
-  <ul class="searchResults-list searchResults-list--album" ng-show="(searchType === searchTypes.album)">
-    <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.album) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
-  </ul>
+    <ul class="searchResults-list" ng-show="(searchType === searchTypes.all)">
+      <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.all) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
+    </ul>
 
-  <ul class="searchResults-list searchResults-list--song" ng-show="(searchType === searchTypes.song)">
-    <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.song) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
-  </ul>
+    <ul class="searchResults-list searchResults-list--artist" ng-show="(searchType === searchTypes.artist)">
+      <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.artist) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
+    </ul>
 
-  <ul class="searchResults-list searchResults-list--lyrics" ng-show="(searchType === searchTypes.lyrics)">
-    <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.lyrics) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
-  </ul>
+    <ul class="searchResults-list searchResults-list--album" ng-show="(searchType === searchTypes.album)">
+      <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.album) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
+    </ul>
 
-</section>
+    <ul class="searchResults-list searchResults-list--song" ng-show="(searchType === searchTypes.song)">
+      <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.song) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
+    </ul>
 
-<footer class="page-footer" ng-include="'views/partial--footer.html'"></footer>
+    <ul class="searchResults-list searchResults-list--lyrics" ng-show="(searchType === searchTypes.lyrics)">
+      <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.lyrics) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
+    </ul>
+
+  </section>
+
+  <footer class="page-footer" ng-include="'views/partial--footer.html'"></footer>
+
+</main>

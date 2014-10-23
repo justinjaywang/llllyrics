@@ -12,7 +12,6 @@ html {
 body {
   height: 100%;
   width: 100%;
-  position: relative;
   color: @color--body;
   background-color: @background-color--body;
   font-family: @font-family--body;
@@ -85,24 +84,37 @@ p {
 }
 
 // components
-// : general
-.input {
-  border: none;
-  margin: 0;
-  padding: 0;
-  outline: none;
-  -webkit-appearance: none;
-  font: inherit;
-  color: inherit;
-  .font-smoothing(inherit);
-  text-rendering: inherit;
-  background: inherit;
+// : header
+.page-header {
+  width: @width--page-header;
+  position: absolute;
+  top: 0;
+}
+// : main
+.page-main {
+  margin-top: @margin-top--page-main;
+  margin-bottom: @margin-bottom--page-main;
+}
+// : nav
+.nav--header {
+  text-align: right;
+  background: @color-temp; // TEMP
+}
+.nav--header .nav-item:first-child { // TEMP
+  position: absolute;
+  left: 0;
+}
+.nav-item {
+  display: inline-block;
 }
 // : search
 .input--search {
   width: 100%;
 }
 // : view and edit
+.article {
+
+}
 .article-lyrics {
   white-space: pre-wrap;
 }
@@ -116,16 +128,11 @@ p {
   }
 }
 
-// TEMP
-.searchResults-list--artist {
-  background: fade(red, 20%);
+// temp
+button[disabled] {
+  color: rgba(0,0,0,0.1);
 }
-.searchResults-list--album {
-  background: fade(green, 20%);
-}
-.searchResults-list--song {
-  background: fade(blue, 20%);
-}
-.searchResults-list--lyrics {
-  background: fade(orange, 20%);
+.page-header--absolute {
+  position: absolute;
+  top: 0;
 }
