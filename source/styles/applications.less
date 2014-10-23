@@ -6,14 +6,77 @@
 *:after {
   .box-sizing(border-box);
 }
+html {
+  font-size: @font-size--html;
+}
+body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  color: @color--body;
+  background-color: @background-color--body;
+  font-family: @font-family--body;
+  font-weight: @font-weight--body;
+  font-size: @font-size--body;
+  line-height: @line-height--body;
+  letter-spacing: @letter-spacing--body;
+  text-rendering: optimizeLegibility;
+  .font-smoothing(antialiased);
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+.container {
+  width: @width--container;
+  max-width: @max-width--container;
+  .margin-center();
+  background: @color-temp; // TEMP
+}
+a {
+  color: @color--a;
+  text-decoration: none;
+}
+
+// typography
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: @font-family--headings;
+  font-weight: @font-weight--headings;
+  letter-spacing: @letter-spacing--headings;
+}
+h1 {
+  font-size: @font-size--h1;
+  line-height: @line-height--h1;
+}
+h2 {
+  font-size: @font-size--h2;
+  line-height: @line-height--h2;
+}
+h3 {
+  font-size: @font-size--h3;
+  line-height: @line-height--h3;
+}
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  line-height: inherit;
+}
+p {
+  font-size: @font-size--p;
+  line-height: @line-height--p;
+}
+
+// components
+// : view and edit
+
+// responsiveness
+// TO DO
 
 // temp
-body {
-  color: blue;
-}
-.searchResults-list {
-  background: #ccc;
-}
 .searchResults-list--artist {
   background: fade(red, 20%);
 }

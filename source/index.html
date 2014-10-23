@@ -6,7 +6,7 @@
     <title ng-bind="Page.title()"></title>
     <meta name="description" content="Collaboratively edited lyrics.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href='http://fonts.googleapis.com/css?family=PT+Serif:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=PT+Serif:400' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/all.min.css">
     <link rel="apple-touch-icon" href="/icon57.png" sizes="57x57">
     <link rel="apple-touch-icon" href="/icon72.png" sizes="72x72">
@@ -22,7 +22,7 @@
   </head>
   <body class="page" ng-class="{isSearchPage: isActiveCtrl('SearchCtrl'), isViewPage: isActiveCtrl('ViewCtrl'), isEditPage: isActiveCtrl('EditCtrl'), isAddPage: isActiveCtrl('AddCtrl'), isAboutPage: isActiveCtrl('AboutCtrl')}">
     <header class="page-header" ng-include="'views/partial--header.html'"></header>
-    <main class="page-main" ng-view></main>
+    <main class="page-main container" ng-view></main>
     <!-- <div id="header-wrapper">
       <header class="container">
         <h1 class="clearfix"><a ng-href="/" ng-click="clearSearch()">llllyrics</a></h1>

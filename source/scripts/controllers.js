@@ -77,7 +77,7 @@ controllers.controller('SearchCtrl', [
       console.log('successful query'); // TEMP
       $scope.songs = songs;
     }, function(err) {
-      console.log('query failed'); // TEMP
+      console.log(err);
     });
 
     // other functions
@@ -218,7 +218,6 @@ controllers.controller('ViewCtrl', [
     }, function(err) {
       $scope.errorId = $routeParams.songId;
       Page.setTitle('llllyrics / ' + err.status);
-      console.log('get failed'); // TEMP
       console.log(err);
     });
   }]);
@@ -229,12 +228,10 @@ controllers.controller('AddCtrl', [
   'Page',
   'Song',
   function($scope, $location, Page, Song) {
-    // $scope.songs = Song.query();
     $scope.save = function() {
       Song.save($scope.song, function(song) {
         $location.path('/view/' + song._id.$oid);
       }, function(err) {
-        console.log('add save failed'); // TEMP
         console.log(err);
       });
     }
@@ -248,22 +245,9 @@ controllers.controller('EditCtrl', [
   'Page',
   'Song',
   function($scope, $location, $routeParams, Page, Song) {
-    // $scope.songs = Song.query();
-    // var self = this;
-
-    // Song.get({id: $routeParams.songId}, function(song) {
-    //   self.original = song;
-    //   $scope.song = new Song(self.original);
-    //   Page.setTitle('llllyrics / edit "' + song.song + '" by ' + song.artist);
-    // }, function(err){
-    //   $scope.errorId = $routeParams.songId;
-    //   Page.setTitle('llllyrics / ' + err.status);
-    // });
-
     Song.get({id: $routeParams.songId}, function(song){
       $scope.song = song;
     }, function(err){
-      console.log('get failed'); // TEMP
       console.log(err);
     });
     
@@ -276,7 +260,6 @@ controllers.controller('EditCtrl', [
       $scope.song.update(function(song) {
         $location.path('/view/' + song._id.$oid);
       }, function(err) {
-        console.log('edit save failed'); // TEMP
         console.log(err);
       });
     }
