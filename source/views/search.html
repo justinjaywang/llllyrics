@@ -1,26 +1,25 @@
-<h1>search</h1>
+<input class="searchInput" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 0}}" ng-change="updateResults()" placeholder="Search" autofocus="autofocus">
 
-<!-- <input type="text" ng-model="searchInput[searchType]" ng-model-options="{debounce: {'default': 500}}" ng-change="updateSearchResults()" placeholder="Search"> -->
-<input type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 500}}" ng-change="updateResults()" placeholder="Search" autofocus="autofocus">
-<!-- <input type="text" ng-model="searchQuery" focus="true" placeholder="Search"> -->
+<section classs="searchResults">
 
-<!-- <ul ng-repeat="song in songs | filter:searchInput | limitTo:12 as filteredSongs track by song._id.$oid"> -->
-<ul class="results" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.all) | limitTo:12 as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.all)">
+<ul class="results" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.all) | limitTo:resultLimit as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.all)">
   <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
 </ul>
 
-<ul class="results results--artist" ng-repeat="song in songs | filter:searchInput | limitTo:12 as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.artist)">
+<ul class="results results--artist" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.artist) | limitTo:resultLimit as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.artist)">
   <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
 </ul>
 
-<ul class="results results--album" ng-repeat="song in songs | filter:searchInput | limitTo:12 as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.album)">
+<ul class="results results--album" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.album) | limitTo:resultLimit as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.album)">
   <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
 </ul>
 
-<ul class="results results--song" ng-repeat="song in songs | filter:searchInput | limitTo:12 as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.song)">
+<ul class="results results--song" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.song) | limitTo:resultLimit as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.song)">
   <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
 </ul>
 
-<ul class="results results--lyrics" ng-repeat="song in songs | filter:searchInput | limitTo:12 as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.lyrics)">
+<ul class="results results--lyrics" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.lyrics) | limitTo:resultLimit as filteredSongs track by song._id.$oid" ng-show="(searchType === searchTypes.lyrics)">
   <li><a ng-href="/view/{{song._id.$oid}}">{{song.song}} by {{song.artist}} on {{song.album}}</a></li>
 </ul>
+
+</section>

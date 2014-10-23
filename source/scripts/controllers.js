@@ -37,7 +37,7 @@ controllers.controller('SearchCtrl', [
     // define helper functions
     $scope.changeSearchType = function(type) {
       $scope.searchType = type;
-      console.log('searchType: ' + type); // TEMP
+      // console.log('searchType: ' + type); // TEMP
     };
 
     // define regular expressions
@@ -46,6 +46,11 @@ controllers.controller('SearchCtrl', [
     regexes.album = /^(album|b):/i;
     regexes.song = /^(song|s):/i;
     regexes.lyrics = /^(lyrics|l):/i;
+    regexes.multispace = / +/g;
+    regexes.prespace = /^ /; // TEMP
+    regexes.postspace = / $/; // TEMP
+    regexes.newline = /\n/g;
+    regexes.symbols = /[^a-z0-9 ]/g;
 
     // define search type strings
     $scope.searchTypes = {};
@@ -57,6 +62,9 @@ controllers.controller('SearchCtrl', [
 
     // instantiate search type
     $scope.changeSearchType('$');
+
+    // limit variable
+    $scope.resultLimit = 12;
 
     // query database
     Song.query(function(songs) {
@@ -78,86 +86,107 @@ controllers.controller('SearchCtrl', [
       // console.log(q); // TEMP
       if (searchInput === '') {
         // empty search
-        // $scope.songs = [];
-        $scope.changeSearchType($scope.searchTypes.all);
+        $scope.changeSearchType($scope.searchTypes.all); // TO DO: change to empty, show something else
       } else if (searchInput.match(regexes.artist)) {
         // artist search
-        // console.log('artist search');
         $scope.changeSearchType($scope.searchTypes.artist);
       } else if (searchInput.match(regexes.album)) {
         // album search
-        // console.log('album search');
         $scope.changeSearchType($scope.searchTypes.album);
 
       } else if (searchInput.match(regexes.song)) {
         // song title search
-        // console.log('song search');
         $scope.changeSearchType($scope.searchTypes.song);
 
       } else if (searchInput.match(regexes.lyrics)) {
         // lyrics search
-        // console.log('lyrics search');
         $scope.changeSearchType($scope.searchTypes.lyrics);
       } else {
-        // regular search
+        // all search
         $scope.changeSearchType($scope.searchTypes.all);
       }
     };
-    // Song.query().$promise.then(function(songs) {
-    //   $scope.songs = songs;
-    //   // $scope.updateUrl = function() {
-    //   //   var path = $location.path();
-    //   //   $location.url(path + '?q=' + $scope.searchQuery);
-    //   // };
-    //   // $scope.$watch(function() { return $location.url(); }, function(url) {
-    //   //   if (url) {
-    //   //     $scope.searchQuery = $location.updateUrl().q
-    //   //     $scope.updateUrl();
-    //   //   }
-    //   // });
-    // });
 
     // filter helper functions
-    $scope.formatInput = function(searchInput, searchType) {
+    var formatInput = function(searchInput, searchType) {
+      if (angular.isUndefined(searchInput)) return;
+      var preformatInput = function(searchInput) {
+        return angular.lowercase(searchInput);
+      };
+      var postformatInput = function(q) {
+        return q
+          .replace(regexes.multispace, ' ')
+          .replace(regexes.prespace, '')
+          .replace(regexes.postspace, '')
+          .replace(regexes.symbols, '');
+      };
+      var q = preformatInput(searchInput);
       switch(searchType) {
         case $scope.searchTypes.all:
-          return angular.lowercase(searchInput);
+          return postformatInput(q);
           break;
         case $scope.searchTypes.artist:
-          return angular.lowercase(searchInput);
+          return postformatInput(q.replace(regexes.artist, ''));
           break;
         case $scope.searchTypes.album:
-          return angular.lowercase(searchInput);
+          return postformatInput(q.replace(regexes.album, ''));
           break;
         case $scope.searchTypes.song:
-          return angular.lowercase(searchInput);
+          return postformatInput(q.replace(regexes.song, ''));
           break;
         case $scope.searchTypes.lyrics:
-          return angular.lowercase(searchInput);
+          return postformatInput(q.replace(regexes.lyrics, ''));
           break;
         default:
-          return angular.lowercase(searchInput);
+          return postformatInput(q);
       }
     };
-    $scope.formatData = function(data) {
-      return angular.lowercase(data);
+    var formatData = function(data) {
+      return angular.lowercase(data)
+        .replace(regexes.newline, ' ')
+        .replace(regexes.multispace, ' ')
+        .replace(regexes.symbols, '');
     };
-    $scope.isMatch = function(data, q) {
+    var isMatchByType = function(song, q, searchType) {
+      var artistData = formatData(song.artist);
+      var albumData = formatData(song.album);
+      var songData = formatData(song.song);
+      var lyricsData = formatData(song.lyrics);
+      switch (searchType) {
+        case $scope.searchTypes.all:
+          return isMatch(artistData, q) || isMatch(albumData, q) || isMatch(songData, q) || isMatch(lyricsData, q);
+          break;
+        case $scope.searchTypes.artist:
+          return isMatch(artistData, q);
+          break;
+        case $scope.searchTypes.album:
+          return isMatch(albumData, q);
+          break;
+        case $scope.searchTypes.song:
+          return isMatch(songData, q);
+          break;
+        case $scope.searchTypes.lyrics:
+          return isMatch(lyricsData, q);
+          break;
+        default:
+          console.log('default isMatchByType'); // TEMP
+          return false;
+      }
+    }
+    var isMatch = function(data, q) {
+      // TO DO: make this per word basis
       return data.match(q);
     };
 
-    // filter functions
+    // the filter function
     $scope.filterSearch = function(searchInput, searchType) {
-      var q = $scope.formatInput(searchInput, searchType);
+      // console.log('filter search called'); // TEMP this checks how many times it gets called
+      var q = formatInput(searchInput, searchType);
       return function(song) {
-        var artistData = $scope.formatData(song.artist);
-        var albumData = $scope.formatData(song.album);
-        var songData = $scope.formatData(song.song);
-        var lyricsData = $scope.formatData(song.lyrics);
-        return $scope.isMatch(artistData, q) || $scope.isMatch(albumData, q) || $scope.isMatch(songData, q) || $scope.isMatch(lyricsData, q);
+        return isMatchByType(song, q, searchType);
       };
     };
-    
+
     // set search page title
     Page.setTitle('llllyrics / search'); // TEMP
   }]);
