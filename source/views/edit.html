@@ -1,3 +1,19 @@
-<h1>edit/add</h1>
-
+<!-- TEMP -->
 <div><a ng-href="/view/{{song._id.$oid}}">view</a></div>
+
+<form class="article article--edit" name="editForm">
+  <section class="article-meta article-meta--edit">
+    <span class="article-artist article-artist--edit">
+      <input type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist">
+    </span>
+    <span class="article-album article-album--edit">
+      <input type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album">
+    </span>
+  </section>
+  <h1 class="article-song article-song--edit">
+    <input type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
+  </h1>
+  <p class="article-lyrics article-lyrics--edit">
+    <textarea name="lyrics" ng-model="song.lyrics" required placeholder="Lyrics"></textarea>
+  </p>
+</form>
