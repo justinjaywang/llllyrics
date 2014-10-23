@@ -4,24 +4,24 @@
 <form class="article article--edit" name="editForm">
   <section class="article-meta article-meta--edit">
     <span class="article-artist article-artist--edit" ng-class="{error: editForm.artist.$invalid && !editForm.artist.$pristine}">
-      <input type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist">
+      <input class="input" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist">
     </span>
     <span class="article-album article-album--edit" ng-class="{error: editForm.album.$invalid && !editForm.album.$pristine}">
-      <input type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album">
+      <input class="input" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album">
     </span>
   </section>
   <h1 class="article-song article-song--edit">
-    <input type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
+    <input class="input" type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
   </h1>
   <p class="article-lyrics article-lyrics--edit">
-    <textarea name="lyrics" ng-model="song.lyrics" required placeholder="Lyrics"></textarea>
+    <textarea class="textarea textarea--lyrics" name="lyrics" ng-model="song.lyrics" required placeholder="Lyrics"></textarea>
   </p>
   <div>
     <a ng-href="/view/{{song._id.$oid}}">cancel</a>
     <a ng-href="/">cancel</a>
-    <button ng-click="save()" ng-disabled="editForm.$invalid">
+    <button class="button" ng-click="save()" ng-disabled="editForm.$invalid || isClean()">
       <span>save changes/add</span>
     </button>
-    <button ng-click="destroy()">delete</button>
+    <button class="button" ng-click="destroy()">delete</button>
   </div>
 </form>

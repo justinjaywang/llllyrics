@@ -1,8 +1,8 @@
 // responsiveness
 // : variables
 @width-screen-sm-min: 480px;
-@width-screen-md-min: 680px;
-@width-screen-lg-min: 1104px;
+@width-screen-md-min: 800px;
+@width-screen-lg-min: 1100px;
 @width-screen-sm-max: (@width-screen-md-min - 1);
 @width-screen-md-max: (@width-screen-lg-min - 1);
 
@@ -26,8 +26,8 @@
 
 // typography
 // : font-size-variables
-@font-size-px-base:      17.5px;
-@font-size-px-small:     16px;
+@font-size-px-base:      19px;
+@font-size-px-small:     17.5px;
 @font-size-rem-tera:     3rem;
 @font-size-rem-giga:     2rem;
 @font-size-rem-mega:     1.75rem;
@@ -52,6 +52,7 @@
 @font-size-em-micro:     0.6667em;
 // : font-size-applications
 @font-size--html:                @font-size-px-base;
+@font-size--html-sm:             @font-size-px-small;
 @font-size--body:                @font-size-em-base;
 @font-size--h1:                  @font-size-em-mega;
 @font-size--h2:                  @font-size-em-largest;
@@ -97,11 +98,13 @@
 
 // layout
 // : variables
-@container-gutter:     20px;
+@container-gutter:         0.03;
+@container-gutter-percent: percentage(@container-gutter);
 // : applications
-@width--container:        100%;
-@max-width--container:    @width-screen-md-min;
-@padding-left--container: @container-gutter;
+@width--container:           100%;
+@max-width--container:       @width-screen-md-min;
+@padding-left--container:    (@container-gutter * @max-width--container);
+@padding-left--container-sm: @container-gutter-percent;
 
 // spacing
 // TO DO

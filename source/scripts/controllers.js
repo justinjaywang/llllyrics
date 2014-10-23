@@ -245,12 +245,17 @@ controllers.controller('EditCtrl', [
   'Page',
   'Song',
   function($scope, $location, $routeParams, Page, Song) {
+    var self = this;
     Song.get({id: $routeParams.songId}, function(song){
-      $scope.song = song;
+      self.original = song;
+      $scope.song = new Song(self.original);
     }, function(err){
       console.log(err);
     });
     
+    $scope.isClean = function() {
+      return angular.equals(self.original, $scope.song);
+    }
     $scope.destroy = function() {
       $scope.song.destroy(function() {
         $location.path('/');

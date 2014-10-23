@@ -28,12 +28,26 @@ body {
 .container {
   width: @width--container;
   max-width: @max-width--container;
+  padding-left: @padding-left--container;
+  padding-right: @padding-left--container;
   .margin-center();
   background: @color-temp; // TEMP
 }
 a {
   color: @color--a;
   text-decoration: none;
+}
+.input, .textarea, .button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  -webkit-appearance: none;
+  font: inherit;
+  color: inherit;
+  .font-smoothing(inherit);
+  text-rendering: inherit;
+  background: inherit;
 }
 
 // typography
@@ -71,12 +85,38 @@ p {
 }
 
 // components
+// : general
+.input {
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  -webkit-appearance: none;
+  font: inherit;
+  color: inherit;
+  .font-smoothing(inherit);
+  text-rendering: inherit;
+  background: inherit;
+}
+// : search
+.input--search {
+  width: 100%;
+}
 // : view and edit
+.article-lyrics {
+  white-space: pre-wrap;
+}
 
 // responsiveness
-// TO DO
+// : small screens
+@media (max-width: @width-screen-sm-max) {
+  .container {
+    padding-left: @padding-left--container-sm;
+    padding-right: @padding-left--container-sm;
+  }
+}
 
-// temp
+// TEMP
 .searchResults-list--artist {
   background: fade(red, 20%);
 }
