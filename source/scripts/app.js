@@ -2,7 +2,7 @@
 
 // App Module
 
-var app = angular.module('app', [
+var llllyricsApp = angular.module('llllyricsApp', [
   'ngRoute',
   'ngAnimate',
   'controllers',
@@ -11,7 +11,7 @@ var app = angular.module('app', [
   'services',
   ]);
 
-app.config(['$routeProvider', '$locationProvider',
+llllyricsApp.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
