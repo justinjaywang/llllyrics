@@ -7,6 +7,23 @@
   margin-right: auto;
 }
 
+// GETS USED
+// placeholder text
+.placeholder(@color) {
+  ::-webkit-input-placeholder {
+    color: @color;
+  }
+  input:-moz-placeholder {
+    color: @color;
+  }
+  input::-moz-placeholder {
+    color: @color;
+  }
+  :-ms-input-placeholder {  
+    color: @color;
+  }
+}
+
 // For modern browsers
 // 1. The space content is one way to avoid an Opera bug when the
 //    contenteditable attribute is included anywhere else in the document.
