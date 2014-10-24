@@ -4,11 +4,6 @@
 
 var controllers = angular.module('controllers', []);
 
-// controllers.controller('EmptyCtrl', [
-//   '$scope',
-//   function($scope) {
-//   }]);
-
 controllers.controller('TitleCtrl', [
   '$scope',
   '$location',
@@ -22,24 +17,7 @@ controllers.controller('TitleCtrl', [
       if (angular.isUndefined(current)) return;
       return (current.controller == controller);
     };
-    // $scope.parameters = {};
-    // $scope.$on('$routeChangeStart', function(event, next, current) {
-    //   if (typeof next === 'undefined') return;
-    //   if (typeof current === 'undefined') return;
-    //   if (next.templateUrl == current.loadedTemplateUrl) return; // same template, no need to reset params
-    //   $scope.parameters.resetParameters();
-    // });
-    // $scope.$on('$routeChangeSuccess', function(event, next, current) {
-    //   $scope.parameters.closeNav();
-    // });
   }]);
-
-// controllers.controller('HeaderCtrl', [
-//   '$scope',
-//   '$routeParams',
-//   function($scope, $routeParams) {
-//     $scope.songId = $routeParams.songId;
-//   }]);
 
 controllers.controller('SearchCtrl', [
   '$scope',

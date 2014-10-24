@@ -48,6 +48,7 @@ a {
   text-rendering: inherit;
   background: inherit;
 }
+
 // typography
 h1,
 h2,
@@ -118,6 +119,13 @@ p {
 // : view and edit
 .article-lyrics {
   white-space: pre-wrap;
+}
+.textarea--lyrics {
+  width: 100%;
+  resize: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  .transition(0.15s);
 }
 
 // responsiveness
