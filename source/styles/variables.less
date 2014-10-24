@@ -90,7 +90,7 @@
 @font-weight--headings:            @font-weight-semibold;
 @font-weight--meta:                @font-weight-normal;
 @font-weight--page-header:         @font-weight-normal;
-@font-weight--page-header--search: @font-weight-semibold;
+@font-weight--page-header--search: @font-weight-normal;
 @font-weight--page-footer:         @font-weight-normal;
 // : line-height-variables
 @line-height-tightest: 1.2;
@@ -133,7 +133,7 @@
 @padding-left--container:      (@container-gutter * @max-width--container);
 @padding-left--container-sm:   @container-gutter-percent;
 @width--page-header:           100%;
-@height--page-header:          4rem;
+@height--page-header:          3.5rem;
 // @padding-left--page-header:    @padding-left--container;
 // @padding-top--page-header:     @padding-left--container;
 // @padding-left--page-header-sm: @padding-left--container-sm;
@@ -142,9 +142,10 @@
 
 // spacing
 @margin-bottom--page-main:      4rem;
-@margin-top--page-main:         (@height--page-header + @margin-bottom--page-main - 1rem);
-@margin-top--card:              1.5rem;
-@margin-bottom--card:           1.5rem;
+@margin-top--page-main:         (@height--page-header + 1rem);
+@padding-top--card-link:        1rem;
+@padding-bottom--card-link:     1rem;
+@margin-top--article-header:    @margin-bottom--page-main;
 @margin-bottom--article-header: 1rem;
 
 // miscellaneous

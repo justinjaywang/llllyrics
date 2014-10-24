@@ -3,17 +3,19 @@
 <main class="page-main container">
 
   <form class="article article--edit" name="editForm">
-    <section class="article-meta article-meta--edit">
-      <span class="article-artist article-artist--edit" ng-class="{error: editForm.artist.$invalid && !editForm.artist.$pristine}">
-        <input class="input" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist">
-      </span>
-      <span class="article-album article-album--edit" ng-class="{error: editForm.album.$invalid && !editForm.album.$pristine}">
-        <input class="input" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album">
-      </span>
-    </section>
-    <h1 class="article-song article-song--edit">
-      <input class="input" type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
-    </h1>
+    <header class="article-header">
+      <section class="article-meta article-meta--edit">
+        <span class="article-artist article-artist--edit" ng-class="{error: editForm.artist.$invalid && !editForm.artist.$pristine}">
+          <input class="input" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist">
+        </span>
+        <span class="article-album article-album--edit" ng-class="{error: editForm.album.$invalid && !editForm.album.$pristine}">
+          <input class="input" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album">
+        </span>
+      </section>
+      <h1 class="article-song article-song--edit">
+        <input class="input" type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
+      </h1>
+    </header>
     <p class="article-lyrics article-lyrics--edit">
       <textarea class="textarea textarea--lyrics" name="lyrics" ng-model="song.lyrics" required placeholder="Lyrics"></textarea>
     </p>
