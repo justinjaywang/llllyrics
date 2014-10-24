@@ -101,15 +101,20 @@
 @container-gutter:         0.03;
 @container-gutter-percent: percentage(@container-gutter);
 // : applications
-@width--container:           100%;
-@max-width--container:       @width-screen-md-min;
-@padding-left--container:    (@container-gutter * @max-width--container);
-@padding-left--container-sm: @container-gutter-percent;
+@width--container:             100%;
+@max-width--container:         @width-screen-md-min;
+@padding-left--container:      (@container-gutter * @max-width--container);
+@padding-left--container-sm:   @container-gutter-percent;
+@width--page-header:           100%;
+@height--page-header:          2.5rem;
+@padding-left--page-header:    @padding-left--container;
+@padding-top--page-header:     @padding-left--container;
+@padding-left--page-header-sm: @padding-left--container-sm;
+@width--navBar:                @width--page-header;
 
 // spacing
-@width--page-header: 100%;
-@margin-top--page-main: 3rem;
-@margin-bottom--page-main: 3rem;
+@margin-top--page-main:    4rem;
+@margin-bottom--page-main: 4rem;
 
 // miscellaneous
 // TO DO
