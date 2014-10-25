@@ -3,13 +3,15 @@
 <main class="page-main container">
 
   <article class="article">
-    <header class="article-header">
-      <section class="article-meta">
-        <span class="article-artist">{{song.artist}}</span>
-        <span class="article-album">{{song.album}}</span>
-      </section>
-      <h1 class="article-song">{{song.song}}</h1>
-    </header>
+    <div class="article-headerWrapper">
+      <header class="article-header">
+        <section class="article-meta">
+          <span class="article-artist">{{song.artist}}</span>
+          <span class="article-album">{{song.album}}</span>
+        </section>
+        <h1 class="article-song">{{song.song}}</h1>
+      </header>
+    </div>
     <p class="article-lyrics">{{song.lyrics}}</p>
   </article>
 

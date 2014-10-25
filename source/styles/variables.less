@@ -29,45 +29,53 @@
 @color--navBar:                 @color-gray;
 @color--placeholder:            @color-gray-light;
 
+// sizing
+@size-tera:         4.3208;
+@size-giga:         3.2308;
+@size-mega:         2.6154;
+@size-largest:      2;
+@size-larger:       1.6154;
+@size-large:        1.2308;
+@size-base:         1;
+@size-small:        0.7692;
+@size-smaller:      0.6154;
+@size-smallest:     0.4615;
+@size-rem-tera:     unit(@size-tera, rem);
+@size-rem-giga:     unit(@size-giga, rem);
+@size-rem-mega:     unit(@size-mega, rem);
+@size-rem-largest:  unit(@size-largest, rem);
+@size-rem-larger:   unit(@size-larger, rem);
+@size-rem-large:    unit(@size-large, rem);
+@size-rem-base:     unit(@size-base, rem);
+@size-rem-small:    unit(@size-small, rem);
+@size-rem-smaller:  unit(@size-smaller, rem);
+@size-rem-smallest: unit(@size-smallest, rem);
+
 // typography
 // : font-size-variables
 @font-size-px-base:      19px;
 @font-size-px-small:     17.5px;
-@font-size-rem-tera:     3rem;
-@font-size-rem-giga:     2rem;
-@font-size-rem-mega:     1.75rem;
-@font-size-rem-largest:  1.5rem;
-@font-size-rem-larger:   1.3333rem;
-@font-size-rem-large:    1.1667rem;
-@font-size-rem-base:     1rem;
-@font-size-rem-small:    0.9167rem;
-@font-size-rem-smaller:  0.8333rem;
-@font-size-rem-smallest: 0.75rem;
-@font-size-rem-micro:    0.6667rem;
-@font-size-em-tera:      3em;
-@font-size-em-giga:      2em;
-@font-size-em-mega:      1.75em;
-@font-size-em-largest:   1.5em;
-@font-size-em-larger:    1.3333em;
-@font-size-em-large:     1.1667em;
-@font-size-em-base:      1em;
-@font-size-em-small:     0.9167em;
-@font-size-em-smaller:   0.8333em;
-@font-size-em-smallest:  0.75em;
-@font-size-em-micro:     0.6667em;
+@font-size-em-mega:      unit(@size-mega, em);
+@font-size-em-largest:   unit(@size-largest, em);
+@font-size-em-larger:    unit(@size-larger, em);
+@font-size-em-large:     unit(@size-large, em);
+@font-size-em-base:      unit(@size-base, em);
+@font-size-em-small:     unit(@size-small, em);
+@font-size-em-smaller:   unit(@size-smaller, em);
+@font-size-em-smallest:  unit(@size-smallest, em);
 // : font-size-applications
 @font-size--html:                @font-size-px-base;
 @font-size--html-sm:             @font-size-px-small;
 @font-size--body:                @font-size-em-base;
 @font-size--h1:                  @font-size-em-mega;
-@font-size--h2:                  @font-size-em-mega;
-@font-size--h3:                  @font-size-em-larger;
+@font-size--h2:                  @font-size-em-largest;
+@font-size--h3:                  @font-size-em-large;
 @font-size--p:                   @font-size-em-base;
 @font-size--card-meta:           @font-size-em-base;
-@font-size--article-meta:        @font-size-em-base;
-@font-size--navBar:              @font-size-em-larger;
+@font-size--article-meta:        @font-size-em-large;
+@font-size--navBar:              @font-size-em-large;
 @font-size--page-header:         @font-size-em-base;
-@font-size--page-header--search: @font-size-em-larger;
+@font-size--page-header--search: @font-size-em-large;
 @font-size--page-footer:         @font-size-em-base;
 // : font-family-variables
 @font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -76,7 +84,7 @@
 // : font-family-applications
 @font-family--body:                @font-family-serif;
 @font-family--headings:            @font-family-sans-serif;
-@font-family--meta:                @font-family-serif;
+@font-family--meta:                @font-family-sans-serif;
 @font-family--page-header:         @font-family-sans-serif;
 @font-family--page-header--search: @font-family-sans-serif;
 @font-family--page-footer:         @font-family-sans-serif;
@@ -93,31 +101,33 @@
 @font-weight--page-header--search: @font-weight-normal;
 @font-weight--page-footer:         @font-weight-normal;
 // : line-height-variables
-@line-height-tightest: 1.2;
-@line-height-tighter:  1.3;
-@line-height-tight:    1.4;
-@line-height-base:     1.5;
-@line-height-loose:    1.6;
-@line-height-looser:   1.7;
+@line-height-tightest: 1.1;
+@line-height-tighter:  1.2;
+@line-height-tight:    1.3;
+@line-height-base:     1.4;
+@line-height-loose:    1.5;
+@line-height-looser:   1.6;
 // : line-height-applications
 @line-height--body:                @line-height-base;
 @line-height--h1:                  @line-height-tightest;
-@line-height--h2:                  @line-height-tighter;
+@line-height--h2:                  @line-height-tightest;
 @line-height--h3:                  @line-height-tighter;
-@line-height--p:                   @line-height-base;
+@line-height--p:                   @line-height-loose;
 @line-height--meta:                @line-height-base;
 @line-height--page-header:         @line-height-base;
 @line-height--page-header--search: @line-height-tighter;
 @line-height--page-footer:         @line-height-base;
 // : letter-spacing-variables
-@letter-spacing-tighter: -0.04em;
+@letter-spacing-tighter: -0.02em;
 @letter-spacing-tight:   -0.01em;
 @letter-spacing-base:    0;
 @letter-spacing-loose:   0.02em;
 @letter-spacing-looser:  0.04em;
 // : letter-spacing-applications
 @letter-spacing--body:                @letter-spacing-base;
-@letter-spacing--headings:            @letter-spacing-base;
+@letter-spacing--h1:                  @letter-spacing-tight;
+@letter-spacing--h2:                  @letter-spacing-tight;
+@letter-spacing--h3:                  @letter-spacing-base;
 @letter-spacing--meta:                @letter-spacing-base;
 @letter-spacing--page-header:         @letter-spacing-base;
 @letter-spacing--page-header--search: @letter-spacing-base;
@@ -133,7 +143,7 @@
 @padding-left--container:      (@container-gutter * @max-width--container);
 @padding-left--container-sm:   @container-gutter-percent;
 @width--page-header:           100%;
-@height--page-header:          3.5rem;
+@height--page-header:          @size-rem-giga;
 // @padding-left--page-header:    @padding-left--container;
 // @padding-top--page-header:     @padding-left--container;
 // @padding-left--page-header-sm: @padding-left--container-sm;
@@ -141,12 +151,14 @@
 // @padding-top--input--search:   0.75rem;
 
 // spacing
-@margin-bottom--page-main:      4rem;
-@margin-top--page-main:         (@height--page-header + 1rem);
-@padding-top--card-link:        1rem;
-@padding-bottom--card-link:     1rem;
-@margin-top--article-header:    @margin-bottom--page-main;
-@margin-bottom--article-header: 1rem;
+@margin-bottom--page-main:       @size-rem-tera;
+@margin-top--page-main:          (@height--page-header + @size-rem-base);
+@padding-top--card-link:         @size-rem-large;
+@padding-bottom--card-link:      @size-rem-large;
+@padding-top--article-header:    @padding-top--card-link;
+@padding-bottom--article-header: @padding-bottom--card-link;
+@margin-top--article-lyrics:     @size-rem-largest;
+// @margin-bottom--article-header:  1.5rem;
 
 // miscellaneous
 // @border-bottom--input--search: 1px solid @color-gray-lighter;

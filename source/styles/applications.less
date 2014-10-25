@@ -67,25 +67,28 @@ h5,
 h6 {
   font-family: @font-family--headings;
   font-weight: @font-weight--headings;
-  letter-spacing: @letter-spacing--headings;
 }
 h1 {
   font-size: @font-size--h1;
   line-height: @line-height--h1;
+  letter-spacing: @letter-spacing--h1;
 }
 h2 {
   font-size: @font-size--h2;
   line-height: @line-height--h2;
+  letter-spacing: @letter-spacing--h2;
 }
 h3 {
   font-size: @font-size--h3;
   line-height: @line-height--h3;
+  letter-spacing: @letter-spacing--h3;
 }
 h4,
 h5,
 h6 {
   font-size: inherit;
   line-height: inherit;
+  letter-spacing: inherit;
 }
 p {
   font-size: @font-size--p;
@@ -136,6 +139,9 @@ p {
   width: @width--navBar;
   text-align: right;
 }
+.navBar-list {
+  position: relative;
+}
 .navBar-item {
   display: inline-block;
 }
@@ -145,7 +151,13 @@ p {
   // left: @padding-left--page-header;
 }
 // : cards
-.card {
+.card:after,
+.article-headerWrapper:after {
+  content: '';
+  display: block;
+  height: 2px;
+  width: 1.5rem;
+  background: #ddd;
 }
 .card-link {
   display: block;
@@ -157,14 +169,18 @@ p {
 }
 // : view and edit
 .article-header {
-  margin-top: @margin-top--article-header;
-  margin-bottom: @margin-bottom--article-header;
+  padding-top: @padding-top--article-header;
+  padding-bottom: @padding-bottom--article-header;
 }
 .article-meta {
   font-size: @font-size--article-meta;
 }
+.article-album:before {
+  content: '·';
+}
 .article-lyrics {
   white-space: pre-wrap;
+  margin-top: @margin-top--article-lyrics;
 }
 .textarea--lyrics {
   width: 100%;
