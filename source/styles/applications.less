@@ -32,6 +32,11 @@ body {
   .margin-center();
   // background: @color-temp; // TEMP
 }
+.container--header {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none;
+}
 a {
   color: @color--a;
   text-decoration: none;
@@ -128,6 +133,7 @@ p {
 // }
 // : footer
 .page-footer {
+  color: @color--page-footer;
   font-family: @font-family--page-footer;
   font-weight: @font-weight--page-footer;
   font-size: @font-size--page-footer;
@@ -138,21 +144,34 @@ p {
   font-size: @font-size--navBar;
   color: @color--navBar;
   width: @width--navBar;
-  text-align: right;
 }
 .navBar-list {
   position: relative;
 }
 .navBar-item {
   display: inline-block;
+  margin-left: @margin-left--navBar-item;
+  margin-right: @margin-left--navBar-item;
 }
 .navBar-item--left {
   position: absolute;
   left: 0;
-  // left: @padding-left--page-header;
+}
+.navBar-item:first-child,
+.navBar-item--left {
+  margin-left: 0;
+}
+.navBar-item--right {
+  position: absolute;
+  right: 0;
+}
+.navBar-item:last-child,
+.navBar-item--right {
+  margin-right: 0;
 }
 // : search
 .searchField {
+  display: inline-block;
   margin-top: @margin-top--searchField;
   margin-bottom: @margin-bottom--searchField;
 }
@@ -160,7 +179,7 @@ p {
   padding: 0.3em 0; // TEMP
   // background: #f1f1f1; // TEMP
   // border-radius: 5px; // TEMP
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #ddd; // TEMP
 }
 // : cards
 // .card:after,
@@ -210,13 +229,6 @@ p {
   .container {
     padding-left: @padding-left--container-sm;
     padding-right: @padding-left--container-sm;
-  }
-  .page-header {
-    // padding-left: @padding-left--page-header-sm;
-    // padding-right: @padding-left--page-header-sm;
-  }
-  .navBar-item--left { // TEMP
-    // left: @padding-left--page-header-sm;
   }
 }
 

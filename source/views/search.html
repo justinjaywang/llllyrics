@@ -1,4 +1,4 @@
-<!-- <ng-include src="'views/partial--header.html'"></ng-include> -->
+<ng-include src="'views/partial--header.html'"></ng-include>
 <!-- <header class="page-header page-header--search">
   <div class="container u-fillHeight">
     <input class="input input--search u-fill" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 0}}" ng-change="updateResults()" placeholder="search lyrics" autofocus="autofocus">
@@ -7,11 +7,11 @@
 
 <main class="page-main container">
 
-  <h1 class="searchField">
+  <h1 class="searchField u-fillWidth">
     <input class="input input--search u-fillWidth" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 0}}" ng-change="updateResults()" placeholder="search lyrics" autofocus="autofocus">
   </h1>
 
-  <section class="searchResults">
+  <section class="searchResults" ng-show="(searchInput.length > 0)">
 
     <ul class="searchResults-list" ng-show="(searchType === searchTypes.all)">
       <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(searchInput, searchTypes.all) | limitTo:resultLimit as filteredSongs track by song._id.$oid"></li>
@@ -35,6 +35,6 @@
 
   </section>
 
-  <ng-include src="'views/partial--footer.html'"></ng-include>
+  <!-- <ng-include src="'views/partial--footer.html'"></ng-include> -->
 
 </main>

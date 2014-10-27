@@ -16,6 +16,7 @@
 @color-gray-lighter:  rgba(0,0,0,0.16);
 @color-gray-lightest: rgba(0,0,0,0.08);
 @color-white:         rgb(255,255,255);
+@color-whiteish:      rgb(242,242,242);
 @color-temp:          rgba(255,0,0,0.1);
 // : applications
 @background-color--body:        @color-white;
@@ -27,6 +28,7 @@
 @color--meta:                   @color-gray-light;
 @color--navBar:                 @color-gray-light;
 @color--placeholder:            @color-gray-light;
+@color--page-footer:            @color-gray-lighter;
 
 // sizing
 @size-tera:         4.3208;
@@ -98,7 +100,7 @@
 @font-weight--meta:                @font-weight-normal;
 @font-weight--page-header:         @font-weight-bold;
 // @font-weight--page-header--search: @font-weight-normal;
-@font-weight--page-footer:         @font-weight-normal;
+@font-weight--page-footer:         @font-weight-bold;
 // : line-height-variables
 @line-height-tightest: 1.1;
 @line-height-tighter:  1.2;
@@ -150,8 +152,8 @@
 // @padding-top--input--search:   0.75rem;
 
 // spacing
-@margin-bottom--page-main:       @height--page-header;
-@margin-top--page-main:          @height--page-header;
+@margin-top--page-main:          @size-rem-tera;
+@margin-bottom--page-main:       @size-rem-tera;
 @margin-top--searchField:        @size-rem-large;
 @margin-bottom--searchField:     @size-rem-large;
 @padding-top--card-link:         @size-rem-large;
@@ -161,6 +163,8 @@
 @margin-top--article-lyrics:     @size-rem-smaller;
 @margin-bottom--article-lyrics:  @size-rem-large;
 // @margin-bottom--article-header:  1.5rem;
+@margin-left--navBar-item:       @size-rem-smallest;
+// @margin-right--nav-item:         @size-rem-base;
 
 // miscellaneous
 // @border-bottom--input--search: 1px solid @color-gray-lighter;
