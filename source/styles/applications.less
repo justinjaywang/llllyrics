@@ -44,6 +44,7 @@ a {
   -webkit-appearance: none;
   font: inherit;
   color: inherit;
+  letter-spacing: inherit;
   .font-smoothing(inherit);
   text-rendering: inherit;
   background: inherit;
@@ -118,13 +119,13 @@ p {
   // border-bottom: 1px solid @color-gray-lightest; // TEMP
   // background: @color-temp; // TEMP
 }
-.page-header--search {
-  font-family: @font-family--page-header--search;
-  font-weight: @font-weight--page-header--search;
-  font-size: @font-size--page-header--search;
-  line-height: @line-height--page-header--search;
-  letter-spacing: @letter-spacing--page-header--search;
-}
+// .page-header--search {
+//   font-family: @font-family--page-header--search;
+//   font-weight: @font-weight--page-header--search;
+//   font-size: @font-size--page-header--search;
+//   line-height: @line-height--page-header--search;
+//   letter-spacing: @letter-spacing--page-header--search;
+// }
 // : footer
 .page-footer {
   font-family: @font-family--page-footer;
@@ -149,6 +150,17 @@ p {
   position: absolute;
   left: 0;
   // left: @padding-left--page-header;
+}
+// : search
+.searchField {
+  margin-top: @margin-top--searchField;
+  margin-bottom: @margin-bottom--searchField;
+}
+.input--search {
+  padding: 0.3em 0; // TEMP
+  // background: #f1f1f1; // TEMP
+  // border-radius: 5px; // TEMP
+  border-bottom: 1px solid #ddd;
 }
 // : cards
 // .card:after,
@@ -182,6 +194,7 @@ p {
 .article-lyrics {
   white-space: pre-wrap;
   margin-top: @margin-top--article-lyrics;
+  margin-bottom: @margin-bottom--article-lyrics;
 }
 .textarea--lyrics {
   width: 100%;

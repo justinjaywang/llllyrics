@@ -2,27 +2,27 @@
   <nav class="nav navBar u-alignBlock">
     <div class="container">
       <ul class="navBar-list" ng-if="isActiveCtrl('SearchCtrl')">
-        <!-- <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action">llllyrics</a></li> -->
-        <!-- <li class="navBar-item"><a href="/add" class="navBar-action"><span class="icon-add"></span></a></li> -->
+        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action">llllyrics</a></li>
+        <li class="navBar-item"><a href="/add" class="navBar-action">add</a></li>
         <!-- <input class="input input--search" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 0}}" ng-change="updateResults()" placeholder="search lyrics" autofocus="autofocus"> -->
       </ul>
       <ul class="navBar-list" ng-if="isActiveCtrl('ViewCtrl')">
-        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action">&larr; back</a></li>
+        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action">back</a></li>
         <li class="navBar-item">
           <a class="navBar-action" ng-href="/edit/{{song._id.$oid}}">edit</a>
         </li>
       </ul>
       <ul class="navBar-list" ng-if="isActiveCtrl('EditCtrl')">
-        <li class="navBar-item navBar-item--left"><a class="navBar-action" ng-href="/view/{{song._id.$oid}}"><span class="icon-close"></span></a></li>
-        <li class="navBar-item"><button class="button navBar-action" ng-click="destroy()"><span class="icon-trash"></span></button></li>
+        <li class="navBar-item navBar-item--left"><a class="navBar-action" ng-href="/view/{{song._id.$oid}}">cancel</a></li>
+        <li class="navBar-item"><button class="button navBar-action" ng-click="destroy()">delete</button></li>
         <li class="navBar-item">
-          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid || isClean()"><span class="icon-check"></span></button>
+          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid || isClean()">save</button>
         </li>
       </ul>
       <ul class="navBar-list" ng-if="isActiveCtrl('AddCtrl')">
-        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action"><span class="icon-close"></a></li>
+        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action">cancel</a></li>
         <li class="navBar-item">
-          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid"><span class="icon-check"></button>
+          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid">add this song</button>
         </li>
       </ul>
     </div>

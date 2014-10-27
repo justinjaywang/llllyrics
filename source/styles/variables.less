@@ -74,7 +74,7 @@
 @font-size--article-meta:        @font-size-em-base;
 @font-size--navBar:              @font-size-em-base;
 @font-size--page-header:         @font-size-em-base;
-@font-size--page-header--search: @font-size-em-large;
+// @font-size--page-header--search: @font-size-em-large;
 @font-size--page-footer:         @font-size-em-base;
 // : font-family-variables
 @font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -83,9 +83,9 @@
 // : font-family-applications
 @font-family--body:                @font-family-serif;
 @font-family--headings:            @font-family-sans-serif;
-@font-family--meta:                @font-family-sans-serif;
+@font-family--meta:                @font-family-serif;
 @font-family--page-header:         @font-family-sans-serif;
-@font-family--page-header--search: @font-family-sans-serif;
+// @font-family--page-header--search: @font-family-sans-serif;
 @font-family--page-footer:         @font-family-sans-serif;
 // : font-weight-variables
 @font-weight-bold:      700;
@@ -97,7 +97,7 @@
 @font-weight--headings:            @font-weight-semibold;
 @font-weight--meta:                @font-weight-normal;
 @font-weight--page-header:         @font-weight-bold;
-@font-weight--page-header--search: @font-weight-normal;
+// @font-weight--page-header--search: @font-weight-normal;
 @font-weight--page-footer:         @font-weight-normal;
 // : line-height-variables
 @line-height-tightest: 1.1;
@@ -114,7 +114,7 @@
 @line-height--p:                   @line-height-loose;
 @line-height--meta:                @line-height-base;
 @line-height--page-header:         @line-height-base;
-@line-height--page-header--search: @line-height-tighter;
+// @line-height--page-header--search: @line-height-tighter;
 @line-height--page-footer:         @line-height-base;
 // : letter-spacing-variables
 @letter-spacing-tighter: -0.02em;
@@ -129,7 +129,7 @@
 @letter-spacing--h3:                  @letter-spacing-base;
 @letter-spacing--meta:                @letter-spacing-base;
 @letter-spacing--page-header:         @letter-spacing-base;
-@letter-spacing--page-header--search: @letter-spacing-base;
+// @letter-spacing--page-header--search: @letter-spacing-base;
 @letter-spacing--page-footer:         @letter-spacing-base;
 
 // layout
@@ -150,13 +150,16 @@
 // @padding-top--input--search:   0.75rem;
 
 // spacing
-@margin-bottom--page-main:       @size-rem-tera;
-@margin-top--page-main:          (@height--page-header + @size-rem-base);
+@margin-bottom--page-main:       @height--page-header;
+@margin-top--page-main:          @height--page-header;
+@margin-top--searchField:        @size-rem-large;
+@margin-bottom--searchField:     @size-rem-large;
 @padding-top--card-link:         @size-rem-large;
 @padding-bottom--card-link:      @size-rem-large;
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
-@margin-top--article-lyrics:     @size-rem-large;
+@margin-top--article-lyrics:     @size-rem-smaller;
+@margin-bottom--article-lyrics:  @size-rem-large;
 // @margin-bottom--article-header:  1.5rem;
 
 // miscellaneous
