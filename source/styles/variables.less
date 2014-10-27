@@ -8,25 +8,24 @@
 
 // colors
 // : variables
-@color-gray-darkest:  rgba(0,0,0,0.8);
+@color-gray-darkest:  rgba(0,0,0,0.72);
 @color-gray-darker:   rgba(0,0,0,0.6);
 @color-gray-dark:     rgba(0,0,0,0.6);
-@color-gray:          rgba(0,0,0,0.44);
-@color-gray-light:    rgba(0,0,0,0.28);
-@color-gray-lighter:  rgba(0,0,0,0.15);
+@color-gray:          rgba(0,0,0,0.4);
+@color-gray-light:    rgba(0,0,0,0.24);
+@color-gray-lighter:  rgba(0,0,0,0.16);
 @color-gray-lightest: rgba(0,0,0,0.08);
 @color-white:         rgb(255,255,255);
 @color-temp:          rgba(255,0,0,0.1);
-@color-whiteish:      rgb(242,242,242);
 // : applications
 @background-color--body:        @color-white;
-@background-color--page-header: @color-whiteish;
+@background-color--page-header: @color-white;
 @color--body:                   @color-gray-darkest;
 @color--a:                      inherit;
 @color--box-shadow--a:          @color-gray-light;
 @color--border--hr:             @color-gray-lighter;
-@color--meta:                   @color-gray;
-@color--navBar:                 @color-gray;
+@color--meta:                   @color-gray-light;
+@color--navBar:                 @color-gray-light;
 @color--placeholder:            @color-gray-light;
 
 // sizing
@@ -67,13 +66,13 @@
 @font-size--html:                @font-size-px-base;
 @font-size--html-sm:             @font-size-px-small;
 @font-size--body:                @font-size-em-base;
-@font-size--h1:                  @font-size-em-mega;
+@font-size--h1:                  @font-size-em-largest;
 @font-size--h2:                  @font-size-em-largest;
 @font-size--h3:                  @font-size-em-large;
 @font-size--p:                   @font-size-em-base;
 @font-size--card-meta:           @font-size-em-base;
-@font-size--article-meta:        @font-size-em-large;
-@font-size--navBar:              @font-size-em-large;
+@font-size--article-meta:        @font-size-em-base;
+@font-size--navBar:              @font-size-em-base;
 @font-size--page-header:         @font-size-em-base;
 @font-size--page-header--search: @font-size-em-large;
 @font-size--page-footer:         @font-size-em-base;
@@ -97,7 +96,7 @@
 @font-weight--body:                @font-weight-normal;
 @font-weight--headings:            @font-weight-semibold;
 @font-weight--meta:                @font-weight-normal;
-@font-weight--page-header:         @font-weight-normal;
+@font-weight--page-header:         @font-weight-bold;
 @font-weight--page-header--search: @font-weight-normal;
 @font-weight--page-footer:         @font-weight-normal;
 // : line-height-variables
@@ -143,7 +142,7 @@
 @padding-left--container:      (@container-gutter * @max-width--container);
 @padding-left--container-sm:   @container-gutter-percent;
 @width--page-header:           100%;
-@height--page-header:          @size-rem-giga;
+@height--page-header:          @size-rem-mega;
 // @padding-left--page-header:    @padding-left--container;
 // @padding-top--page-header:     @padding-left--container;
 // @padding-left--page-header-sm: @padding-left--container-sm;
@@ -157,7 +156,7 @@
 @padding-bottom--card-link:      @size-rem-large;
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
-@margin-top--article-lyrics:     @size-rem-largest;
+@margin-top--article-lyrics:     @size-rem-large;
 // @margin-bottom--article-header:  1.5rem;
 
 // miscellaneous

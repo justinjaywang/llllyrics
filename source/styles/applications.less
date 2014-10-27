@@ -151,14 +151,14 @@ p {
   // left: @padding-left--page-header;
 }
 // : cards
-.card:after,
-.article-headerWrapper:after {
-  content: '';
-  display: block;
-  height: 2px;
-  width: 1.5rem;
-  background: #ddd;
-}
+// .card:after,
+// .article-headerWrapper:after {
+//   content: '';
+//   display: block;
+//   height: 2px;
+//   width: 1.5rem;
+//   background: #ddd;
+// }
 .card-link {
   display: block;
   padding-top: @padding-top--card-link;  
@@ -175,8 +175,9 @@ p {
 .article-meta {
   font-size: @font-size--article-meta;
 }
-.article-album:before {
-  content: '·';
+.article-album:before,
+.card-album:before {
+  content: ' · ';
 }
 .article-lyrics {
   white-space: pre-wrap;
