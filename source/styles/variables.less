@@ -18,16 +18,17 @@
 @color-gray-faint:    rgba(0,0,0,0.08);
 @color-white:         rgb(255,255,255);
 // : applications
-@background-color--body:        @color-white;
-@background-color--page-header: @color-white;
-@color--body:                   @color-gray-darkest;
-@color--a:                      inherit;
-@color--box-shadow--a:          @color-gray-light;
-@color--border--hr:             @color-gray-lighter;
-@color--meta:                   @color-gray-light;
-@color--navBar:                 @color-gray-lighter;
-@color--placeholder:            @color-gray;
-@color--page-footer:            @color-gray-lighter;
+@background-color--body:         @color-white;
+@background-color--page-header:  fade(@color-white, 96%);
+@color--body:                    @color-gray-darkest;
+@color--a:                       inherit;
+@color--box-shadow--a:           @color-gray-light;
+@color--border--hr:              @color-gray-lighter;
+@color--meta:                    @color-gray-light;
+@color--navBar:                  @color-gray-lighter;
+@color--placeholder:             @color-gray;
+@color--page-footer:             @color-gray-lighter;
+@color--box-shadow--page-header: @color-gray-lighter;
 
 // sizing
 @size-tera:         4.2308;
@@ -163,6 +164,6 @@
 // miscellaneous
 // @border-bottom--input--search: 1px solid @color-gray-lighter;
 @transition--textarea--lyrics: 0.15s;
-
+@box-shadow--page-header:      0 0 1px @color--box-shadow--page-header;
 // content
 // TO DO
