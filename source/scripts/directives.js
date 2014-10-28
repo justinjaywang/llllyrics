@@ -137,6 +137,11 @@ directives.directive('stickyHeader', [
             // if scrolled to top and is not shown,
             // then finish showing
             scope.isShown = true;
+          } else if ((scrollTop <= headerHeight) && !scope.isShown) {
+            // if scrolled within header and is not shown,
+            // then remove affix and remove transition
+            scope.isAffixed = false;
+            scope.isTransitioned = false;
           } else if (scrollBottom >= bodyHeight) {
             // if scrolled to bottom,
             // then show
