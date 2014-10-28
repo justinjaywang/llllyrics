@@ -224,6 +224,14 @@ p {
   margin-top: @margin-top--article-lyrics;
   margin-bottom: @margin-bottom--article-lyrics;
 }
+.input--artist {
+  width: @width--input--artist;
+  max-width: 100%;
+}
+.input--album {
+  width: @width--input--album;
+  max-width: 100%;
+}
 .textarea--lyrics {
   resize: none;
   overflow-x: auto;
@@ -244,7 +252,7 @@ p {
 button[disabled] {
   color: rgba(0,0,0,0.1);
 }
-.input,
+.isEditView .input,
 .textarea {
   background: @color-gray-faint;
 }
