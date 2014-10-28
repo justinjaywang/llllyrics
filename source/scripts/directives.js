@@ -50,3 +50,27 @@ directives.directive('autoGrow', [
       }, true);
     }
   }]);
+
+directives.directive('stickyHeader', [
+  '$window',
+  function ($window) {
+    return function(scope, element, attrs) {
+      angular.element($window).bind('scroll', function() {
+        var offsetTop = this.pageYOffset,
+          offsetBottom = this.innerHeight + offsetTop,
+          headerHeight = element[0].offsetHeight,
+          bodyHeight = document.body.scrollHeight;
+        if (offsetTop > headerHeight) {
+          scope.shouldAffix = true;
+        } else {
+          scope.shouldAffix = false;
+        }
+        if (offsetBottom >= bodyHeight) {
+          scope.shouldShow = true;
+        } else {
+          scope.shouldShow = false;
+        }
+        scope.$apply();
+      });
+    };
+  }]);

@@ -123,6 +123,23 @@ p {
   letter-spacing: @letter-spacing--page-header;
   // border-bottom: 1px solid @color-gray-lightest; // TEMP
   // background: @color-temp; // TEMP
+  .transition-transform(200ms);
+}
+.page-header.isAffixed-add {
+  visibility: hidden;
+}
+.page-header.isAffixed {
+  position: fixed;
+  background: rgba(255,255,255,0.97); // TEMP
+  box-shadow: 0 0 1px rgba(0,0,0,0.15); // TEMP
+  .translate(0, (@height--page-header*-1));
+}
+.page-header.isShown {
+  .translate(0, 0);
+}
+.page-header-isShown-add-active,
+.page-header-isShown-remove-active {
+
 }
 // .page-header--search {
 //   font-family: @font-family--page-header--search;
