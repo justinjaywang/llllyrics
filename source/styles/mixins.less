@@ -90,11 +90,11 @@
           transition: @transition;
 }
 // GETS USED
-.translate(@x; @y) {
-  -webkit-transform: translate(@x, @y);
-      -ms-transform: translate(@x, @y); // IE9 only
-       -o-transform: translate(@x, @y);
-          transform: translate(@x, @y);
+.translate3d(@x; @y; @z) {
+  -webkit-transform: translate3d(@x, @y, @z);
+      -ms-transform: translate3d(@x, @y, @z); // IE9 only
+       -o-transform: translate3d(@x, @y, @z);
+          transform: translate3d(@x, @y, @z);
 }
 // GETS USED
 .transition-transform(@transition) {

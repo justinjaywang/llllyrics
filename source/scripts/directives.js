@@ -53,24 +53,134 @@ directives.directive('autoGrow', [
 
 directives.directive('stickyHeader', [
   '$window',
-  function ($window) {
+  '$document',
+  function ($window, $document) {
     return function(scope, element, attrs) {
-      angular.element($window).bind('scroll', function() {
-        var offsetTop = this.pageYOffset,
-          offsetBottom = this.innerHeight + offsetTop,
-          headerHeight = element[0].offsetHeight,
-          bodyHeight = document.body.scrollHeight;
-        if (offsetTop > headerHeight) {
-          scope.shouldAffix = true;
+      // variables
+      var transitionDuration = 200,
+        scrollInterval = 10,
+        scrollIntervalId = 0,
+        substantialScroll = 8,
+        windowHeight = 0,
+        bodyHeight = 0,
+        headerHeight = 0,
+        prevScrollTop = 0,
+        scrollTop = 0,
+        relativeScrollTop = 0,
+        scrollBottom = 0,
+        counter = 0,
+        transitionIntervals = transitionDuration / scrollInterval;
+
+      scope.isAffixed = false;
+      scope.isShown = false;
+      scope.isTransitioned = false;
+
+      // construction
+      var init = function() {
+        scrollIntervalId = setInterval(updatePage, scrollInterval);
+        setInitialValues();
+        bindWindowResize();
+      };
+
+      var setInitialValues = function() {
+        windowHeight = $window.innerHeight,
+        bodyHeight = $document[0].body.scrollHeight,
+        headerHeight = element[0].offsetHeight;
+        prevScrollTop = $window.pageYOffset;
+        scrollTop = prevScrollTop;
+        scrollBottom = scrollTop + windowHeight;
+      };
+
+      // updating
+      var updatePage = function() {
+        $window.requestAnimationFrame(function() {
+          updateValues();
+          updateClasses();
+        });
+      };
+
+      var updateValues = function() {
+        bodyHeight = $document[0].body.scrollHeight;
+        prevScrollTop = scrollTop;
+        scrollTop = $window.pageYOffset;
+        scrollBottom = scrollTop + windowHeight;
+        relativeScrollTop = scrollTop - prevScrollTop;
+      };
+
+      var updateClasses = function() {
+        // two sets of actions, depending on isTransitioned
+        if (!scope.isTransitioned) {
+          // not transitioned
+          if (!scope.isAffixed && (scrollTop > headerHeight)) {
+            // if not affixed and scrolled below header,
+            // then affix and set transition after apply
+            scope.isAffixed = true;
+            scope.isShown = false;
+            scope.$apply();
+            scope.isTransitioned = true;
+          } else if (scope.isAffixed && (scrollTop <= 0)) {
+            // if affixed and scrolled to top,
+            // then remove affix after timeout
+            scope.isAffixed = false;
+          }
         } else {
-          scope.shouldAffix = false;
-        }
-        if (offsetBottom >= bodyHeight) {
-          scope.shouldShow = true;
-        } else {
-          scope.shouldShow = false;
+          // transitioned
+          if ((scrollTop <= 0) && scope.isShown) {
+            // if scrolled to top and is shown,
+            // then remove transition after allowing show transition to occur
+            counter++;
+            if (counter >= transitionIntervals) {
+              scope.isTransitioned = false;
+              counter = 0;
+            }
+          } else if ((scrollTop <= 0) && !scope.isShown) {
+            // if scrolled to top and is not shown,
+            // then finish showing
+            scope.isShown = true;
+          } else if (scrollBottom >= bodyHeight) {
+            // if scrolled to bottom,
+            // then show
+            scope.isShown = true;
+          } else if (scope.isShown && (relativeScrollTop > 0)) {
+            // if shown and scrolled down,
+            // then remove show
+            scope.isShown = false;
+          } else if (!scope.isShown && (relativeScrollTop < -substantialScroll)) {
+            // if not shown and scrolled up substantially,
+            // then show
+            scope.isShown = true;
+          }
         }
         scope.$apply();
-      });
+      };
+
+      // bind window resize
+      var bindWindowResize = function() {
+        angular.element($window).bind('resize', function() {
+          setInitialValues();
+        });
+      };
+
+      // start
+      init();
+
+      // angular.element($window).bind('scroll', function() {
+      //   var offsetTop = this.pageYOffset,
+      //     offsetBottom = this.innerHeight + offsetTop,
+      //     headerHeight = element[0].offsetHeight,
+      //     bodyHeight = document.body.scrollHeight;
+      //   if (offsetTop > headerHeight) {
+      //     scope.isAffixed = true;
+      //   } else {
+      //     scope.isAffixed = false;
+      //   }
+      //   if (offsetBottom >= bodyHeight) {
+      //     scope.isShown = true;
+      //   } else {
+      //     scope.isShown = false;
+      //   }
+      //   scope.$apply();
+      // });
+
     };
   }]);
