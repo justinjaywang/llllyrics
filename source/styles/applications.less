@@ -8,6 +8,8 @@
 }
 html {
   font-size: @font-size--html;
+  position: relative;
+  min-height: 100%;
 }
 body {
   height: 100%;
@@ -138,6 +140,9 @@ p {
   font-weight: @font-weight--page-footer;
   font-size: @font-size--page-footer;
   letter-spacing: @letter-spacing--page-footer;
+  position: absolute;
+  bottom: 0;
+  padding-bottom: @padding-bottom--page-footer;
 }
 .footerNav-item {
   display: inline-block;
