@@ -115,13 +115,13 @@
 @line-height--h1:                  @line-height-normal;
 @line-height--h2:                  @line-height-normal;
 @line-height--h3:                  @line-height-tighter;
-@line-height--p:                   @line-height-base;
-@line-height--meta:                @line-height-base;
+@line-height--p:                   @line-height-loose;
+@line-height--meta:                @line-height-loose;
 @line-height--page-header:         @line-height-base;
 @line-height--page-footer:         @line-height-base;
 // : letter-spacing-variables
 @letter-spacing-tighter: -0.02em;
-@letter-spacing-tight:   -0.01em;
+@letter-spacing-tight:   -0.015em;
 @letter-spacing-base:    0;
 @letter-spacing-loose:   0.02em;
 @letter-spacing-looser:  0.04em;
@@ -136,31 +136,33 @@
 
 // layout
 // : variables
-@container-gutter:         0.04;
-@container-gutter-percent: percentage(@container-gutter);
+// @container-gutter:         0.04;
+// @container-gutter-percent: percentage(@container-gutter);
 // : applications
 @width--container:             100%;
 @max-width--container:         @width-screen-md-min;
-@padding-left--container:      (@container-gutter * @max-width--container);
-@padding-left--container-sm:   @container-gutter-percent;
+// @padding-left--container:      (@container-gutter * @max-width--container);
+// @padding-left--container-sm:   @container-gutter-percent;
+@padding-left--container:      18px;
+// @padding-left--container-sm:   @size-rem-base;
 @width--page-header:           100%;
-@height--page-header:          @size-rem-giga;
+@height--page-header:          60px;
 @width--navBar:                @width--page-header;
 @width--input--artist:         10rem;
 @width--input--album:          15rem;
 
 // spacing
 @margin-top--page-main:          @size-rem-tera;
-@margin-bottom--page-main:       @size-rem-tera;
+@margin-bottom--page-main:       @size-rem-large;
 @margin-top--searchField:        @size-rem-large;
 @margin-bottom--searchField:     @size-rem-large;
 @padding-top--card-link:         @size-rem-large;
 @padding-bottom--card-link:      @size-rem-large;
-@margin-top--page-footer:        @size-rem-smallest;
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
 @margin-top--article-lyrics:     @size-rem-smaller;
 @margin-bottom--article-lyrics:  @size-rem-tera;
+@margin-bottom--searchResults:   @size-rem-mega;
 @margin-left--navBar-item:       @size-rem-smallest;
 @margin-left--footerNav-item:    @size-rem-smallest;
 @padding-top--input--search:     @size-rem-smaller;
