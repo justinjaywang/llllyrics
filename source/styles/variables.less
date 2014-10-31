@@ -18,6 +18,7 @@
 @color-gray-faint:    rgba(0,0,0,0.1);
 @color-gray-fainter:  rgba(0,0,0,0.05);
 @color-white:         rgb(255,255,255);
+@color-accent:        rgb(0,245,147);
 // : applications
 @background-color--body:              @color-white;
 @background-color--page-header:       fade(@color-white, 95%);
@@ -27,11 +28,11 @@
 @color--box-shadow--a:                @color-gray-light;
 @color--border--hr:                   @color-gray-lighter;
 @color--meta:                         @color-gray-light;
-@color--navBar:                       @color-gray-lighter;
+@color--navBar:                       @color-gray;
 @color--placeholder:                  @color-gray-light;
 @color--page-footer:                  @color-gray-lightest;
 @color--box-shadow--page-header:      @color-gray-lighter;
-@color--border-bottom--input--search: @color-gray-lightest;
+@color--border-bottom--input--search: @color-gray-lighter;
 
 // sizing
 @size-tera:         4.2308;
@@ -78,7 +79,7 @@
 @font-size--card-meta:           @font-size-em-base;
 @font-size--article-meta:        @font-size-em-base;
 @font-size--navBar:              @font-size-em-base;
-@font-size--page-header:         @font-size-em-base;
+@font-size--page-header:         @font-size-em-large;
 @font-size--page-footer:         @font-size-em-base;
 // : font-family-variables
 @font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -143,14 +144,14 @@
 @padding-left--container:      (@container-gutter * @max-width--container);
 @padding-left--container-sm:   @container-gutter-percent;
 @width--page-header:           100%;
-@height--page-header:          @size-rem-mega;
+@height--page-header:          @size-rem-giga;
 @width--navBar:                @width--page-header;
 @width--input--artist:         10rem;
 @width--input--album:          15rem;
 
 // spacing
 @margin-top--page-main:          @size-rem-tera;
-@margin-bottom--page-main:       @size-rem-large;
+@margin-bottom--page-main:       @size-rem-tera;
 @margin-top--searchField:        @size-rem-large;
 @margin-bottom--searchField:     @size-rem-large;
 @padding-top--card-link:         @size-rem-large;
@@ -162,7 +163,7 @@
 @margin-bottom--article-lyrics:  @size-rem-tera;
 @margin-left--navBar-item:       @size-rem-smallest;
 @margin-left--footerNav-item:    @size-rem-smallest;
-@padding-top--input--search:     @size-rem-small;
+@padding-top--input--search:     @size-rem-smaller;
 
 // miscellaneous
 @border-bottom--input--search: 1px solid @color--border-bottom--input--search;

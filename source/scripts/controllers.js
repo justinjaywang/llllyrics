@@ -190,7 +190,7 @@ controllers.controller('SearchCtrl', [
     };
 
     // set search page title
-    Page.setTitle('llllyrics / search'); // TEMP
+    Page.setTitle('search — llllyrics'); // TEMP
   }]);
 
 controllers.controller('ViewCtrl', [
@@ -205,7 +205,7 @@ controllers.controller('ViewCtrl', [
       Page.setTitle('"' + song.song + '" by ' + song.artist);    
     }, function(err) {
       $scope.errorId = $routeParams.songId;
-      Page.setTitle('llllyrics / ' + err.status);
+      Page.setTitle(err.status + ' — llllyrics');
       console.log(err);
     });
   }]);
@@ -223,7 +223,7 @@ controllers.controller('AddCtrl', [
         console.log(err);
       });
     }
-    Page.setTitle('llllyrics / add');
+    Page.setTitle('add — llllyrics');
   }]);
 
 controllers.controller('EditCtrl', [
@@ -237,7 +237,10 @@ controllers.controller('EditCtrl', [
     Song.get({id: $routeParams.songId}, function(song){
       self.original = song;
       $scope.song = new Song(self.original);
+      Page.setTitle('"' + song.song + '" by ' + song.artist + ' (edit)');
+
     }, function(err){
+      Page.setTitle(err.status + ' — llllyrics');
       console.log(err);
     });
     
@@ -263,5 +266,5 @@ controllers.controller('AboutCtrl', [
   '$location',
   'Page',
   function($scope, $location, Page) {
-    Page.setTitle('llllyrics / about');
+    Page.setTitle('about — llllyrics');
   }]);

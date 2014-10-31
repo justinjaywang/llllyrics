@@ -21,30 +21,14 @@
     <meta property="og:image" content="http://llllyrics.com/fb.png">
   </head>
   <body class="page" ng-class="{isSearchPage: isActiveCtrl('SearchCtrl'), isViewPage: isActiveCtrl('ViewCtrl'), isEditPage: isActiveCtrl('EditCtrl'), isAddPage: isActiveCtrl('AddCtrl'), isAboutPage: isActiveCtrl('AboutCtrl')}">
-    <!-- <header class="page-header" ng-include="'views/partial--header.html'"></header> -->
-    <!-- <main class="page-main container" ng-view></main> -->
     <ng-view></ng-view>
-    <!-- <div id="header-wrapper">
-      <header class="container">
-        <h1 class="clearfix"><a ng-href="/" ng-click="clearSearch()">llllyrics</a></h1>
-        <nav class="clearfix">
-          <ul>
-            <li><a ng-href="/add" ng-click="clearSearch()">add</a></li>
-            <li><a ng-href="/about" ng-click="clearSearch()">about</a></li>
-          </ul>
-        </nav>
-      </header>
-    </div>
-    <div id="content" ng-view></div> -->
     <script src="/assets/lib/angular/angular.min.js"></script>
     <script src="/assets/lib/angular-animate/angular-animate.min.js"></script>
     <script src="/assets/lib/angular-route/angular-route.min.js"></script>
     <script src="/assets/lib/angular-resource/angular-resource.min.js"></script>
     <script src="/assets/all.js"></script><!-- TO DO: switch to minified -->
     <!-- // <script src="/assets/all.min.js"></script> -->
-    <!-- // <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script> -->
-    <!-- // <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js"></script> -->
-    <!-- // <script src="/assets/song.js"></script> -->
+
     <!--<script>(function(e,t,n,r,i,s,o){e["GoogleAnalyticsObject"]=i;e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},e[i].l=1*new Date;s=t.createElement(n),o=t.getElementsByTagName(n)[0];s.async=1;s.src=r;o.parentNode.insertBefore(s,o)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create","UA-40739812-1","llllyrics.com");ga("send","pageview")</script>-->
   </body>
 </html>
