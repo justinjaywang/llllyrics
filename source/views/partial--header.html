@@ -2,29 +2,29 @@
   <nav class="navBar u-alignBlock">
     <div class="container container--header">
       <ul class="navBar-list u-textAlignRight" ng-if="isActiveCtrl('SearchCtrl')">
-        <li class="navBar-item"><a href="/add" class="navBar-action"><span class="icon-plus"></span></a></li>
+        <li class="navBar-item"><a href="/add" class="navBar-action"><span class="icon-add"></span></a></li>
       </ul>
       <ul class="navBar-list u-textAlignRight" ng-if="isActiveCtrl('ViewCtrl')">
-        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action"><span class="icon-chevron-left2"></span></a></li>
+        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action"><span class="icon-back"></span></a></li>
         <li class="navBar-item">
-          <a class="navBar-action" ng-href="/edit/{{song._id.$oid}}"><span class="icon-mode-edit"></span></a>
+          <a class="navBar-action" ng-href="/edit/{{song._id.$oid}}"><span class="icon-edit"></span></a>
         </li>
       </ul>
       <ul class="navBar-list u-textAlignRight" ng-if="isActiveCtrl('EditCtrl')">
-        <li class="navBar-item navBar-item--left"><a class="navBar-action" ng-href="/view/{{song._id.$oid}}"><span class="icon-cross"></span></a></li>
+        <li class="navBar-item navBar-item--left"><a class="navBar-action" ng-href="/view/{{song._id.$oid}}"><span class="icon-cancel"></span></a></li>
         <li class="navBar-item"><button class="button navBar-action" ng-click="destroy()"><span class="icon-trash"></span></button></li>
         <li class="navBar-item">
-          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid || isClean()"><span class="icon-check2"></span></button>
+          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid || isClean()"><span class="icon-save"></span></button>
         </li>
       </ul>
       <ul class="navBar-list u-textAlignRight" ng-if="isActiveCtrl('AddCtrl')">
-        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action"><span class="icon-cross"></span></a></li>
+        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action"><span class="icon-cancel"></span></a></li>
         <li class="navBar-item">
-          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid"><span class="icon-check2"></span></button>
+          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid"><span class="icon-save"></span></button>
         </li>
       </ul>
       <ul class="navBar-list u-textAlignRight" ng-if="isActiveCtrl('AboutCtrl')">
-        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action"><span class="icon-chevron-left2"></span></a></li>
+        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action"><span class="icon-back"></span></a></li>
       </ul>
     </div>
   </nav>
