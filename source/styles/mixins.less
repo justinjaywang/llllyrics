@@ -9,17 +9,17 @@
 
 // GETS USED
 // placeholder text
-.placeholder(@color) {
-  ::-webkit-input-placeholder {
+.placeholder(@color: @color--placeholder) {
+  &::-webkit-input-placeholder {
     color: @color;
   }
-  input:-moz-placeholder {
+  &::-moz-placeholder {
     color: @color;
   }
-  input::-moz-placeholder {
+  &:-ms-input-placeholder {  
     color: @color;
   }
-  :-ms-input-placeholder {  
+  &:-moz-placeholder {
     color: @color;
   }
 }
