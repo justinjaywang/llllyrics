@@ -15,20 +15,23 @@
 @color-gray-light:    rgba(0,0,0,0.32);
 @color-gray-lighter:  rgba(0,0,0,0.24);
 @color-gray-lightest: rgba(0,0,0,0.16);
-@color-gray-faint:    rgba(0,0,0,0.08);
+@color-gray-faint:    rgba(0,0,0,0.1);
+@color-gray-fainter:  rgba(0,0,0,0.05);
 @color-white:         rgb(255,255,255);
 // : applications
-@background-color--body:         @color-white;
-@background-color--page-header:  fade(@color-white, 96%);
-@color--body:                    @color-gray-darkest;
-@color--a:                       inherit;
-@color--box-shadow--a:           @color-gray-light;
-@color--border--hr:              @color-gray-lighter;
-@color--meta:                    @color-gray-light;
-@color--navBar:                  @color-gray-lighter;
-@color--placeholder:             @color-gray-light;
-@color--page-footer:             @color-gray-lighter;
-@color--box-shadow--page-header: @color-gray-lighter;
+@background-color--body:              @color-white;
+@background-color--page-header:       fade(@color-white, 95%);
+@background-color--input--edit:       @color-gray-fainter;          
+@color--body:                         @color-gray-darkest;
+@color--a:                            inherit;
+@color--box-shadow--a:                @color-gray-light;
+@color--border--hr:                   @color-gray-lighter;
+@color--meta:                         @color-gray-light;
+@color--navBar:                       @color-gray-lighter;
+@color--placeholder:                  @color-gray-light;
+@color--page-footer:                  @color-gray-lightest;
+@color--box-shadow--page-header:      @color-gray-lighter;
+@color--border-bottom--input--search: @color-gray-lightest;
 
 // sizing
 @size-tera:         4.2308;
@@ -142,27 +145,27 @@
 @width--page-header:           100%;
 @height--page-header:          @size-rem-mega;
 @width--navBar:                @width--page-header;
-// @padding-top--input--search:   0.75rem;
 @width--input--artist:         10rem;
 @width--input--album:          15rem;
 
 // spacing
 @margin-top--page-main:          @size-rem-tera;
-@margin-bottom--page-main:       @size-rem-tera;
+@margin-bottom--page-main:       @size-rem-large;
 @margin-top--searchField:        @size-rem-large;
 @margin-bottom--searchField:     @size-rem-large;
 @padding-top--card-link:         @size-rem-large;
 @padding-bottom--card-link:      @size-rem-large;
-@margin-top--page-footer:        0;
+@margin-top--page-footer:        @size-rem-smallest;
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
 @margin-top--article-lyrics:     @size-rem-smaller;
-@margin-bottom--article-lyrics:  @size-rem-large;
+@margin-bottom--article-lyrics:  @size-rem-tera;
 @margin-left--navBar-item:       @size-rem-smallest;
 @margin-left--footerNav-item:    @size-rem-smallest;
+@padding-top--input--search:     @size-rem-small;
 
 // miscellaneous
-// @border-bottom--input--search: 1px solid @color-gray-lighter;
+@border-bottom--input--search: 1px solid @color--border-bottom--input--search;
 @transition--textarea--lyrics: 0.15s;
 @box-shadow--page-header:      0 0 1px @color--box-shadow--page-header;
 // content

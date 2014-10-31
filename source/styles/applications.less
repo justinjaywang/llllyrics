@@ -30,7 +30,6 @@ body {
   padding-left: @padding-left--container;
   padding-right: @padding-left--container;
   .margin-center();
-  // background: @color-temp; // TEMP
 }
 .container--header {
   margin-left: 0;
@@ -112,8 +111,6 @@ p {
   background-color: @background-color--page-header;
   height: @height--page-header;
   width: @width--page-header;
-  // padding-left: @padding-left--page-header;
-  // padding-right: @padding-left--page-header;
   position: absolute;
   top: 0;
   font-family: @font-family--page-header;
@@ -121,18 +118,14 @@ p {
   font-size: @font-size--page-header;
   line-height: @line-height--page-header;
   letter-spacing: @letter-spacing--page-header;
-  // border-bottom: 1px solid @color-gray-lightest; // TEMP
-  // background: @color-temp; // TEMP
 }
 .page-header.isTransitioned {
   .transition-transform(200ms);
 }
 .page-header.isAffixed {
   position: fixed;
-  // background: rgba(255,255,255,0.96); // TEMP
   box-shadow: @box-shadow--page-header;
   .translate3d(0, (ceil(@height--page-header)*-1), 0);
-  // background: rgba(0,0,255,0.5); // TEMP
 }
 .page-header.isAffixed.isShown {
   .translate3d(0, 0, 0);
@@ -191,10 +184,10 @@ p {
   margin-bottom: @margin-bottom--searchField;
 }
 .input--search {
-  padding: 0.3em 0; // TEMP
+  padding: @padding-top--input--search 0; // TEMP
   // background: #f1f1f1; // TEMP
   // border-radius: 5px; // TEMP
-  border-bottom: 1px solid #ddd; // TEMP
+  border-bottom: @border-bottom--input--search; // TEMP
 }
 // : cards
 // .card:after,
@@ -244,6 +237,13 @@ p {
   overflow-y: hidden;
   .transition(@transition--textarea--lyrics);
 }
+.input--edit,
+.textarea--lyrics {
+  &:hover,
+  &:focus {
+    background-color: @background-color--input--edit;
+  }
+}
 
 // responsiveness
 // : small screens
@@ -257,8 +257,4 @@ p {
 // temp
 button[disabled] {
   color: rgba(0,0,0,0.1);
-}
-.isEditView .input,
-.textarea {
-  background: @color-gray-faint;
 }
