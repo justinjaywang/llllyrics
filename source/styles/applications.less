@@ -206,11 +206,19 @@ p {
 }
 .card-link {
   display: block;
-  padding-top: @padding-top--card-link;  
-  padding-bottom: @padding-bottom--card-link;  
+  padding-top: @padding-top--card-link;
+  padding-bottom: @padding-bottom--card-link;
 }
 .card-meta {
   font-size: @font-size--card-meta;
+}
+.noResults-text {
+  color: @color--noResults-text;
+  padding-top: @padding-top--noResults-text;
+  line-height: @line-height--noResults-text;
+}
+.noResults-link {
+  box-shadow: @box-shadow--noResults-link;
 }
 // : view and edit
 .article-header {
@@ -269,3 +277,9 @@ p {
 button[disabled] {
   color: rgba(0,0,0,0.1);
 }
+// .noResults-link {
+//   color: @color--page-footer;
+//   font-size: @font-size--page-footer;
+//   font-family: @font-family--page-footer;
+//   font-weight: @font-weight--page-footer;
+// }

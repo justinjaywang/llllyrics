@@ -190,7 +190,7 @@ controllers.controller('SearchCtrl', [
     };
 
     // set search page title
-    Page.setTitle('search — llllyrics'); // TEMP
+    Page.setTitle('Search — llllyrics'); // TEMP
   }]);
 
 controllers.controller('ViewCtrl', [
@@ -218,12 +218,12 @@ controllers.controller('AddCtrl', [
   function($scope, $location, Page, Song) {
     $scope.save = function() {
       Song.save($scope.song, function(song) {
-        $location.path('/view/' + song._id.$oid);
+        $location.path('/' + song._id.$oid);
       }, function(err) {
         console.log(err);
       });
     }
-    Page.setTitle('add — llllyrics');
+    Page.setTitle('Add — llllyrics');
   }]);
 
 controllers.controller('EditCtrl', [
@@ -254,7 +254,7 @@ controllers.controller('EditCtrl', [
     }
     $scope.save = function() {
       $scope.song.update(function(song) {
-        $location.path('/view/' + song._id.$oid);
+        $location.path('/' + song._id.$oid);
       }, function(err) {
         console.log(err);
       });
@@ -266,5 +266,5 @@ controllers.controller('AboutCtrl', [
   '$location',
   'Page',
   function($scope, $location, Page) {
-    Page.setTitle('about — llllyrics');
+    Page.setTitle('About — llllyrics');
   }]);

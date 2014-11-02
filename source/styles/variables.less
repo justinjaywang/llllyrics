@@ -32,9 +32,10 @@
 @color--navBar:                       @color-gray-lighter;
 @color--navBar-title:                 @color-gray-darkest;
 @color--placeholder:                  @color-gray-light;
-@color--page-footer:                  @color-gray-lightest;
+@color--page-footer:                  @color-gray-lighter;
 @color--box-shadow--page-header:      @color-gray-lighter;
 @color--border-bottom--input--search: @color-gray-lightest;
+@color--noResults-text:               @color-gray-light;
 
 // sizing
 @size-tera:         3;
@@ -123,14 +124,15 @@
 @line-height-looser:   1.6;
 @line-height-normal:   normal;
 // : line-height-applications
-@line-height--body:        @line-height-base;
-@line-height--h1:          @line-height-normal;
-@line-height--h2:          @line-height-normal;
-@line-height--h3:          @line-height-tighter;
-@line-height--p:           @line-height-loose;
-@line-height--meta:        @line-height-base;
-@line-height--page-header: @line-height-base;
-@line-height--page-footer: @line-height-base;
+@line-height--body:           @line-height-base;
+@line-height--h1:             @line-height-normal;
+@line-height--h2:             @line-height-normal;
+@line-height--h3:             @line-height-tighter;
+@line-height--p:              @line-height-loose;
+@line-height--meta:           @line-height-base;
+@line-height--noResults-text: @line-height-base;
+@line-height--page-header:    @line-height-base;
+@line-height--page-footer:    @line-height-base;
 // : letter-spacing-variables
 @letter-spacing-tighter: -0.02em;
 @letter-spacing-tight:   -0.015em;
@@ -166,6 +168,7 @@
 @margin-bottom--searchField:     0;
 @padding-top--card-link:         @size-rem-small;
 @padding-bottom--card-link:      @size-rem-small;
+@padding-top--noResults-text:    @padding-top--card-link;
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
 @margin-top--article-lyrics:     @size-rem-smaller;
@@ -180,6 +183,7 @@
 // miscellaneous
 @border-bottom--input--search: 1px solid @color--border-bottom--input--search;
 @box-shadow--page-header:      0 0 1px @color--box-shadow--page-header;
+@box-shadow--noResults-link:   inset 0 -1px @color-gray-lighter;
 
 // transitions
 @transition-timing--page-header:      250ms;
