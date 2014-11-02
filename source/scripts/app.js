@@ -19,14 +19,6 @@ llllyrics.config(['$routeProvider', '$locationProvider',
         templateUrl: 'views/search.html',
         controller: 'SearchCtrl'
       })
-      .when('/view/:songId', {
-        templateUrl: 'views/view.html',
-        controller: 'ViewCtrl'
-      })
-      .when('/edit/:songId', {
-        templateUrl: 'views/edit.html',
-        controller: 'EditCtrl'
-      })
       .when('/add', {
         templateUrl: 'views/edit.html',
         controller: 'AddCtrl'
@@ -34,6 +26,14 @@ llllyrics.config(['$routeProvider', '$locationProvider',
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/:songId', {
+        templateUrl: 'views/view.html',
+        controller: 'ViewCtrl'
+      })
+      .when('/:songId/edit', {
+        templateUrl: 'views/edit.html',
+        controller: 'EditCtrl'
       })
       .otherwise({
         redirectTo: '/'

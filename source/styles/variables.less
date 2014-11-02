@@ -3,6 +3,7 @@
 @width-screen-sm-min: 480px;
 @width-screen-md-min: 800px;
 @width-screen-lg-min: 1100px;
+@width-screen-xs-max: (@width-screen-sm-min - 1);
 @width-screen-sm-max: (@width-screen-md-min - 1);
 @width-screen-md-max: (@width-screen-lg-min - 1);
 
@@ -22,7 +23,7 @@
 // : applications
 @background-color--body:              @color-white;
 @background-color--page-header:       fade(@color-white, 95%);
-@background-color--input--edit:       @color-gray-fainter;          
+@background-color--input--edit:       @color-gray-fainter;
 @color--body:                         @color-gray-darkest;
 @color--a:                            inherit;
 @color--box-shadow--a:                @color-gray-light;
@@ -33,7 +34,7 @@
 @color--placeholder:                  @color-gray-light;
 @color--page-footer:                  @color-gray-lightest;
 @color--box-shadow--page-header:      @color-gray-lighter;
-@color--border-bottom--input--search: @color-gray-lighter;
+@color--border-bottom--input--search: @color-gray-lightest;
 
 // sizing
 @size-tera:         3;
@@ -65,52 +66,54 @@
 
 // typography
 // : font-size-variables
-@font-size-px-base:      19px;
-@font-size-px-small:     17.5px;
-@font-size-em-tera:      unit(@size-tera, em);
-@font-size-em-giga:      unit(@size-giga, em);
-@font-size-em-mega:      unit(@size-mega, em);
-@font-size-em-largest:   unit(@size-largest, em);
-@font-size-em-larger:    unit(@size-larger, em);
-@font-size-em-large:     unit(@size-large, em);
-@font-size-em-base:      unit(@size-base, em);
-@font-size-em-small:     unit(@size-small, em);
-@font-size-em-smaller:   unit(@size-smaller, em);
-@font-size-em-smallest:  unit(@size-smallest, em);
+@font-size-px-base:     19px;
+@font-size-px-small:    17.5px;
+@font-size-px-smaller:  16px;
+@font-size-em-tera:     unit(@size-tera, em);
+@font-size-em-giga:     unit(@size-giga, em);
+@font-size-em-mega:     unit(@size-mega, em);
+@font-size-em-largest:  unit(@size-largest, em);
+@font-size-em-larger:   unit(@size-larger, em);
+@font-size-em-large:    unit(@size-large, em);
+@font-size-em-base:     unit(@size-base, em);
+@font-size-em-small:    unit(@size-small, em);
+@font-size-em-smaller:  unit(@size-smaller, em);
+@font-size-em-smallest: unit(@size-smallest, em);
 // : font-size-applications
-@font-size--html:                @font-size-px-base;
-@font-size--html-sm:             @font-size-px-small;
-@font-size--body:                @font-size-em-base;
-@font-size--h1:                  @font-size-em-giga;
-@font-size--h2:                  @font-size-em-giga;
-@font-size--h3:                  @font-size-em-larger;
-@font-size--p:                   @font-size-em-base;
-@font-size--card-meta:           @font-size-em-base;
-@font-size--article-meta:        @font-size-em-base;
-@font-size--page-header:         @font-size-em-base;
-@font-size--page-footer:         @font-size-em-base;
-@font-size--icon:                @font-size-em-larger;
+@font-size--html:         @font-size-px-base;
+@font-size--html-sm:      @font-size-px-small;
+@font-size--html-xs:      @font-size-px-smaller;
+@font-size--body:         @font-size-em-base;
+@font-size--h1:           @font-size-em-giga;
+@font-size--h2:           @font-size-em-giga;
+@font-size--h3:           @font-size-em-larger;
+@font-size--p:            @font-size-em-base;
+@font-size--card-meta:    @font-size-em-base;
+@font-size--article-meta: @font-size-em-base;
+@font-size--page-header:  @font-size-em-base;
+@font-size--page-footer:  @font-size-em-base;
+@font-size--icon:         @font-size-em-larger;
 // : font-family-variables
 @font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:      "PT Serif", Georgia, "Times New Roman", Times, serif;
 @font-family-monospace:  Consolas, Monaco, "Andale Mono", monospace;
 // : font-family-applications
-@font-family--body:                @font-family-serif;
-@font-family--headings:            @font-family-sans-serif;
-@font-family--meta:                @font-family-serif;
-@font-family--page-header:         @font-family-sans-serif;
-@font-family--page-footer:         @font-family-sans-serif;
+@font-family--body:        @font-family-serif;
+@font-family--headings:    @font-family-sans-serif;
+@font-family--meta:        @font-family-serif;
+@font-family--page-header: @font-family-sans-serif;
+@font-family--page-footer: @font-family-sans-serif;
 // : font-weight-variables
 @font-weight-bold:      700;
 @font-weight-semibold:  500;
 @font-weight-normal:    400;
 @font-weight-semilight: 300;
 // : font-weight-applications
-@font-weight--body:                @font-weight-normal;
-@font-weight--headings:            @font-weight-semibold;
-@font-weight--meta:                @font-weight-normal;
-@font-weight--page-header:         @font-weight-bold;
-@font-weight--page-footer:         @font-weight-bold;
+@font-weight--body:        @font-weight-normal;
+@font-weight--headings:    @font-weight-semibold;
+@font-weight--meta:        @font-weight-normal;
+@font-weight--page-header: @font-weight-bold;
+@font-weight--page-footer: @font-weight-bold;
 // : line-height-variables
 @line-height-tightest: 1.1;
 @line-height-tighter:  1.2;
@@ -120,14 +123,14 @@
 @line-height-looser:   1.6;
 @line-height-normal:   normal;
 // : line-height-applications
-@line-height--body:                @line-height-base;
-@line-height--h1:                  @line-height-normal;
-@line-height--h2:                  @line-height-normal;
-@line-height--h3:                  @line-height-tighter;
-@line-height--p:                   @line-height-loose;
-@line-height--meta:                @line-height-base;
-@line-height--page-header:         @line-height-base;
-@line-height--page-footer:         @line-height-base;
+@line-height--body:        @line-height-base;
+@line-height--h1:          @line-height-normal;
+@line-height--h2:          @line-height-normal;
+@line-height--h3:          @line-height-tighter;
+@line-height--p:           @line-height-loose;
+@line-height--meta:        @line-height-base;
+@line-height--page-header: @line-height-base;
+@line-height--page-footer: @line-height-base;
 // : letter-spacing-variables
 @letter-spacing-tighter: -0.02em;
 @letter-spacing-tight:   -0.015em;
@@ -135,38 +138,34 @@
 @letter-spacing-loose:   0.02em;
 @letter-spacing-looser:  0.04em;
 // : letter-spacing-applications
-@letter-spacing--body:                @letter-spacing-base;
-@letter-spacing--h1:                  @letter-spacing-tight;
-@letter-spacing--h2:                  @letter-spacing-tight;
-@letter-spacing--h3:                  @letter-spacing-base;
-@letter-spacing--meta:                @letter-spacing-base;
-@letter-spacing--page-header:         @letter-spacing-base;
-@letter-spacing--page-footer:         @letter-spacing-base;
+@letter-spacing--body:        @letter-spacing-base;
+@letter-spacing--h1:          @letter-spacing-tight;
+@letter-spacing--h2:          @letter-spacing-tight;
+@letter-spacing--h3:          @letter-spacing-base;
+@letter-spacing--meta:        @letter-spacing-base;
+@letter-spacing--page-header: @letter-spacing-base;
+@letter-spacing--page-footer: @letter-spacing-base;
 
 // layout
 // : variables
-// @container-gutter:         0.04;
-// @container-gutter-percent: percentage(@container-gutter);
+@container-gutter: @size-rem-base;
 // : applications
-@width--container:             100%;
-@max-width--container:         @width-screen-md-min;
-// @padding-left--container:      (@container-gutter * @max-width--container);
-// @padding-left--container-sm:   @container-gutter-percent;
-@padding-left--container:      @size-rem-base;
-// @padding-left--container-sm:   @size-rem-base;
-@width--page-header:           100%;
-@height--page-header:          2.5rem;
-@width--navBar:                @width--page-header;
-@width--input--artist:         10rem;
-@width--input--album:          15rem;
+@width--container:        100%;
+@max-width--container:    @width-screen-md-min;
+@padding-left--container: @container-gutter;
+@width--page-header:      100%;
+@height--page-header:     2.5rem;
+@width--navBar:           @width--page-header;
+@width--input--artist:    10rem;
+@width--input--album:     15rem;
 
 // spacing
 @margin-top--page-main:          5rem;
 @margin-bottom--page-main:       @size-rem-large;
 @margin-top--searchField:        0;
 @margin-bottom--searchField:     0;
-@padding-top--card-link:         @size-rem-smaller;
-@padding-bottom--card-link:      @size-rem-smaller;
+@padding-top--card-link:         @size-rem-small;
+@padding-bottom--card-link:      @size-rem-small;
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
 @margin-top--article-lyrics:     @size-rem-smaller;
@@ -175,12 +174,16 @@
 @margin-bottom--searchResults:   @margin-bottom--article-lyrics;
 @margin-left--navBar-item:       @size-rem-pico;
 @margin-left--footerNav-item:    @size-rem-smallest;
-@padding-top--input--search:     @size-rem-smaller;
+@padding-top--input--search:     @padding-top--card-link;
 @padding-bottom--page-footer:    @size-rem-base;
 
 // miscellaneous
 @border-bottom--input--search: 1px solid @color--border-bottom--input--search;
-@transition--textarea--lyrics: 0.15s;
 @box-shadow--page-header:      0 0 1px @color--box-shadow--page-header;
+
+// transitions
+@transition-timing--page-header:      250ms;
+@transition-timing--textarea--lyrics: 150ms;
+
 // content
 @content--navBar-title: 'llllyrics';
