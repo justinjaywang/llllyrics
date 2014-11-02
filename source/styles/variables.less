@@ -8,9 +8,9 @@
 
 // colors
 // : variables
-@color-gray-darkest:  rgba(0,0,0,0.72);
+@color-gray-darkest:  rgba(0,0,0,0.75);
 @color-gray-darker:   rgba(0,0,0,0.6);
-@color-gray-dark:     rgba(0,0,0,0.48);
+@color-gray-dark:     rgba(0,0,0,0.5);
 @color-gray:          rgba(0,0,0,0.4);
 @color-gray-light:    rgba(0,0,0,0.32);
 @color-gray-lighter:  rgba(0,0,0,0.24);
@@ -28,23 +28,26 @@
 @color--box-shadow--a:                @color-gray-light;
 @color--border--hr:                   @color-gray-lighter;
 @color--meta:                         @color-gray-light;
-@color--navBar:                       @color-gray;
+@color--navBar:                       @color-gray-lighter;
 @color--placeholder:                  @color-gray-light;
 @color--page-footer:                  @color-gray-lightest;
 @color--box-shadow--page-header:      @color-gray-lighter;
 @color--border-bottom--input--search: @color-gray-lighter;
 
 // sizing
-@size-tera:         4.2308;
-@size-giga:         3.2308;
-@size-mega:         2.6154;
-@size-largest:      2;
-@size-larger:       1.6154;
-@size-large:        1.2308;
+@size-tera:         3;
+@size-giga:         2;
+@size-mega:         1.75;
+@size-largest:      1.5;
+@size-larger:       1.3333;
+@size-large:        1.1667;
 @size-base:         1;
-@size-small:        0.7692;
-@size-smaller:      0.6154;
-@size-smallest:     0.4615;
+@size-small:        0.9167;
+@size-smaller:      0.8333;
+@size-smallest:     0.75;
+@size-micro:        0.6667;
+@size-nano:         0.5833;
+@size-pico:         0.5;
 @size-rem-tera:     unit(@size-tera, rem);
 @size-rem-giga:     unit(@size-giga, rem);
 @size-rem-mega:     unit(@size-mega, rem);
@@ -55,11 +58,16 @@
 @size-rem-small:    unit(@size-small, rem);
 @size-rem-smaller:  unit(@size-smaller, rem);
 @size-rem-smallest: unit(@size-smallest, rem);
+@size-rem-micro:    unit(@size-micro, rem);
+@size-rem-nano:     unit(@size-nano, rem);
+@size-rem-pico:     unit(@size-pico, rem);
 
 // typography
 // : font-size-variables
 @font-size-px-base:      19px;
 @font-size-px-small:     17.5px;
+@font-size-em-tera:      unit(@size-tera, em);
+@font-size-em-giga:      unit(@size-giga, em);
 @font-size-em-mega:      unit(@size-mega, em);
 @font-size-em-largest:   unit(@size-largest, em);
 @font-size-em-larger:    unit(@size-larger, em);
@@ -72,15 +80,15 @@
 @font-size--html:                @font-size-px-base;
 @font-size--html-sm:             @font-size-px-small;
 @font-size--body:                @font-size-em-base;
-@font-size--h1:                  @font-size-em-largest;
-@font-size--h2:                  @font-size-em-largest;
-@font-size--h3:                  @font-size-em-large;
+@font-size--h1:                  @font-size-em-giga;
+@font-size--h2:                  @font-size-em-giga;
+@font-size--h3:                  @font-size-em-larger;
 @font-size--p:                   @font-size-em-base;
 @font-size--card-meta:           @font-size-em-base;
 @font-size--article-meta:        @font-size-em-base;
-@font-size--navBar:              @font-size-em-base;
-@font-size--page-header:         @font-size-em-large;
+@font-size--page-header:         @font-size-em-base;
 @font-size--page-footer:         @font-size-em-base;
+@font-size--icon:                @font-size-em-larger;
 // : font-family-variables
 @font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:      "PT Serif", Georgia, "Times New Roman", Times, serif;
@@ -116,7 +124,7 @@
 @line-height--h2:                  @line-height-normal;
 @line-height--h3:                  @line-height-tighter;
 @line-height--p:                   @line-height-loose;
-@line-height--meta:                @line-height-loose;
+@line-height--meta:                @line-height-base;
 @line-height--page-header:         @line-height-base;
 @line-height--page-footer:         @line-height-base;
 // : letter-spacing-variables
@@ -143,30 +151,30 @@
 @max-width--container:         @width-screen-md-min;
 // @padding-left--container:      (@container-gutter * @max-width--container);
 // @padding-left--container-sm:   @container-gutter-percent;
-@padding-left--container:      18px;
+@padding-left--container:      @size-rem-base;
 // @padding-left--container-sm:   @size-rem-base;
 @width--page-header:           100%;
-@height--page-header:          60px;
+@height--page-header:          2.5rem;
 @width--navBar:                @width--page-header;
 @width--input--artist:         10rem;
 @width--input--album:          15rem;
 
 // spacing
-@margin-top--page-main:          @size-rem-tera;
+@margin-top--page-main:          5rem;
 @margin-bottom--page-main:       @size-rem-large;
-@margin-top--searchField:        @size-rem-large;
-@margin-bottom--searchField:     @size-rem-large;
+@margin-top--searchField:        0;
+@margin-bottom--searchField:     0;
 @padding-top--card-link:         @size-rem-large;
 @padding-bottom--card-link:      @size-rem-large;
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
 @margin-top--article-lyrics:     @size-rem-smaller;
-@margin-bottom--article-lyrics:  @size-rem-tera;
-@margin-bottom--searchResults:   @size-rem-tera;
-@margin-left--navBar-item:       @size-rem-smallest;
+@margin-bottom--article-lyrics:  (5rem + @height--page-header);
+@margin-bottom--searchResults:   @margin-bottom--article-lyrics;
+@margin-left--navBar-item:       @size-rem-nano;
 @margin-left--footerNav-item:    @size-rem-smallest;
 @padding-top--input--search:     @size-rem-smaller;
-@padding-bottom--page-footer:    @padding-left--container;
+@padding-bottom--page-footer:    @size-rem-base;
 
 // miscellaneous
 @border-bottom--input--search: 1px solid @color--border-bottom--input--search;

@@ -154,9 +154,12 @@ p {
 }
 // : nav
 .navBar {
-  font-size: @font-size--navBar;
   color: @color--navBar;
   width: @width--navBar;
+}
+.navBar .icon {
+  font-size: @font-size--icon;
+  line-height: normal;
 }
 .navBar-list {
   position: relative;
@@ -192,7 +195,7 @@ p {
   padding: @padding-top--input--search 0; // TEMP
   // background: #f1f1f1; // TEMP
   // border-radius: 5px; // TEMP
-  border-bottom: @border-bottom--input--search; // TEMP
+  // border-bottom: @border-bottom--input--search; // TEMP
 }
 .searchResults {
   margin-bottom: @margin-bottom--searchResults;
