@@ -185,6 +185,12 @@ p {
 .navBar-item--right {
   margin-right: 0;
 }
+.navBar-title {
+  color: @color--navBar-title;
+}
+.navBar-title:after {
+  content: @content--navBar-title;
+}
 // : search
 .searchField {
   display: inline-block;
@@ -198,6 +204,7 @@ p {
   // border-bottom: @border-bottom--input--search; // TEMP
 }
 .searchResults {
+  margin-top: @margin-top--searchResults;
   margin-bottom: @margin-bottom--searchResults;
 }
 // : cards
