@@ -1,4 +1,4 @@
-<header class="page-header u-alignMiddle" ng-class="{isAffixed: isAffixed, isShown: isShown, isTransitioned: isTransitioned}" sticky-header>
+<header class="page-header u-alignMiddle" ng-class="{isAffixed: isAffixed, isShown: isShown, isTransitioned: isTransitioned}">
   <nav class="navBar u-alignBlock">
     <div class="container container--header">
       <ul class="navBar-list u-textAlignRight">
@@ -18,17 +18,17 @@
         <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
           <a class="navBar-action" ng-href="/{{song._id.$oid}}">cancel</a>
         </li>
-        <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
+        <!-- <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
           <button class="button navBar-action" ng-click="destroy()">delete</button>
-        </li>
-        <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
+        </li> -->
+        <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')" ng-hide="editForm.$invalid || isClean()">
           <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid || isClean()">save</button>
         </li>
         <!-- AddCtrl -->
         <li class="navBar-item" ng-if="isActiveCtrl('AddCtrl')">
           <a href="/" class="navBar-action">cancel</a>
         </li>
-        <li class="navBar-item" ng-if="isActiveCtrl('AddCtrl')">
+        <li class="navBar-item" ng-if="isActiveCtrl('AddCtrl')" ng-hide="editForm.$invalid">
           <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid">add this song</button>
         </li>
         <!-- AboutCtrl -->

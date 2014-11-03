@@ -167,7 +167,6 @@ p {
 .navBar-item {
   display: inline-block;
   margin-left: @margin-left--navBar-item;
-  margin-right: @margin-left--navBar-item;
 }
 .navBar-item--left {
   position: absolute;
@@ -176,14 +175,6 @@ p {
 .navBar-item:first-child,
 .navBar-item--left {
   margin-left: 0;
-}
-.navBar-item--right {
-  position: absolute;
-  right: 0;
-}
-.navBar-item:last-child,
-.navBar-item--right {
-  margin-right: 0;
 }
 .navBar-title {
   color: @color--navBar-title;
@@ -216,6 +207,9 @@ p {
   color: @color--noResults-text;
   padding-top: @padding-top--noResults-text;
   line-height: @line-height--noResults-text;
+}
+.noResults-input {
+  color: @color--noResults-input;
 }
 .noResults-link {
   box-shadow: @box-shadow--noResults-link;
@@ -275,11 +269,5 @@ p {
 
 // temp
 button[disabled] {
-  color: rgba(0,0,0,0.1);
+  color: rgba(255,0,0,0.1);
 }
-// .noResults-link {
-//   color: @color--page-footer;
-//   font-size: @font-size--page-footer;
-//   font-family: @font-family--page-footer;
-//   font-weight: @font-weight--page-footer;
-// }

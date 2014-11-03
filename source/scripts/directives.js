@@ -57,7 +57,7 @@ directives.directive('stickyHeader', [
   function ($window, $document) {
     return function(scope, element, attrs) {
       // variables
-      var transitionDuration = 200,
+      var transitionDuration = 250,
         scrollInterval = 10,
         scrollIntervalId = 0,
         substantialScroll = 8,
@@ -168,24 +168,5 @@ directives.directive('stickyHeader', [
 
       // start
       init();
-
-      // angular.element($window).bind('scroll', function() {
-      //   var offsetTop = this.pageYOffset,
-      //     offsetBottom = this.innerHeight + offsetTop,
-      //     headerHeight = element[0].offsetHeight,
-      //     bodyHeight = document.body.scrollHeight;
-      //   if (offsetTop > headerHeight) {
-      //     scope.isAffixed = true;
-      //   } else {
-      //     scope.isAffixed = false;
-      //   }
-      //   if (offsetBottom >= bodyHeight) {
-      //     scope.isShown = true;
-      //   } else {
-      //     scope.isShown = false;
-      //   }
-      //   scope.$apply();
-      // });
-
     };
   }]);

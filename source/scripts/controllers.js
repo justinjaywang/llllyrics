@@ -67,8 +67,6 @@ controllers.controller('SearchCtrl', [
 
     // other functions
     $scope.updateResults = function() {
-      console.log('\n')
-      // console.log($scope.searchInput);
       if (angular.isUndefined($scope.searchInput)) {
         console.log('$scope.q undefined'); // TEMP
         return;
@@ -100,6 +98,8 @@ controllers.controller('SearchCtrl', [
 
     // filter helper functions
     var formatInput = function(searchInput, searchType) {
+      // returns input, lowercased and with special characters removed
+      // if prefixed, remove prefixes also
       if (angular.isUndefined(searchInput)) return;
       var preformatInput = function(searchInput) {
         return angular.lowercase(searchInput);
@@ -133,6 +133,7 @@ controllers.controller('SearchCtrl', [
       }
     };
     var formatData = function(data) {
+      // returns data, lowercased and with special characters removed
       if (angular.isUndefined(data)) {
         return angular.lowercase(data);
       } else {
@@ -142,37 +143,48 @@ controllers.controller('SearchCtrl', [
           .replace(regexes.symbols, '');
       }
     };
-    var isMatchByType = function(song, q, searchType) {
+    var doesMatchAllByType = function(song, qArray, searchType) {
+      // returns true if each word in qArray is a match based on searchType
+
+      // assign formatted data
       var artistData = formatData(song.artist);
       var albumData = formatData(song.album);
       var songData = formatData(song.song);
       var lyricsData = formatData(song.lyrics);
+      var allData = artistData + ' ' + albumData + ' ' + songData + ' ' + lyricsData;
+
+      // for every string in qArray, return true if matches all
       switch (searchType) {
         case $scope.searchTypes.all:
-          return isMatch(artistData, q) 
-            || isMatch(albumData, q) 
-            || isMatch(songData, q) 
-            || isMatch(lyricsData, q);
+          var doesMatchAll = qArray.every(function(q) {
+            return isMatch(q, allData);
+          });
           break;
         case $scope.searchTypes.artist:
-          return isMatch(artistData, q);
+          var doesMatchAll = qArray.every(function(q) {
+            return isMatch(q, artistData);
+          });
           break;
         case $scope.searchTypes.album:
-          return isMatch(albumData, q);
+          var doesMatchAll = qArray.every(function(q) {
+            return isMatch(q, albumData);
+          });
           break;
         case $scope.searchTypes.song:
-          return isMatch(songData, q);
+          var doesMatchAll = qArray.every(function(q) {
+            return isMatch(q, songData);
+          });
           break;
         case $scope.searchTypes.lyrics:
-          return isMatch(lyricsData, q);
+          var doesMatchAll = qArray.every(function(q) {
+            return isMatch(q, lyricsData);
+          });
           break;
-        default:
-          console.log('default isMatchByType'); // TEMP
-          return false;
       }
-    }
-    var isMatch = function(data, q) {
-      // TO DO: make this per word basis
+      return doesMatchAll;
+    };
+    var isMatch = function(q, data) {
+      // returns true if query is a match in input data
       if (angular.isUndefined(data)) {
         return false;
       } else {
@@ -182,10 +194,10 @@ controllers.controller('SearchCtrl', [
 
     // the filter function
     $scope.filterSearch = function(searchInput, searchType) {
-      // console.log('filter search called'); // TEMP this checks how many times it gets called
-      var q = formatInput(searchInput, searchType);
+      var qString = formatInput(searchInput, searchType);
+      var qArray = (angular.isUndefined(qString)) ? [''] : qString.split(' ');
       return function(song) {
-        return isMatchByType(song, q, searchType);
+        return doesMatchAllByType(song, qArray, searchType);
       };
     };
 

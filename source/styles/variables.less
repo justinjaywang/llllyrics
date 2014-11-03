@@ -36,6 +36,8 @@
 @color--box-shadow--page-header:      @color-gray-lighter;
 @color--border-bottom--input--search: @color-gray-lightest;
 @color--noResults-text:               @color-gray-light;
+@color--noResults-input:              @color-gray-darkest;
+@color--box-shadow--noResults-link:   @color-gray-lighter;
 
 // sizing
 @size-tera:         3;
@@ -162,7 +164,7 @@
 @width--input--album:     15rem;
 
 // spacing
-@margin-top--page-main:          5rem;
+@margin-top--page-main:          (2rem + @height--page-header);
 @margin-bottom--page-main:       @size-rem-large;
 @margin-top--searchField:        0;
 @margin-bottom--searchField:     0;
@@ -172,10 +174,10 @@
 @padding-top--article-header:    @padding-top--card-link;
 @padding-bottom--article-header: @padding-bottom--card-link;
 @margin-top--article-lyrics:     @size-rem-smaller;
-@margin-bottom--article-lyrics:  (5rem + @height--page-header);
+@margin-bottom--article-lyrics:  (4rem + @height--page-header);
 @margin-top--searchResults:      @margin-top--article-lyrics;
 @margin-bottom--searchResults:   @margin-bottom--article-lyrics;
-@margin-left--navBar-item:       @size-rem-pico;
+@margin-left--navBar-item:       @size-rem-base;
 @margin-left--footerNav-item:    @size-rem-smallest;
 @padding-top--input--search:     @padding-top--card-link;
 @padding-bottom--page-footer:    @size-rem-base;
@@ -183,7 +185,7 @@
 // miscellaneous
 @border-bottom--input--search: 1px solid @color--border-bottom--input--search;
 @box-shadow--page-header:      0 0 1px @color--box-shadow--page-header;
-@box-shadow--noResults-link:   inset 0 -1px @color-gray-lighter;
+@box-shadow--noResults-link:   inset 0 -1px @color--box-shadow--noResults-link;
 
 // transitions
 @transition-timing--page-header:      250ms;
