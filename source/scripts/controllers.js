@@ -38,10 +38,13 @@ controllers.controller('SearchCtrl', [
     regexes.song = /^(song|s):/i;
     regexes.lyrics = /^(lyrics|l):/i;
     regexes.multispace = / +/g;
-    regexes.prespace = /^ /; // TEMP
-    regexes.postspace = / $/; // TEMP
+    regexes.prespace = /^ /;
+    regexes.postspace = / $/;
     regexes.newline = /\n/g;
-    regexes.symbols = /[^a-z0-9 ]/g;
+    regexes.symbols = /[^a-z0-9" ]/g;
+    regexes.prequote = /^"/;
+    regexes.postquote = /"$/;
+    regexes.splitBySpace = /"([^"]+)"|([^ ]+)/g; // split by space not in double quotes
 
     // define search type strings
     $scope.searchTypes = {};
@@ -132,6 +135,18 @@ controllers.controller('SearchCtrl', [
           return postformatInput(q);
       }
     };
+    var formatInputToArray = function(qString) {
+      // returns array from space-delimited string,
+      // keeping spaces between double quotes
+      var qArray = (angular.isUndefined(qString) || !qString) ? [''] : qString.match(regexes.splitBySpace);
+      // clean up leftover spaces and quotes within array
+      var qArrayCleaned = qArray.map(function(q) {
+        return q
+          .replace(regexes.prequote, '')
+          .replace(regexes.postquote, '');
+      });
+      return qArrayCleaned;
+    } 
     var formatData = function(data) {
       // returns data, lowercased and with special characters removed
       if (angular.isUndefined(data)) {
@@ -195,7 +210,7 @@ controllers.controller('SearchCtrl', [
     // the filter function
     $scope.filterSearch = function(searchInput, searchType) {
       var qString = formatInput(searchInput, searchType);
-      var qArray = (angular.isUndefined(qString)) ? [''] : qString.split(' ');
+      var qArray = formatInputToArray(qString);
       return function(song) {
         return doesMatchAllByType(song, qArray, searchType);
       };
