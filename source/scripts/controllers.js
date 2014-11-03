@@ -90,6 +90,10 @@ controllers.controller('SearchCtrl', [
       // returns input, lowercased and with special characters removed
       // if prefixed, remove prefixes also
       if (angular.isUndefined(searchInput)) return;
+      // default searchType if none supplied
+      if (arguments.length == 1) {
+        searchType = $scope.searchTypes.all;
+      }
       var preformatInput = function(searchInput) {
         return angular.lowercase(searchInput);
       };
@@ -205,7 +209,16 @@ controllers.controller('SearchCtrl', [
     $scope.updateLocation = function() {
       // sets location query parameter to searchInput
       // gets called on ngChange for search input
-      $location.search('q', $scope.searchInput);
+      var searchInput = $scope.searchInput;
+      var formattedInput = formatInput(searchInput);
+      console.log(formattedInput);
+      // if (!formatInput(searchInput, $scope.searchTypes.all)) {
+      //   $location.path('/');
+      //   $scope.$apply();
+      // } else {
+      //   $location.search('q', searchInput); // TO DO: pretty format URL?
+      // }
+      $location.search('q', $scope.searchInput).replace(); // TO DO: pretty format URL?
     };
 
     $scope.queryByType = function(searchType) {
@@ -218,7 +231,14 @@ controllers.controller('SearchCtrl', [
       if (angular.isDefined(q)) {
         $scope.searchInput = q;
         $scope.q = q;
+        $scope.formattedQ = formatInput(q);
         $scope.parseSearchType();
+      }
+      // TO DO: fix title setting
+      if (q) {
+        Page.setTitle(q + ' — llllyrics search');
+      } else {
+        Page.setTitle('llllyrics search');
       }
     };
 
@@ -236,8 +256,7 @@ controllers.controller('SearchCtrl', [
       };
     };
 
-    // set search page title
-    Page.setTitle('Search — llllyrics'); // TEMP
+    
   }]);
 
 controllers.controller('ViewCtrl', [
@@ -252,7 +271,7 @@ controllers.controller('ViewCtrl', [
       Page.setTitle('"' + song.song + '" by ' + song.artist);    
     }, function(err) {
       $scope.errorId = $routeParams.songId;
-      Page.setTitle(err.status + ' — llllyrics');
+      Page.setTitle('llllyrics' + err.status);
       console.log(err);
     });
   }]);
@@ -270,7 +289,7 @@ controllers.controller('AddCtrl', [
         console.log(err);
       });
     }
-    Page.setTitle('Add — llllyrics');
+    Page.setTitle('add llllyrics');
   }]);
 
 controllers.controller('EditCtrl', [

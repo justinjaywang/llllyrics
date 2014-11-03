@@ -10,7 +10,7 @@
     <input class="input input--search u-fillWidth" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 1000}}" ng-change="updateLocation()" placeholder="search lyrics" focus>
   </h1>
 
-  <div class="searchResults" ng-show="(q.length > 0)">
+  <div class="searchResults" ng-show="(formattedQ.length > 0)">
 
     <section class="cards">
       <ul class="searchResults-list" ng-show="(searchType === searchTypes.all)">
