@@ -26,10 +26,10 @@ controllers.controller('SearchCtrl', [
   'Song',
   function($scope, $location, Page, Song) {
     // define helper functions
-    $scope.changeSearchType = function(type) {
+    var changeSearchType = function(type) {
       $scope.searchType = type;
     };
-    $scope.parseSearchType = function() {
+    var parseSearchType = function() {
       // updates searchType based on prefixes
       if (angular.isUndefined($scope.q)) {
         console.log('$scope.q undefined in changeSearchType'); // TEMP
@@ -38,24 +38,24 @@ controllers.controller('SearchCtrl', [
       var q = $scope.q;
       if (q === '') {
         // empty search
-        $scope.changeSearchType($scope.searchTypes.all); // TO DO: change to empty, show something else
+        changeSearchType($scope.searchTypes.all); // TO DO: change to empty, show something else
       } else if (q.match(regexes.artist)) {
         // artist search
-        $scope.changeSearchType($scope.searchTypes.artist);
+        changeSearchType($scope.searchTypes.artist);
       } else if (q.match(regexes.album)) {
         // album search
-        $scope.changeSearchType($scope.searchTypes.album);
+        changeSearchType($scope.searchTypes.album);
 
       } else if (q.match(regexes.song)) {
         // song title search
-        $scope.changeSearchType($scope.searchTypes.song);
+        changeSearchType($scope.searchTypes.song);
 
       } else if (q.match(regexes.lyrics)) {
         // lyrics search
-        $scope.changeSearchType($scope.searchTypes.lyrics);
+        changeSearchType($scope.searchTypes.lyrics);
       } else {
         // all search
-        $scope.changeSearchType($scope.searchTypes.all);
+        changeSearchType($scope.searchTypes.all);
       }
     };
     // define all variables
@@ -81,9 +81,11 @@ controllers.controller('SearchCtrl', [
     $scope.searchTypes.song = 'song';
     $scope.searchTypes.lyrics = 'lyrics';
     // : instantiate search type
-    $scope.changeSearchType('$');
+    changeSearchType('$');
     // : limit variable
     $scope.resultLimit = 12;
+    // : variable
+    $scope.isDoneQuerying = false;
 
     // filterSearch helper functions
     var formatInput = function(searchInput, searchType) {
@@ -202,6 +204,7 @@ controllers.controller('SearchCtrl', [
     Song.query(function(songs) {
       console.log('successful query'); // TEMP
       $scope.songs = songs;
+      $scope.isDoneQuerying = true;
     }, function(err) {
       console.log(err);
     });
@@ -232,13 +235,13 @@ controllers.controller('SearchCtrl', [
         $scope.searchInput = q;
         $scope.q = q;
         $scope.formattedQ = formatInput(q);
-        $scope.parseSearchType();
+        parseSearchType();
       }
       // TO DO: fix title setting
       if (q) {
         Page.setTitle(q + ' — llllyrics search');
       } else {
-        Page.setTitle('llllyrics search');
+        Page.setTitle('llllyrics');
       }
     };
 
@@ -332,5 +335,5 @@ controllers.controller('AboutCtrl', [
   '$location',
   'Page',
   function($scope, $location, Page) {
-    Page.setTitle('About — llllyrics');
+    Page.setTitle('about llllyrics');
   }]);

@@ -34,11 +34,12 @@
       </ul>
     </section>
 
-    <section class="noResults" ng-show="(!filteredSongsAll || (filteredSongsAll.length == 0))
-                                     && (!filteredSongsArtist || (filteredSongsArtist.length == 0))
-                                     && (!filteredSongsAlbum || (filteredSongsAlbum.length == 0))
-                                     && (!filteredSongsSong || (filteredSongsSong.length == 0))
-                                     && (!filteredSongsLyrics || (filteredSongsLyrics.length == 0))">
+    <section class="noResults" ng-show="isDoneQuerying
+                                        && (!filteredSongsAll || (filteredSongsAll.length == 0))
+                                        && (!filteredSongsArtist || (filteredSongsArtist.length == 0))
+                                        && (!filteredSongsAlbum || (filteredSongsAlbum.length == 0))
+                                        && (!filteredSongsSong || (filteredSongsSong.length == 0))
+                                        && (!filteredSongsLyrics || (filteredSongsLyrics.length == 0))">
       <p class="noResults-text">No results found. <a class="noResults-link" href="/add">Add</a> these lyrics.</p>
     </section>
 
