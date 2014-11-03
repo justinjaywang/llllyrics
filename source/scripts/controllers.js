@@ -28,10 +28,38 @@ controllers.controller('SearchCtrl', [
     // define helper functions
     $scope.changeSearchType = function(type) {
       $scope.searchType = type;
-      // console.log('searchType: ' + type); // TEMP
     };
+    $scope.parseSearchType = function() {
+      // updates searchType based on prefixes
+      if (angular.isUndefined($scope.q)) {
+        console.log('$scope.q undefined in changeSearchType'); // TEMP
+        return;
+      }
+      var q = $scope.q;
+      if (q === '') {
+        // empty search
+        $scope.changeSearchType($scope.searchTypes.all); // TO DO: change to empty, show something else
+      } else if (q.match(regexes.artist)) {
+        // artist search
+        $scope.changeSearchType($scope.searchTypes.artist);
+      } else if (q.match(regexes.album)) {
+        // album search
+        $scope.changeSearchType($scope.searchTypes.album);
 
-    // define regular expressions
+      } else if (q.match(regexes.song)) {
+        // song title search
+        $scope.changeSearchType($scope.searchTypes.song);
+
+      } else if (q.match(regexes.lyrics)) {
+        // lyrics search
+        $scope.changeSearchType($scope.searchTypes.lyrics);
+      } else {
+        // all search
+        $scope.changeSearchType($scope.searchTypes.all);
+      }
+    };
+    // define all variables
+    // : define regular expressions
     var regexes = {};
     regexes.artist = /^(artist|a):/i;
     regexes.album = /^(album|b):/i;
@@ -45,61 +73,19 @@ controllers.controller('SearchCtrl', [
     regexes.prequote = /^"/;
     regexes.postquote = /"$/;
     regexes.splitBySpace = /"([^"]+)"|([^ ]+)/g; // split by space not in double quotes
-
-    // define search type strings
+    // : define search type strings
     $scope.searchTypes = {};
     $scope.searchTypes.all = '$';
     $scope.searchTypes.artist = 'artist';
     $scope.searchTypes.album = 'album';
     $scope.searchTypes.song = 'song';
     $scope.searchTypes.lyrics = 'lyrics';
-
-    // instantiate search type
+    // : instantiate search type
     $scope.changeSearchType('$');
-
-    // limit variable
+    // : limit variable
     $scope.resultLimit = 12;
 
-    // query database
-    Song.query(function(songs) {
-      console.log('successful query'); // TEMP
-      $scope.songs = songs;
-    }, function(err) {
-      console.log(err);
-    });
-
-    // other functions
-    $scope.updateResults = function() {
-      if (angular.isUndefined($scope.searchInput)) {
-        console.log('$scope.q undefined'); // TEMP
-        return;
-      }
-      var searchInput = $scope.searchInput;
-      // console.log(q); // TEMP
-      if (searchInput === '') {
-        // empty search
-        $scope.changeSearchType($scope.searchTypes.all); // TO DO: change to empty, show something else
-      } else if (searchInput.match(regexes.artist)) {
-        // artist search
-        $scope.changeSearchType($scope.searchTypes.artist);
-      } else if (searchInput.match(regexes.album)) {
-        // album search
-        $scope.changeSearchType($scope.searchTypes.album);
-
-      } else if (searchInput.match(regexes.song)) {
-        // song title search
-        $scope.changeSearchType($scope.searchTypes.song);
-
-      } else if (searchInput.match(regexes.lyrics)) {
-        // lyrics search
-        $scope.changeSearchType($scope.searchTypes.lyrics);
-      } else {
-        // all search
-        $scope.changeSearchType($scope.searchTypes.all);
-      }
-    };
-
-    // filter helper functions
+    // filterSearch helper functions
     var formatInput = function(searchInput, searchType) {
       // returns input, lowercased and with special characters removed
       // if prefixed, remove prefixes also
@@ -138,7 +124,8 @@ controllers.controller('SearchCtrl', [
     var formatInputToArray = function(qString) {
       // returns array from space-delimited string,
       // keeping spaces between double quotes
-      var qArray = (angular.isUndefined(qString) || !qString) ? [''] : qString.match(regexes.splitBySpace);
+      var qArray = (angular.isUndefined(qString) || 
+        !qString) ? [''] : qString.match(regexes.splitBySpace);
       // clean up leftover spaces and quotes within array
       var qArrayCleaned = qArray.map(function(q) {
         return q
@@ -160,14 +147,12 @@ controllers.controller('SearchCtrl', [
     };
     var doesMatchAllByType = function(song, qArray, searchType) {
       // returns true if each word in qArray is a match based on searchType
-
       // assign formatted data
       var artistData = formatData(song.artist);
       var albumData = formatData(song.album);
       var songData = formatData(song.song);
       var lyricsData = formatData(song.lyrics);
       var allData = artistData + ' ' + albumData + ' ' + songData + ' ' + lyricsData;
-
       // for every string in qArray, return true if matches all
       switch (searchType) {
         case $scope.searchTypes.all:
@@ -207,9 +192,44 @@ controllers.controller('SearchCtrl', [
       }
     };
 
+    // WORKING AREA -------------------------------------
+
+    // query database
+    Song.query(function(songs) {
+      console.log('successful query'); // TEMP
+      $scope.songs = songs;
+    }, function(err) {
+      console.log(err);
+    });
+
+    $scope.updateLocation = function() {
+      // sets location query parameter to searchInput
+      // gets called on ngChange for search input
+      $location.search('q', $scope.searchInput);
+    };
+
+    $scope.queryByType = function(searchType) {
+
+    };
+
+    $scope.initLocation = function() {
+      // initializes variables for new location
+      var q = $location.search().q;
+      if (angular.isDefined(q)) {
+        $scope.searchInput = q;
+        $scope.q = q;
+        $scope.parseSearchType();
+      }
+    };
+
+    $scope.initLocation();
+
+    // WORKING AREA -------------------------------------
+
     // the filter function
-    $scope.filterSearch = function(searchInput, searchType) {
-      var qString = formatInput(searchInput, searchType);
+    $scope.filterSearch = function(q, searchType) {
+      // gets called for each song to determine if q is a match
+      var qString = formatInput(q, searchType);
       var qArray = formatInputToArray(qString);
       return function(song) {
         return doesMatchAllByType(song, qArray, searchType);

@@ -4,8 +4,6 @@
 
 var directives = angular.module('directives', []);
 
-// lowerCamelCase
-
 directives.directive('autoGrow', [
   function() {
     return function(scope, element, attrs) {
@@ -169,4 +167,19 @@ directives.directive('stickyHeader', [
       // start
       init();
     };
+  }]);
+
+directives.directive('focus', [
+  '$timeout',
+  function($timeout) {
+    return function(scope, element, attrs) {
+      $timeout(function() { 
+        element[0].focus();
+      }, 0);
+      // scope.$watch(attrs.focus, function() {
+      //     $timeout(function() { 
+      //       element[0].focus();
+      //     }, 0);
+      // }, true);
+    }
   }]);
