@@ -49,16 +49,137 @@ directives.directive('autoGrow', [
     }
   }]);
 
+// directives.directive('stickyHeader', [
+//   '$window',
+//   '$document',
+//   function ($window, $document) {
+//     return function(scope, element, attrs) {
+//       // variables
+//       var transitionDuration = 250,
+//         scrollInterval = 50,
+//         scrollIntervalId = 0,
+//         substantialScroll = scrollInterval,
+//         windowHeight = 0,
+//         bodyHeight = 0,
+//         headerHeight = 0,
+//         prevScrollTop = 0,
+//         scrollTop = 0,
+//         relativeScrollTop = 0,
+//         scrollBottom = 0,
+//         counter = 0,
+//         transitionIntervals = transitionDuration / scrollInterval;
+
+//       scope.isAffixed = false;
+//       scope.isShown = false;
+//       scope.isTransitioned = false;
+
+//       // construction
+//       var init = function() {
+//         scrollIntervalId = setInterval(updatePage, scrollInterval);
+//         setInitialValues();
+//         bindWindowResize();
+//       };
+
+//       var setInitialValues = function() {
+//         windowHeight = $window.innerHeight,
+//         bodyHeight = $document[0].body.scrollHeight,
+//         headerHeight = element[0].offsetHeight;
+//         prevScrollTop = $window.pageYOffset;
+//         scrollTop = prevScrollTop;
+//         scrollBottom = scrollTop + windowHeight;
+//       };
+
+//       // updating
+//       var updatePage = function() {
+//         $window.requestAnimationFrame(function() {
+//           updateValues();
+//           updateClasses();
+//         });
+//       };
+
+//       var updateValues = function() {
+//         bodyHeight = $document[0].body.scrollHeight;
+//         prevScrollTop = scrollTop;
+//         scrollTop = $window.pageYOffset;
+//         scrollBottom = scrollTop + windowHeight;
+//         relativeScrollTop = scrollTop - prevScrollTop;
+//       };
+
+//       var updateClasses = function() {
+//         // two sets of actions, depending on isTransitioned
+//         if (!scope.isTransitioned) {
+//           // not transitioned
+//           if (!scope.isAffixed && (scrollTop > headerHeight)) {
+//             // if not affixed and scrolled below header,
+//             // then affix and set transition after apply
+//             scope.isAffixed = true;
+//             scope.isShown = false;
+//             scope.$apply();
+//             scope.isTransitioned = true;
+//           } else if (scope.isAffixed && (scrollTop <= 0)) {
+//             // if affixed and scrolled to top,
+//             // then remove affix after timeout
+//             scope.isAffixed = false;
+//           }
+//         } else {
+//           // transitioned
+//           if ((scrollTop <= 0) && scope.isShown) {
+//             // if scrolled to top and is shown,
+//             // then remove transition after allowing show transition to occur
+//             counter++;
+//             if (counter >= transitionIntervals) {
+//               scope.isTransitioned = false;
+//               counter = 0;
+//             }
+//           } else if ((scrollTop <= 0) && !scope.isShown) {
+//             // if scrolled to top and is not shown,
+//             // then finish showing
+//             scope.isShown = true;
+//           } else if ((scrollTop <= headerHeight) && !scope.isShown) {
+//             // if scrolled within header and is not shown,
+//             // then remove affix and remove transition
+//             scope.isAffixed = false;
+//             scope.isTransitioned = false;
+//           } else if (scrollBottom >= bodyHeight) {
+//             // if scrolled to bottom,
+//             // then show
+//             scope.isShown = true;
+//           } else if (scope.isShown && (relativeScrollTop > 0)) {
+//             // if shown and scrolled down,
+//             // then remove show
+//             scope.isShown = false;
+//           } else if (!scope.isShown && (relativeScrollTop < -substantialScroll)) {
+//             // if not shown and scrolled up substantially,
+//             // then show
+//             scope.isShown = true;
+//           }
+//         }
+//         scope.$apply();
+//       };
+
+//       // bind window resize
+//       var bindWindowResize = function() {
+//         angular.element($window).bind('resize', function() {
+//           setInitialValues();
+//         });
+//       };
+
+//       // start
+//       init();
+//     };
+//   }]);
+
 directives.directive('stickyHeader', [
   '$window',
   '$document',
-  function ($window, $document) {
+  '$timeout',
+  function ($window, $document, $timeout) {
     return function(scope, element, attrs) {
       // variables
       var transitionDuration = 250,
-        scrollInterval = 10,
+        scrollInterval = 50,
         scrollIntervalId = 0,
-        substantialScroll = 8,
+        substantialScroll = 25,
         windowHeight = 0,
         bodyHeight = 0,
         headerHeight = 0,
@@ -66,12 +187,14 @@ directives.directive('stickyHeader', [
         scrollTop = 0,
         relativeScrollTop = 0,
         scrollBottom = 0,
-        counter = 0,
-        transitionIntervals = transitionDuration / scrollInterval;
+        addTransition = false,
+        removeTransitionCounter = 0,
+        transitionIntervals = Math.ceil(transitionDuration / scrollInterval);
 
-      scope.isAffixed = false;
-      scope.isShown = false;
-      scope.isTransitioned = false;
+      var headerClasses = {};
+      headerClasses.isAffixed = false;
+      headerClasses.isShown = false;
+      headerClasses.isTransitioned = false;
 
       // construction
       var init = function() {
@@ -105,56 +228,71 @@ directives.directive('stickyHeader', [
         relativeScrollTop = scrollTop - prevScrollTop;
       };
 
+      var applyClasses = function() {
+        var headerElement = angular.element(document.getElementById('stickyHeader'));
+        angular.forEach(headerClasses, function(val, key) {
+          if (val) {
+            headerElement.addClass(key);
+          } else {
+            headerElement.removeClass(key);
+          }
+        });
+      };
+
       var updateClasses = function() {
         // two sets of actions, depending on isTransitioned
-        if (!scope.isTransitioned) {
+        if (!headerClasses.isTransitioned) {
           // not transitioned
-          if (!scope.isAffixed && (scrollTop > headerHeight)) {
+          if (addTransition) {
+            // if should addTransition,
+            // then add transition and reset toggle
+            headerClasses.isTransitioned = true;
+            addTransition = false;
+          } else if (!headerClasses.isAffixed && (scrollTop > headerHeight)) {
             // if not affixed and scrolled below header,
-            // then affix and set transition after apply
-            scope.isAffixed = true;
-            scope.isShown = false;
-            scope.$apply();
-            scope.isTransitioned = true;
-          } else if (scope.isAffixed && (scrollTop <= 0)) {
+            // then affix and set addTransition to true for next call to updateClasses
+            headerClasses.isAffixed = true;
+            headerClasses.isShown = false;
+            addTransition = true;
+          } else if (headerClasses.isAffixed && (scrollTop <= 0)) {
             // if affixed and scrolled to top,
             // then remove affix after timeout
-            scope.isAffixed = false;
+            headerClasses.isAffixed = false;
           }
         } else {
           // transitioned
-          if ((scrollTop <= 0) && scope.isShown) {
+          if ((scrollTop <= 0) && headerClasses.isShown) {
             // if scrolled to top and is shown,
             // then remove transition after allowing show transition to occur
-            counter++;
-            if (counter >= transitionIntervals) {
-              scope.isTransitioned = false;
-              counter = 0;
+            removeTransitionCounter++;
+            if (removeTransitionCounter >= transitionIntervals) {
+              headerClasses.isTransitioned = false;
+              removeTransitionCounter = 0;
             }
-          } else if ((scrollTop <= 0) && !scope.isShown) {
+          } else if ((scrollTop <= 0) && !headerClasses.isShown) {
             // if scrolled to top and is not shown,
             // then finish showing
-            scope.isShown = true;
-          } else if ((scrollTop <= headerHeight) && !scope.isShown) {
+            headerClasses.isShown = true;
+          } else if ((scrollTop <= headerHeight) && !headerClasses.isShown) {
             // if scrolled within header and is not shown,
             // then remove affix and remove transition
-            scope.isAffixed = false;
-            scope.isTransitioned = false;
+            headerClasses.isAffixed = false;
+            headerClasses.isTransitioned = false;
           } else if (scrollBottom >= bodyHeight) {
             // if scrolled to bottom,
             // then show
-            scope.isShown = true;
-          } else if (scope.isShown && (relativeScrollTop > 0)) {
+            headerClasses.isShown = true;
+          } else if (headerClasses.isShown && (relativeScrollTop > 0)) {
             // if shown and scrolled down,
             // then remove show
-            scope.isShown = false;
-          } else if (!scope.isShown && (relativeScrollTop < -substantialScroll)) {
+            headerClasses.isShown = false;
+          } else if (!headerClasses.isShown && (relativeScrollTop < -substantialScroll)) {
             // if not shown and scrolled up substantially,
             // then show
-            scope.isShown = true;
+            headerClasses.isShown = true;
           }
         }
-        scope.$apply();
+        applyClasses();
       };
 
       // bind window resize
