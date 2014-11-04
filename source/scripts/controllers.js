@@ -58,6 +58,14 @@ controllers.controller('SearchCtrl', [
         changeSearchType($scope.searchTypes.all);
       }
     };
+    var setTitle = function(q) {
+      if (q) {
+        Page.setTitle(q + ' — llllyrics search');
+      } else {
+        Page.setTitle('llllyrics');
+      }
+    };
+
     // define all variables
     // : define regular expressions
     var regexes = {};
@@ -87,7 +95,7 @@ controllers.controller('SearchCtrl', [
     // : variable
     $scope.isDoneQuerying = false;
 
-    // filterSearch helper functions
+    // define filterSearch helper functions
     var formatInput = function(searchInput, searchType) {
       // returns input, lowercased and with special characters removed
       // if prefixed, remove prefixes also
@@ -198,7 +206,17 @@ controllers.controller('SearchCtrl', [
       }
     };
 
-    // WORKING AREA -------------------------------------
+    // define filter function
+    $scope.filterSearch = function(q, searchType) {
+      // gets called for each song to determine if q is a match
+      var qString = formatInput(q, searchType);
+      var qArray = formatInputToArray(qString);
+      return function(song) {
+        return doesMatchAllByType(song, qArray, searchType);
+      };
+    };
+
+    // START WORKING AREA -------------------------------------
 
     // query database
     Song.query(function(songs) {
@@ -214,7 +232,7 @@ controllers.controller('SearchCtrl', [
       // gets called on ngChange for search input
       var searchInput = $scope.searchInput;
       var formattedInput = formatInput(searchInput);
-      console.log(formattedInput);
+      // console.log(formattedInput);
       // if (!formatInput(searchInput, $scope.searchTypes.all)) {
       //   $location.path('/');
       //   $scope.$apply();
@@ -237,27 +255,15 @@ controllers.controller('SearchCtrl', [
         $scope.formattedQ = formatInput(q);
         parseSearchType();
       }
-      // TO DO: fix title setting
-      if (q) {
-        Page.setTitle(q + ' — llllyrics search');
-      } else {
-        Page.setTitle('llllyrics');
-      }
+      setTitle(q);
     };
 
+    // init
     $scope.initLocation();
 
-    // WORKING AREA -------------------------------------
+    // END WORKING AREA ---------------------------------------
 
-    // the filter function
-    $scope.filterSearch = function(q, searchType) {
-      // gets called for each song to determine if q is a match
-      var qString = formatInput(q, searchType);
-      var qArray = formatInputToArray(qString);
-      return function(song) {
-        return doesMatchAllByType(song, qArray, searchType);
-      };
-    };
+    
 
     
   }]);

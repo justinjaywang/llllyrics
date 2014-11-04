@@ -13,14 +13,11 @@ directives.directive('autoGrow', [
 
       var $shadow = angular.element('<span></span>').css({
         position: 'fixed',
-        width: element[0].offsetWidth,
-        fontSize: element.css('fontSize'),
-        fontFamily: element.css('fontFamily'),
-        lineHeight: element.css('lineHeight'),
-        visibility: 'hidden',
+        width: element[0].offsetWidth + 'px',
+        visibility: 'hidden'
       });
 
-      angular.element(document.body).append($shadow);
+      angular.element(document.getElementById('articleLyricsEdit')).append($shadow);
    
       var update = function() {
         var times = function(string, number) {
@@ -71,8 +68,8 @@ directives.directive('stickyHeader', [
         transitionIntervals = Math.ceil(transitionDuration / scrollInterval);
 
       var headerClasses = {};
-      headerClasses.isAffixed = false;
-      headerClasses.isShown = false;
+      headerClasses.isAffixed = true;
+      headerClasses.isShown = true;
       headerClasses.isTransitioned = false;
 
       // construction
@@ -193,10 +190,5 @@ directives.directive('focus', [
       $timeout(function() { 
         element[0].focus();
       }, 0);
-      // scope.$watch(attrs.focus, function() {
-      //     $timeout(function() { 
-      //       element[0].focus();
-      //     }, 0);
-      // }, true);
-    }
+    };
   }]);
