@@ -45,6 +45,7 @@
   }
 }
 
+// GETS USED
 // opacity
 .opacity(@opacity) {
   opacity: @opacity;
@@ -102,6 +103,14 @@
      -moz-transition: -moz-transform @transition;
        -o-transition: -o-transform @transition;
           transition: transform @transition;
+}
+
+// GETS USED
+.animation(@animation) {
+  -webkit-animation: @animation;
+     -moz-animation: @animation;
+       -o-animation: @animation;
+          animation: @animation;
 }
 
 // user select

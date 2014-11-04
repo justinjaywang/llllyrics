@@ -1,0 +1,90 @@
+// keyframes
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+// // ng-show
+// .cover-image,
+// .subcover--numItems,
+// .subcover--list,
+// .subcover--searchInstructions,
+// .itemElementList {
+//   &.ng-hide-remove {
+//     .transition(opacity 0.2s);
+//     opacity: 0;
+//   }
+//   &.ng-hide-remove.ng-hide-remove-active {
+//     opacity: 1;
+//   }
+//   &.ng-hide-add-active {
+//     visibility: hidden;
+//   }
+// }
+// .itemDetail {
+//   &.ng-hide-remove {
+//     .transition(opacity 0.8s);
+//     opacity: 0;
+//   }
+//   &.ng-hide-remove.ng-hide-remove-active {
+//     opacity: 1;
+//   }
+//   &.ng-hide-add-active {
+//     visibility: hidden;
+//   }
+// }
+// // ng-repeat, ng-view
+// .itemElement {
+//   &.ng-enter {
+//     .transition(opacity 0.8s);
+//     opacity: 0;
+//   }
+//   &.ng-enter.ng-enter-active {
+//     opacity: 1;
+//   }
+//   &.ng-leave-active {
+//     visibility: hidden;
+//   }
+// }
+
+// add and remove
+.navBar-item {
+  // removing ng-hide
+  &.ng-hide-remove {
+    .animation(fadeIn 250ms);
+  }
+  &.ng-hide-add {
+    .animation(fadeOut 50ms);
+  }
+}
+// enter and leave
+// .navBar-item {
+//   &.ng-enter {
+//     background: rgba(0,255,0,0.4);
+//     .transition(all 2s);
+
+//     // .transition(opacity 1s);
+//     // opacity: 0;
+//   }
+//   &.ng-enter.ng-enter-active {
+//     background: rgba(0,255,0,1);
+//     // opacity: 1;
+//   }
+//   &.ng-leave {
+//     background: rgba(255,0,0,0.4);
+//   }
+//   &.ng-leave-active {
+//     background: rgba(255,0,0,1);
+//   }
+// }
+
+.ng-enter {
+
+}
+.ng-leave {
+
+}
