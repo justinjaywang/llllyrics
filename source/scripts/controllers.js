@@ -216,10 +216,7 @@ controllers.controller('SearchCtrl', [
       };
     };
 
-    // START WORKING AREA -------------------------------------
-
-    // TEMP
-    // query database
+    // query function
     var queryAll = function() {
       Song.query(function(songs) {
         console.log('successful query'); // TEMP
@@ -230,18 +227,8 @@ controllers.controller('SearchCtrl', [
         console.log(err);
       });
     }
-    // query database
-    // Song.query(function(songs) {
-    //   console.log('successful query'); // TEMP
-    //   console.log($scope.songs);
-    //   $scope.songs = songs;
-    //   $scope.isDoneQuerying = true;
-    //   console.log($scope.songs);
 
-    // }, function(err) {
-    //   console.log(err);
-    // });
-
+    // location functions
     $scope.setQueryParams = function() {
       // sets location query parameter to searchInput
       // gets called on ngChange for search input
@@ -250,10 +237,10 @@ controllers.controller('SearchCtrl', [
       $location.search('q', $scope.searchInput).replace(); // TO DO: pretty format URL
       getQueryParams();
     };
-
     var getQueryParams = function() {
       // gets query parameter, sets scope variables, page title, and queries database
       var q = $location.search().q; // TO DO: pretty format URL
+      setTitle(q);
       if (angular.isDefined(q)) {
         // set scope's searchInput and q
         $scope.searchInput = q;
@@ -262,19 +249,17 @@ controllers.controller('SearchCtrl', [
         $scope.formattedQ = formatInput(q);
         determineSearchType();
       }
-      // set title and query database
-      setTitle(q);
-      queryAll(); // TO DO: selective querying
     };
 
-    // initialize get query
-    getQueryParams();
+    // initialization function
+    var init = function() {
+      queryAll();
+      getQueryParams();
+    };
 
-    // END WORKING AREA ---------------------------------------
+    // initialize
+    init();    
 
-    
-
-    
   }]);
 
 controllers.controller('ViewCtrl', [
