@@ -65,6 +65,9 @@ controllers.controller('SearchCtrl', [
         Page.setTitle('llllyrics');
       }
     };
+    var focusInput = function() {
+      document.getElementById('inputSearch').focus();
+    };
 
     // define all variables
     // : define regular expressions
@@ -229,6 +232,11 @@ controllers.controller('SearchCtrl', [
     }
 
     // location functions
+    $scope.clearSearch = function() {
+      $location.search('q', '');
+      getQueryParams();
+      focusInput();
+    };
     $scope.setQueryParams = function() {
       // sets location query parameter to searchInput
       // gets called on ngChange for search input
@@ -258,8 +266,7 @@ controllers.controller('SearchCtrl', [
     };
 
     // initialize
-    init();    
-
+    init();
   }]);
 
 controllers.controller('ViewCtrl', [

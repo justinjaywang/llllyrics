@@ -1,10 +1,13 @@
 <header id="stickyHeader" class="page-header u-alignMiddle" sticky-header>
-<!-- <header class="page-header u-alignMiddle" ng-class="{isAffixed: isAffixed, isShown: isShown, isTransitioned: isTransitioned}" sticky-header> -->
-<!-- <header class="page-header u-alignMiddle" ng-class="{isAffixed: isAffixed, isShown: isShown, isTransitioned: isTransitioned}"> -->
   <nav class="navBar u-alignBlock">
     <div class="container container--header">
       <ul class="navBar-list u-textAlignRight">
-        <li class="navBar-item navBar-item--left"><a href="/" class="navBar-action navBar-title"></a></li>
+        <li class="navBar-item navBar-item--left" ng-if="isActiveCtrl('SearchCtrl')">
+          <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title"></a>
+        </li>
+        <li class="navBar-item navBar-item--left" ng-if="!isActiveCtrl('SearchCtrl')">
+          <a href="#" navigate-back class="navBar-action navBar-title"></a>
+        </li>
         <!-- SearchCtrl -->
         <li class="navBar-item" ng-if="isActiveCtrl('SearchCtrl')">
           <a href="/about" class="navBar-action">about</a>
@@ -14,28 +17,28 @@
         </li>
         <!-- ViewCtrl -->
         <li class="navBar-item" ng-if="isActiveCtrl('ViewCtrl')">
-          <a class="navBar-action" ng-href="/{{song._id.$oid}}/edit">edit</a>
+          <a ng-href="/{{song._id.$oid}}/edit" class="navBar-action">edit</a>
         </li>
         <!-- EditCtrl -->
         <!-- <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
           <button class="button navBar-action" ng-click="destroy()">delete</button>
         </li> -->
         <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('EditCtrl')" ng-hide="editForm.$invalid || isClean()">
-          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid || isClean()">save</button>
+          <button ng-click="save()" class="button navBar-action" ng-disabled="editForm.$invalid || isClean()">save</button>
         </li>
         <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
-          <a class="navBar-action" ng-href="/{{song._id.$oid}}">cancel</a>
+          <a ng-href="/{{song._id.$oid}}" class="navBar-action">cancel</a>
         </li>
         <!-- AddCtrl -->
         <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('AddCtrl')" ng-hide="editForm.$invalid">
-          <button class="button navBar-action" ng-click="save()" ng-disabled="editForm.$invalid">save</button>
+          <button ng-click="save()" class="button navBar-action" ng-disabled="editForm.$invalid">save</button>
         </li>
         <li class="navBar-item" ng-if="isActiveCtrl('AddCtrl')">
-          <a href="/" class="navBar-action">cancel</a>
+          <a href="#" navigate-back class="navBar-action">cancel</a>
         </li>
         <!-- AboutCtrl -->
         <li class="navBar-item" ng-if="isActiveCtrl('AboutCtrl')">
-          <a href="/" class="navBar-action">back</a>
+          <a href="#" navigate-back class="navBar-action">return</a>
         </li>
       </ul>
     </div>

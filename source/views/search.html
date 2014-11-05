@@ -2,12 +2,8 @@
 
 <main class="page-main container">
 
-  <!-- <h1 class="searchField u-fillWidth">
-    <input class="input input--search u-fillWidth" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 500}}" ng-change="updateResults()" placeholder="search lyrics" autofocus="autofocus">
-  </h1> -->
-
   <h1 class="searchField u-fillWidth">
-    <input class="input input--search u-fillWidth" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 500}}" ng-change="setQueryParams()" placeholder="search lyrics" focus>
+    <input id="inputSearch" class="input input--search u-fillWidth" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 500}}" ng-change="setQueryParams()" placeholder="search lyrics" focus>
   </h1>
 
   <h3 class="loaderTest" ng-hide="isDoneQuerying">this will be removed on isDoneQuerying</h3>

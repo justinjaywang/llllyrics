@@ -192,3 +192,13 @@ directives.directive('focus', [
       }, 0);
     };
   }]);
+
+directives.directive('navigateBack', [
+  '$window',
+  function($window) {
+    return function(scope, element, attrs) {
+      element.on('click', function() {
+        $window.history.back();
+      });
+    };
+  }]);
