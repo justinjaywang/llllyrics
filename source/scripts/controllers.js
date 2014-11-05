@@ -29,7 +29,7 @@ controllers.controller('SearchCtrl', [
     var changeSearchType = function(type) {
       $scope.searchType = type;
     };
-    var parseSearchType = function() {
+    var determineSearchType = function() {
       // updates searchType based on prefixes
       if (angular.isUndefined($scope.q)) {
         console.log('$scope.q undefined in changeSearchType'); // TEMP
@@ -218,48 +218,57 @@ controllers.controller('SearchCtrl', [
 
     // START WORKING AREA -------------------------------------
 
+    // TEMP
     // query database
-    Song.query(function(songs) {
-      console.log('successful query'); // TEMP
-      $scope.songs = songs;
-      $scope.isDoneQuerying = true;
-    }, function(err) {
-      console.log(err);
-    });
+    var queryAll = function() {
+      Song.query(function(songs) {
+        console.log('successful query'); // TEMP
+        $scope.songs = songs;
+        $scope.isDoneQuerying = true;
 
-    $scope.updateLocation = function() {
+      }, function(err) {
+        console.log(err);
+      });
+    }
+    // query database
+    // Song.query(function(songs) {
+    //   console.log('successful query'); // TEMP
+    //   console.log($scope.songs);
+    //   $scope.songs = songs;
+    //   $scope.isDoneQuerying = true;
+    //   console.log($scope.songs);
+
+    // }, function(err) {
+    //   console.log(err);
+    // });
+
+    $scope.setQueryParams = function() {
       // sets location query parameter to searchInput
       // gets called on ngChange for search input
-      var searchInput = $scope.searchInput;
-      var formattedInput = formatInput(searchInput);
-      // console.log(formattedInput);
-      // if (!formatInput(searchInput, $scope.searchTypes.all)) {
-      //   $location.path('/');
-      //   $scope.$apply();
-      // } else {
-      //   $location.search('q', searchInput); // TO DO: pretty format URL?
-      // }
-      $location.search('q', $scope.searchInput).replace(); // TO DO: pretty format URL?
+      // var searchInput = $scope.searchInput;
+      // var formattedInput = formatInput(searchInput);
+      $location.search('q', $scope.searchInput).replace(); // TO DO: pretty format URL
+      getQueryParams();
     };
 
-    $scope.queryByType = function(searchType) {
-
-    };
-
-    $scope.initLocation = function() {
-      // initializes variables for new location
-      var q = $location.search().q;
+    var getQueryParams = function() {
+      // gets query parameter, sets scope variables, page title, and queries database
+      var q = $location.search().q; // TO DO: pretty format URL
       if (angular.isDefined(q)) {
+        // set scope's searchInput and q
         $scope.searchInput = q;
         $scope.q = q;
+        // determine searchType
         $scope.formattedQ = formatInput(q);
-        parseSearchType();
+        determineSearchType();
       }
+      // set title and query database
       setTitle(q);
+      queryAll(); // TO DO: selective querying
     };
 
-    // init
-    $scope.initLocation();
+    // initialize get query
+    getQueryParams();
 
     // END WORKING AREA ---------------------------------------
 

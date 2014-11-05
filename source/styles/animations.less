@@ -1,11 +1,19 @@
 // keyframes
 @keyframes fadeIn {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @keyframes fadeOut {
-  0%   { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 // // ng-show
@@ -61,6 +69,28 @@
     .animation(fadeOut 50ms);
   }
 }
+
+.page-main--view {
+  &.ng-hide-remove {
+    .animation(fadeIn 100ms);
+  }
+}
+
+.card {
+  &.ng-enter {
+    .animation(fadeIn 250ms);
+  }
+}
+
+// .content {
+//   &.ng-enter {
+//     .animation(fadeIn 500ms);
+
+//   }
+//   &.ng-leave {
+//     .animation(fadeOut 500ms);
+//   }
+// }
 // enter and leave
 // .navBar-item {
 //   &.ng-enter {

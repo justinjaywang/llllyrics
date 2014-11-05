@@ -17,7 +17,8 @@ llllyrics.config(['$routeProvider', '$locationProvider',
     $routeProvider
       .when('/', {
         templateUrl: 'views/search.html',
-        controller: 'SearchCtrl'
+        controller: 'SearchCtrl',
+        reloadOnSearch: false
       })
       .when('/add', {
         templateUrl: 'views/edit.html',
