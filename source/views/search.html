@@ -1,10 +1,6 @@
 <ng-include src="'views/partial--header.html'"></ng-include>
-<!-- <span class="loaderTest"></span> -->
-<!-- <h3 class="loaderTest" ng-hide="isDoneQuerying">!isDoneQuerying</h3> -->
 
 <main class="page-main container">
-
-  <!-- <h1 class="loaderTest" ng-hide="isDoneQuerying">loading...</h1> -->
 
   <h1 class="searchField u-fillWidth" ng-show="isDoneQuerying">
     <input id="inputSearch" class="input input--search u-fillWidth" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 500}}" ng-change="setQueryParams()" placeholder="search lyrics" focus>

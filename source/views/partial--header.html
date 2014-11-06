@@ -3,8 +3,8 @@
     <div class="container container--header">
       <ul class="navBar-list u-textAlignRight">
         <li class="navBar-item navBar-item--left" ng-if="isActiveCtrl('SearchCtrl')">
-          <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title" ng-show="false"></a>
-          <span class="navBar-action navBar-title navBar-titleLoader" ng-hide="false">
+          <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title" ng-show="isDoneQuerying"></a>
+          <span class="navBar-action navBar-title navBar-titleLoader" ng-hide="isDoneQuerying">
             <span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span>
           </span>
         </li>

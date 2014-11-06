@@ -22,43 +22,47 @@
 
 .toggle-keyframes(@name; @first; @second; @third) {
   @-webkit-keyframes @name {
-    0% { opacity: @first; }
+    0% { opacity: 0; }
+    1% { opacity: @first; }
     18% { opacity: @first; }
     19% { opacity: @second; }
     36% { opacity: @second; }
     37% { opacity: @third; }
     72% { opacity: @third; }
-    90% { opacity: 0; }
+    93% { opacity: 0; }
     100% { opacity: 0; }
   }
   @-moz-keyframes @name {
-    0% { opacity: @first; }
+    0% { opacity: 0; }
+    1% { opacity: @first; }
     18% { opacity: @first; }
     19% { opacity: @second; }
     36% { opacity: @second; }
     37% { opacity: @third; }
     72% { opacity: @third; }
-    90% { opacity: 0; }
+    93% { opacity: 0; }
     100% { opacity: 0; }
   }
   @-o-keyframes @name {
-    0% { opacity: @first; }
+    0% { opacity: 0; }
+    1% { opacity: @first; }
     18% { opacity: @first; }
     19% { opacity: @second; }
     36% { opacity: @second; }
     37% { opacity: @third; }
     72% { opacity: @third; }
-    90% { opacity: 0; }
+    93% { opacity: 0; }
     100% { opacity: 0; }
   }
   @keyframes @name {
-    0% { opacity: @first; }
+    0% { opacity: 0; }
+    1% { opacity: @first; }
     18% { opacity: @first; }
     19% { opacity: @second; }
     36% { opacity: @second; }
     37% { opacity: @third; }
     72% { opacity: @third; }
-    90% { opacity: 0; }
+    93% { opacity: 0; }
     100% { opacity: 0; }
   }
 }
