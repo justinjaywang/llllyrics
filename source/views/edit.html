@@ -6,7 +6,7 @@
     <header class="article-header">
       <section class="article-meta article-meta--edit">
         <span class="article-artist article-artist--edit" ng-class="{error: editForm.artist.$invalid && !editForm.artist.$pristine}">
-          <input class="input input--edit input--artist" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist">
+          <input id="inputArtist" class="input input--edit input--artist" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist">
         </span>
         <span class="article-album article-album--edit" ng-class="{error: editForm.album.$invalid && !editForm.album.$pristine}">
           <input class="input input--edit input--album" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album">

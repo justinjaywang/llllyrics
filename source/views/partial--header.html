@@ -3,10 +3,13 @@
     <div class="container container--header">
       <ul class="navBar-list u-textAlignRight">
         <li class="navBar-item navBar-item--left" ng-if="isActiveCtrl('SearchCtrl')">
-          <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title"></a>
+          <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title" ng-show="false"></a>
+          <span class="navBar-action navBar-title navBar-titleLoader" ng-hide="false">
+            <span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span>
+          </span>
         </li>
         <li class="navBar-item navBar-item--left" ng-if="!isActiveCtrl('SearchCtrl')">
-          <a href="#" navigate-back class="navBar-action navBar-title"></a>
+          <a href="/" class="navBar-action navBar-title"></a>
         </li>
         <!-- SearchCtrl -->
         <li class="navBar-item" ng-if="isActiveCtrl('SearchCtrl')">
@@ -16,17 +19,17 @@
           <a href="/add" class="navBar-action">add</a>
         </li>
         <!-- ViewCtrl -->
-        <li class="navBar-item" ng-if="isActiveCtrl('ViewCtrl')">
+        <li class="navBar-item" ng-if="isActiveCtrl('ViewCtrl')" ng-show="song._id.$oid">
           <a ng-href="/{{song._id.$oid}}/edit" class="navBar-action">edit</a>
         </li>
         <!-- EditCtrl -->
-        <!-- <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
+        <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('EditCtrl')" ng-show="(song.song=='this.delete()')">
           <button class="button navBar-action" ng-click="destroy()">delete</button>
-        </li> -->
+        </li>
         <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('EditCtrl')" ng-hide="editForm.$invalid || isClean()">
           <button ng-click="save()" class="button navBar-action" ng-disabled="editForm.$invalid || isClean()">save</button>
         </li>
-        <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')">
+        <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')" ng-show="song._id.$oid">
           <a ng-href="/{{song._id.$oid}}" class="navBar-action">cancel</a>
         </li>
         <!-- AddCtrl -->
@@ -38,7 +41,7 @@
         </li>
         <!-- AboutCtrl -->
         <li class="navBar-item" ng-if="isActiveCtrl('AboutCtrl')">
-          <a href="#" navigate-back class="navBar-action">return</a>
+          <a href="#" navigate-back class="navBar-action">back</a>
         </li>
       </ul>
     </div>

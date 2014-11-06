@@ -53,9 +53,9 @@ directives.directive('stickyHeader', [
     return function(scope, element, attrs) {
       // variables
       var transitionDuration = 250,
-        scrollInterval = 50,
+        scrollInterval = 100,
         scrollIntervalId = 0,
-        substantialScroll = 25,
+        substantialScroll = 0,
         windowHeight = 0,
         bodyHeight = 0,
         headerHeight = 0,
@@ -198,7 +198,11 @@ directives.directive('navigateBack', [
   function($window) {
     return function(scope, element, attrs) {
       element.on('click', function() {
-        $window.history.back();
+        if ($window.history.length != 1) {
+          $window.history.back();
+        } else {
+          $window.location = '/'; // if no back history, go home
+        }
       });
     };
   }]);

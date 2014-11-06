@@ -22,9 +22,10 @@ controllers.controller('TitleCtrl', [
 controllers.controller('SearchCtrl', [
   '$scope',
   '$location',
+  '$timeout',
   'Page',
   'Song',
-  function($scope, $location, Page, Song) {
+  function($scope, $location, $timeout, Page, Song) {
     // define helper functions
     var changeSearchType = function(type) {
       $scope.searchType = type;
@@ -65,7 +66,7 @@ controllers.controller('SearchCtrl', [
         Page.setTitle('llllyrics');
       }
     };
-    var focusInput = function() {
+    var focusInputSearch = function() {
       document.getElementById('inputSearch').focus();
     };
 
@@ -225,7 +226,9 @@ controllers.controller('SearchCtrl', [
         console.log('successful query'); // TEMP
         $scope.songs = songs;
         $scope.isDoneQuerying = true;
-
+        $timeout(function() {
+          focusInputSearch();
+        }, 250);
       }, function(err) {
         console.log(err);
       });
@@ -233,9 +236,9 @@ controllers.controller('SearchCtrl', [
 
     // location functions
     $scope.clearSearch = function() {
-      $location.search('q', '');
+      $location.search('q', ''); // TO DO: pretty format URL
       getQueryParams();
-      focusInput();
+      focusInputSearch();
     };
     $scope.setQueryParams = function() {
       // sets location query parameter to searchInput
@@ -246,7 +249,7 @@ controllers.controller('SearchCtrl', [
       getQueryParams();
     };
     var getQueryParams = function() {
-      // gets query parameter, sets scope variables, page title, and queries database
+      // gets query parameters, sets page title, scope variables, and queries database
       var q = $location.search().q; // TO DO: pretty format URL
       setTitle(q);
       if (angular.isDefined(q)) {
@@ -299,7 +302,11 @@ controllers.controller('AddCtrl', [
         console.log(err);
       });
     }
+    var focusInputArtist = function() {
+      document.getElementById('inputArtist').focus();
+    };
     Page.setTitle('add llllyrics');
+    focusInputArtist();
   }]);
 
 controllers.controller('EditCtrl', [

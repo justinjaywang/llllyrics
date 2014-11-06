@@ -169,8 +169,7 @@ p {
   margin-left: @margin-left--navBar-item;
 }
 .navBar-item--left {
-  position: absolute;
-  left: 0;
+  float: left;
 }
 .navBar-item:first-child,
 .navBar-item--left {
@@ -182,7 +181,7 @@ p {
 .navBar-title {
   color: @color--navBar-title;
 }
-.navBar-title:after {
+.navBar-title:before {
   content: @content--navBar-title;
 }
 .navBar-action:active {
@@ -283,7 +282,21 @@ p {
 // button[disabled] {
 //   color: magenta;
 // }
-.loaderTest {
-  color: red;
-  position: fixed;
+.navBar-titleLoader:before {
+  content: 'lllloading';
+  // color: @color-gray-lightest;
+  // padding: @padding-top--input--search 0;
+  // color: red;
+  // background: red;
+  // position: fixed;
+  // top: 0;
+  // left: -100%;
+  // width: 50%;
+  // height: 2px;
 }
+.navBar-titleLoader-ellipse:before {
+  content: '.';
+}
+// .loaderTest:before {
+//   content: 'loading';
+// }
