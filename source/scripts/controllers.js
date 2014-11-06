@@ -7,11 +7,11 @@ var controllers = angular.module('controllers', []);
 controllers.controller('TitleCtrl', [
   '$scope',
   '$location',
-  '$route',
+  '$route', // TO DO: remove excess vars
   '$timeout',
   'Page',
   function($scope, $location, $route, $timeout, Page) {
-    $scope.Page = Page;
+    $scope.Page = Page; // in order to set titles
     $scope.isActiveCtrl = function(controller) {
       var current = $route.current;
       if (angular.isUndefined(current)) return;

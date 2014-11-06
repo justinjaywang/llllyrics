@@ -26,14 +26,14 @@
         <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('EditCtrl')" ng-show="(song.song=='this.delete()')">
           <button class="button navBar-action" ng-click="destroy()">delete</button>
         </li>
-        <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('EditCtrl')" ng-hide="editForm.$invalid || isClean()">
+        <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('EditCtrl')" ng-show="editForm.$valid && !isClean()">
           <button ng-click="save()" class="button navBar-action" ng-disabled="editForm.$invalid || isClean()">save</button>
         </li>
         <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')" ng-show="song._id.$oid">
           <a ng-href="/{{song._id.$oid}}" class="navBar-action">cancel</a>
         </li>
         <!-- AddCtrl -->
-        <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('AddCtrl')" ng-hide="editForm.$invalid">
+        <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('AddCtrl')" ng-show="editForm.$valid">
           <button ng-click="save()" class="button navBar-action" ng-disabled="editForm.$invalid">save</button>
         </li>
         <li class="navBar-item" ng-if="isActiveCtrl('AddCtrl')">
