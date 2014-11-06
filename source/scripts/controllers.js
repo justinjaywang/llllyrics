@@ -6,26 +6,27 @@ var controllers = angular.module('controllers', []);
 
 controllers.controller('TitleCtrl', [
   '$scope',
-  '$location',
-  '$route', // TO DO: remove excess vars
-  '$timeout',
+  '$route',
   'Page',
-  function($scope, $location, $route, $timeout, Page) {
+  function($scope, $route, Page) {
     $scope.Page = Page; // in order to set titles
     $scope.isActiveCtrl = function(controller) {
       var current = $route.current;
       if (angular.isUndefined(current)) return;
       return (current.controller == controller);
     };
+    $scope.globals = {};
+    $scope.globals.isAwaitingReload = false;
   }]);
 
 controllers.controller('SearchCtrl', [
   '$scope',
+  '$window',
   '$location',
   '$timeout',
   'Page',
   'Song',
-  function($scope, $location, $timeout, Page, Song) {
+  function($scope, $window, $location, $timeout, Page, Song) {
     // define helper functions
     var changeSearchType = function(type) {
       $scope.searchType = type;
@@ -221,7 +222,7 @@ controllers.controller('SearchCtrl', [
     };
 
     // query function
-    var queryAll = function() {
+    var querySong = function() {
       Song.query(function(songs) {
         console.log('successful query'); // TEMP
         $scope.songs = songs;
@@ -264,7 +265,7 @@ controllers.controller('SearchCtrl', [
 
     // initialization function
     var init = function() {
-      queryAll();
+      querySong();
       getQueryParams();
     };
 
@@ -274,19 +275,36 @@ controllers.controller('SearchCtrl', [
 
 controllers.controller('ViewCtrl', [
   '$scope',
+  '$window',
   '$location',
   '$routeParams',
   'Page',
   'Song',
-  function($scope, $location, $routeParams, Page, Song) {
-    Song.get({id: $routeParams.songId}, function(song) {
-      $scope.song = song;
-      Page.setTitle('"' + song.song + '" by ' + song.artist);    
-    }, function(err) {
-      $scope.errorId = $routeParams.songId;
-      Page.setTitle('llllyrics' + err.status);
-      console.log(err);
-    });
+  function($scope, $window, $location, $routeParams, Page, Song) {
+    // get function
+    var getSongById = function(songId) {
+      Song.get({id: songId}, function(song) {
+        $scope.song = song;
+        Page.setTitle('"' + song.song + '" by ' + song.artist);    
+      }, function(err) {
+        $scope.errorId = songId;
+        Page.setTitle('llllyrics' + err.status);
+        console.log(err);
+      });
+    }
+
+    // initialization function
+    var init = function() {
+      getSongById($routeParams.songId);
+    };
+
+    // initialize
+    if ($scope.globals.isAwaitingReload) {
+      $scope.globals.isAwaitingReload = false;
+      $window.location.reload();
+    } else {
+      init();
+    }
   }]);
 
 controllers.controller('AddCtrl', [
@@ -297,7 +315,8 @@ controllers.controller('AddCtrl', [
   function($scope, $location, Page, Song) {
     $scope.save = function() {
       Song.save($scope.song, function(song) {
-        $location.path('/' + song._id.$oid);
+        $scope.globals.isAwaitingReload = true;
+          $location.path('/' + song._id.$oid);
       }, function(err) {
         console.log(err);
       });
@@ -305,8 +324,15 @@ controllers.controller('AddCtrl', [
     var focusInputArtist = function() {
       document.getElementById('inputArtist').focus();
     };
-    Page.setTitle('add llllyrics');
-    focusInputArtist();
+
+    // initialization function
+    var init = function() {
+      Page.setTitle('add llllyrics');
+      focusInputArtist();
+    }
+
+    // initialize
+    init();
   }]);
 
 controllers.controller('EditCtrl', [
@@ -316,17 +342,6 @@ controllers.controller('EditCtrl', [
   'Page',
   'Song',
   function($scope, $location, $routeParams, Page, Song) {
-    var self = this;
-    Song.get({id: $routeParams.songId}, function(song){
-      self.original = song;
-      $scope.song = new Song(self.original);
-      Page.setTitle('"' + song.song + '" by ' + song.artist + ' (edit)');
-
-    }, function(err){
-      Page.setTitle(err.status + ' — llllyrics');
-      console.log(err);
-    });
-    
     $scope.isClean = function() {
       return angular.equals(self.original, $scope.song);
     }
@@ -337,11 +352,29 @@ controllers.controller('EditCtrl', [
     }
     $scope.save = function() {
       $scope.song.update(function(song) {
+        $scope.globals.isAwaitingReload = true;
         $location.path('/' + song._id.$oid);
       }, function(err) {
         console.log(err);
       });
     }
+
+    // initialization function
+    var init = function() {
+      Song.get({id: $routeParams.songId}, function(song){
+        self.original = song;
+        $scope.song = new Song(self.original);
+        Page.setTitle('"' + song.song + '" by ' + song.artist + ' (edit)');
+
+      }, function(err){
+        Page.setTitle(err.status + ' — llllyrics');
+        console.log(err);
+      });
+    };
+
+    // initialize
+    var self = this;
+    init();
   }]);
 
 controllers.controller('AboutCtrl', [
