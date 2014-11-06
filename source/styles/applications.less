@@ -184,6 +184,12 @@ p {
 .navBar-title:before {
   content: @content--navBar-title;
 }
+.navBar-titleLoader:before {
+  content: 'lllloading';
+}
+.navBar-titleLoader-ellipse:before {
+  content: '.';
+}
 .navBar-action:active {
   position: relative;
   top: @top--navBar-action--active;
@@ -281,22 +287,4 @@ p {
 // temp
 // button[disabled] {
 //   color: magenta;
-// }
-.navBar-titleLoader:before {
-  content: 'lllloading';
-  // color: @color-gray-lightest;
-  // padding: @padding-top--input--search 0;
-  // color: red;
-  // background: red;
-  // position: fixed;
-  // top: 0;
-  // left: -100%;
-  // width: 50%;
-  // height: 2px;
-}
-.navBar-titleLoader-ellipse:before {
-  content: '.';
-}
-// .loaderTest:before {
-//   content: 'loading';
 // }

@@ -1,4 +1,5 @@
 // keyframes
+// : fade
 .fade-keyframes(@name; @from; @to) {
   @-webkit-keyframes @name {
     0% { opacity: @from; }
@@ -19,50 +20,50 @@
 }
 .fade-keyframes(fadeIn, 0, 1);
 .fade-keyframes(fadeOut, 1, 0);
-
+// : toggle
 .toggle-keyframes(@name; @first; @second; @third) {
   @-webkit-keyframes @name {
     0% { opacity: 0; }
     1% { opacity: @first; }
-    18% { opacity: @first; }
-    19% { opacity: @second; }
-    36% { opacity: @second; }
-    37% { opacity: @third; }
-    72% { opacity: @third; }
-    93% { opacity: 0; }
+    17% { opacity: @first; }
+    18% { opacity: @second; }
+    34% { opacity: @second; }
+    35% { opacity: @third; }
+    68% { opacity: @third; }
+    85% { opacity: 0; }
     100% { opacity: 0; }
   }
   @-moz-keyframes @name {
     0% { opacity: 0; }
     1% { opacity: @first; }
-    18% { opacity: @first; }
-    19% { opacity: @second; }
-    36% { opacity: @second; }
-    37% { opacity: @third; }
-    72% { opacity: @third; }
-    93% { opacity: 0; }
+    17% { opacity: @first; }
+    18% { opacity: @second; }
+    34% { opacity: @second; }
+    35% { opacity: @third; }
+    68% { opacity: @third; }
+    85% { opacity: 0; }
     100% { opacity: 0; }
   }
   @-o-keyframes @name {
     0% { opacity: 0; }
     1% { opacity: @first; }
-    18% { opacity: @first; }
-    19% { opacity: @second; }
-    36% { opacity: @second; }
-    37% { opacity: @third; }
-    72% { opacity: @third; }
-    93% { opacity: 0; }
+    17% { opacity: @first; }
+    18% { opacity: @second; }
+    34% { opacity: @second; }
+    35% { opacity: @third; }
+    68% { opacity: @third; }
+    85% { opacity: 0; }
     100% { opacity: 0; }
   }
   @keyframes @name {
     0% { opacity: 0; }
     1% { opacity: @first; }
-    18% { opacity: @first; }
-    19% { opacity: @second; }
-    36% { opacity: @second; }
-    37% { opacity: @third; }
-    72% { opacity: @third; }
-    93% { opacity: 0; }
+    17% { opacity: @first; }
+    18% { opacity: @second; }
+    34% { opacity: @second; }
+    35% { opacity: @third; }
+    68% { opacity: @third; }
+    85% { opacity: 0; }
     100% { opacity: 0; }
   }
 }
