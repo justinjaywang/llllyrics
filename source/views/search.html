@@ -2,7 +2,7 @@
 
 <main class="page-main container">
 
-  <h1 class="searchField u-fillWidth" ng-show="isDoneQuerying">
+  <h1 class="searchField u-fillWidth" ng-show="globals.isDoneQuerying">
     <input id="inputSearch" class="input input--search u-fillWidth" type="text" ng-model="searchInput" ng-model-options="{debounce: {'default': 500}}" ng-change="setQueryParams()" placeholder="search lyrics" focus>
   </h1>
 
@@ -30,7 +30,7 @@
       </ul>
     </section>
 
-    <section class="noResults" ng-show="isDoneQuerying
+    <section class="noResults" ng-show="globals.isDoneQuerying
                                         && (!filteredSongsAll || (filteredSongsAll.length == 0))
                                         && (!filteredSongsArtist || (filteredSongsArtist.length == 0))
                                         && (!filteredSongsAlbum || (filteredSongsAlbum.length == 0))

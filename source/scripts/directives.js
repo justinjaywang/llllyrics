@@ -217,12 +217,21 @@ directives.directive('autocomplete', [
         isArtist = (type == 'artist'),
         isAlbum = !isArtist,
         autocompleteListElement = (isArtist) ? angular.element(document.getElementById('autocompleteArtist')) : angular.element(document.getElementById('autocompleteAlbum')),
-        songs = scope.globals.songs,
         matches = [],
         resultLimit = 5,
         selectedIndex = 0;
 
+      var checkSongsIntervalId = 0,
+        checkSongsInterval = 1000,
+        songs = scope.globals.songs;
+
       // functions
+      var checkSongs = function() {
+        // attempt to set songs
+        songs = scope.globals.songs;
+        // clearInterval if songs have been successfully set
+        if (songs) clearInterval(checkSongsIntervalId);
+      };
       var resetMatches = function() {
         matches = [];
       };
@@ -267,7 +276,6 @@ directives.directive('autocomplete', [
             }
           });
         }
-        // console.log(matches); // TEMP
       };
       var appendMatchesToView = function() {
         // remove previous matches
@@ -275,7 +283,6 @@ directives.directive('autocomplete', [
         // appends new matches
         matches.forEach(function(match, index) {
           var autocompleteItemElement = angular.element('<li class="autocomplete-item" autocomplete-item-type="' + type + '" click-autocomplete-item>' + match + '</li>');
-          // var autocompleteItemElement = angular.element('<li info-type="' + type + '" change-input>' + element.key + '</li>'); // TO DO: change input directive
           if (index == selectedIndex) autocompleteItemElement.addClass('selected');
           autocompleteListElement.append($compile(autocompleteItemElement)(scope));
         });
@@ -340,15 +347,14 @@ directives.directive('autocomplete', [
         // handles keyup events
 
         // if stuff is undefined, then remove from view and return
+        if (angular.isUndefined(songs)) {
+          console.log('songs undefined');
+          return;
+        }
         if (angular.isUndefined(scope.song) ||
           angular.isUndefined(scope.song.artist) ||
           (isAlbum && (angular.isUndefined(scope.song.artist) || angular.isUndefined(scope.song.album) || scope.song.album == ''))) {
           hideMatchesInView();
-          return;
-        }
-
-        if (angular.isUndefined(songs)) {
-          console.log('songs is undefined'); // TO DO: make sure songs is never undefined
           return;
         }
 
@@ -380,6 +386,9 @@ directives.directive('autocomplete', [
 
       // initialization function
       var init = function() {
+        // if songs haven't been set, periodically check for them
+        if (!songs) checkSongsIntervalId = setInterval(checkSongs, checkSongsInterval);
+        // bind events to input
         element.bind('keydown', keydownHandler);
         element.bind('keyup', keyupHandler);
         element.bind('focus', focusHandler);

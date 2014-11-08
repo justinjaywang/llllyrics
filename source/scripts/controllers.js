@@ -7,8 +7,10 @@ var controllers = angular.module('controllers', []);
 controllers.controller('TitleCtrl', [
   '$scope',
   '$route',
+  '$timeout',
   'Page',
-  function($scope, $route, Page) {
+  'Song',
+  function($scope, $route, $timeout, Page, Song) {
     $scope.Page = Page; // in order to set titles
     $scope.isActiveCtrl = function(controller) {
       var current = $route.current;
@@ -17,16 +19,29 @@ controllers.controller('TitleCtrl', [
     };
     $scope.globals = {};
     $scope.globals.isAwaitingReload = false;
+    $scope.globals.querySongsGlobal = function(elementToFocus) {
+      $scope.globals.isDoneQuerying = false;
+      Song.query(function(songs) {
+        $scope.globals.songs = songs;
+        $scope.globals.isDoneQuerying = true;
+        if (angular.isDefined(elementToFocus)) {
+          $timeout(function() {
+            elementToFocus.focus();
+          }, 250);
+        }
+      }, function(err) {
+        console.log(err);
+      });
+    };
   }]);
 
 controllers.controller('SearchCtrl', [
   '$scope',
   '$window',
   '$location',
-  '$timeout',
   'Page',
   'Song',
-  function($scope, $window, $location, $timeout, Page, Song) {
+  function($scope, $window, $location, Page, Song) {
     // define helper functions
     var changeSearchType = function(type) {
       $scope.searchType = type;
@@ -95,8 +110,6 @@ controllers.controller('SearchCtrl', [
     changeSearchType('$');
     // : limit variable
     $scope.resultLimit = 12;
-    // : variable
-    $scope.isDoneQuerying = false;
 
     // define filterSearch helper functions
     var formatInput = function(searchInput, searchType) {
@@ -219,19 +232,6 @@ controllers.controller('SearchCtrl', [
       };
     };
 
-    // query function
-    var querySongs = function() {
-      Song.query(function(songs) {
-        $scope.globals.songs = songs;
-        $scope.isDoneQuerying = true;
-        $timeout(function() {
-          focusInputSearch();
-        }, 250);
-      }, function(err) {
-        console.log(err);
-      });
-    };
-
     // location functions
     $scope.clearSearch = function() {
       $location.search('q', ''); // TO DO: pretty format URL
@@ -262,7 +262,7 @@ controllers.controller('SearchCtrl', [
 
     // initialization function
     var init = function() {
-      querySongs();
+      $scope.globals.querySongsGlobal(document.getElementById('inputSearch'));
       getQueryParams();
     };
 
@@ -284,7 +284,7 @@ controllers.controller('ViewCtrl', [
         // get song, set title, then query songs
         $scope.song = song;
         Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
-        querySongs();
+        $scope.globals.querySongsGlobal();
       }, function(err) {
         $scope.errorId = songId;
         Page.setTitle('llllyrics' + err.status);
@@ -292,18 +292,9 @@ controllers.controller('ViewCtrl', [
       });
     };
 
-    // query function
-    var querySongs = function() {
-      Song.query(function(songs) {
-        $scope.globals.songs = songs;
-        $scope.isDoneQuerying = true;
-      }, function(err) {
-        console.log(err);
-      });
-    };
-
     // initialization function
     var init = function() {
+      $scope.globals.isDoneQuerying = false;
       getSongById($routeParams.songId);
     };
 
@@ -332,29 +323,11 @@ controllers.controller('AddCtrl', [
         console.log(err);
       });
     };
-    var focusInputArtist = function() {
-      document.getElementById('inputArtist').focus();
-    };
-
-    // // query function
-    // var querySongs = function() {
-    //   Song.query(function(songs) {
-    //     $scope.globals.songs = songs;
-    //     $scope.isDoneQuerying = true;
-    //   }, function(err) {
-    //     console.log(err);
-    //   });
-    // };
 
     // initialization function
     var init = function() {
       Page.setTitle('add llllyrics');
-      focusInputArtist();
-      // if (angular.isDefined($scope.globals.songs)) {
-      //   $scope.isDoneQuerying = true;
-      //   return;
-      // }
-      // querySongs(); // TO DO: figure out query situation
+      $scope.globals.querySongsGlobal(document.getElementById('inputArtist'));
     };
 
     // initialize
@@ -387,10 +360,12 @@ controllers.controller('EditCtrl', [
 
     // initialization function
     var init = function() {
+      $scope.globals.isDoneQuerying = false;
       Song.get({id: $routeParams.songId}, function(song){
         self.original = song;
         $scope.song = new Song(self.original);
         Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
+        $scope.globals.querySongsGlobal();
       }, function(err){
         Page.setTitle(err.status + ' — llllyrics');
         console.log(err);
@@ -408,4 +383,5 @@ controllers.controller('AboutCtrl', [
   'Page',
   function($scope, $location, Page) {
     Page.setTitle('about llllyrics');
+    $scope.globals.querySongsGlobal();
   }]);
