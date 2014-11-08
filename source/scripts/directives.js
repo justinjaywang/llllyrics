@@ -268,6 +268,7 @@ directives.directive('autocomplete', [
             }
           });
         }
+        console.log(matches);
       };
       var appendMatchesToView = function() {
         // remove previous matches
@@ -285,10 +286,10 @@ directives.directive('autocomplete', [
         autocompleteListElement.empty();
       };
       var showMatchesInView = function() {
-        autocompleteListElement.removeClass('u-hide'); // TO DO: WIP decide if add or remove class
+        autocompleteListElement.removeClass('u-hide');
       };
       var hideMatchesInView = function() {
-        autocompleteListElement.addClass('u-hide'); // TO DO: WIP decide if add or remove class
+        autocompleteListElement.addClass('u-hide');
       };
       var keyupHandler = function(e) {
         // handles keyup events
@@ -296,8 +297,13 @@ directives.directive('autocomplete', [
         // if stuff is undefined, then remove from view and return
         if (angular.isUndefined(scope.song) ||
           angular.isUndefined(scope.song.artist) ||
-          (isAlbum && (angular.isUndefined(scope.song.album) || angular.isUndefined(scope.song.album)))) {
+          (isAlbum && (angular.isUndefined(scope.song.artist) || angular.isUndefined(scope.song.album) || scope.song.album == ''))) {
           hideMatchesInView();
+          return;
+        }
+
+        if (angular.isUndefined(songs)) {
+          console.log('songs is undefined');
           return;
         }
 
@@ -312,6 +318,7 @@ directives.directive('autocomplete', [
       // initialization function
       var init = function() {
         element.bind('keyup', keyupHandler);
+        // element.bind('blur', hideMatchesInView);
       };
       
       // start

@@ -65,7 +65,8 @@ controllers.controller('SearchCtrl', [
       }
     };
     var focusInputSearch = function() {
-      document.getElementById('inputSearch').focus();
+      var inputSearchElement = document.getElementById('inputSearch');
+      if (inputSearchElement) { inputSearchElement.focus(); }
     };
 
     // define all variables
@@ -290,6 +291,7 @@ controllers.controller('ViewCtrl', [
         console.log(err);
       });
     };
+
     // query function
     var querySongs = function() {
       Song.query(function(songs) {
@@ -334,10 +336,25 @@ controllers.controller('AddCtrl', [
       document.getElementById('inputArtist').focus();
     };
 
+    // // query function
+    // var querySongs = function() {
+    //   Song.query(function(songs) {
+    //     $scope.globals.songs = songs;
+    //     $scope.isDoneQuerying = true;
+    //   }, function(err) {
+    //     console.log(err);
+    //   });
+    // };
+
     // initialization function
     var init = function() {
       Page.setTitle('add llllyrics');
       focusInputArtist();
+      // if (angular.isDefined($scope.globals.songs)) {
+      //   $scope.isDoneQuerying = true;
+      //   return;
+      // }
+      // querySongs(); // TO DO: figure out query situation
     };
 
     // initialize
