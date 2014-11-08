@@ -213,7 +213,8 @@ directives.directive('autocomplete', [
   function($timeout, $compile) {
     return function(scope, element, attrs) {
       // variables
-      var isArtist = (attrs.autocompleteField == 'artist'),
+      var type = attrs.autocompleteType,
+        isArtist = (type == 'artist'),
         isAlbum = !isArtist,
         autocompleteListElement = (isArtist) ? angular.element(document.getElementById('autocompleteArtist')) : angular.element(document.getElementById('autocompleteAlbum')),
         songs = scope.globals.songs,
@@ -273,7 +274,7 @@ directives.directive('autocomplete', [
         removeMatchesFromView();
         // appends new matches
         matches.forEach(function(match, index) {
-          var autocompleteItemElement = angular.element('<li class="autocomplete-item">' + match + '</li>');
+          var autocompleteItemElement = angular.element('<li class="autocomplete-item" autocomplete-item-type="' + type + '" click-autocomplete-item>' + match + '</li>');
           // var autocompleteItemElement = angular.element('<li info-type="' + type + '" change-input>' + element.key + '</li>'); // TO DO: change input directive
           if (index == selectedIndex) autocompleteItemElement.addClass('selected');
           autocompleteListElement.append($compile(autocompleteItemElement)(scope));
@@ -303,7 +304,7 @@ directives.directive('autocomplete', [
         scope.$apply(function() {
           $timeout(function() { 
             nextInput.focus();
-          }, 50);
+          }, 0);
         });
       };
       var resetSelectedIndex = function() {
@@ -322,10 +323,12 @@ directives.directive('autocomplete', [
           e.preventDefault();
           if (selectedIndex >= (autocompleteListElement.children().length - 1)) return;
           selectedIndex++;
+          appendMatchesToView();
         } else if (k === 38) { // up
           e.preventDefault();
           if (selectedIndex == 0) return;
           selectedIndex--;
+          appendMatchesToView();
         } else if (k === 9 && e.shiftKey) { // shift + tab
           return;
         } else if (k === 9 || k === 13) { // tab or enter
@@ -385,5 +388,30 @@ directives.directive('autocomplete', [
       
       // start
       init();
+    };
+  }]);
+
+directives.directive('clickAutocompleteItem', [
+  '$timeout',
+  function($timeout) {
+    return function(scope, element, attrs) {
+      var selectAutocompleteItem = function() {
+        var isArtist = (attrs.autocompleteItemType == 'artist'),
+          nextInput = (isArtist) ? document.getElementById('inputAlbum') : document.getElementById('inputSong');
+
+        scope.$apply(function() {
+          // set text of input to be autocomplete item
+          if (isArtist) {
+            scope.song.artist = element[0].innerText;
+          } else {
+            scope.song.album = element[0].innerText;
+          }
+          // focus next input
+          $timeout(function() { 
+            nextInput.focus();
+          }, 0);
+        });
+      };
+      element.bind('mousedown', selectAutocompleteItem);
     };
   }]);
