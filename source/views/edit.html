@@ -11,12 +11,12 @@
         </span>
         <span class="article-meta-separator"></span>
         <span class="article-album article-album--edit" ng-class="{error: editForm.album.$invalid && !editForm.album.$pristine}">
-          <input class="input input--edit input--album" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album (optional)" autocomplete-field="album" autocomplete>
+          <input id="inputAlbum" class="input input--edit input--album" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album (optional)" autocomplete-field="album" autocomplete>
           <ul id="autocompleteAlbum" class="autocomplete autocomplete--album"></ul>
         </span>
       </section>
       <h1 class="article-song article-song--edit">
-        <input class="input input--edit input--song u-fillWidth" type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
+        <input id="inputSong" class="input input--edit input--song u-fillWidth" type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
       </h1>
     </header>
     <p class="article-lyrics article-lyrics--edit" id="articleLyricsEdit">

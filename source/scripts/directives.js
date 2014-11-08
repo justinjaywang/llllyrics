@@ -219,9 +219,7 @@ directives.directive('autocomplete', [
         songs = scope.globals.songs,
         matches = [],
         resultLimit = 5,
-        selectedIndex = 0,
-        prevKeyup = null,
-        currKeycup = null;
+        selectedIndex = 0;
 
       // functions
       var resetMatches = function() {
@@ -268,7 +266,7 @@ directives.directive('autocomplete', [
             }
           });
         }
-        console.log(matches);
+        // console.log(matches); // TEMP
       };
       var appendMatchesToView = function() {
         // remove previous matches
@@ -291,6 +289,50 @@ directives.directive('autocomplete', [
       var hideMatchesInView = function() {
         autocompleteListElement.addClass('u-hide');
       };
+      var selectAutocompleteItem = function() {
+        // set text of input to be autocomplete item
+        if (autocompleteListElement.children().length > 0) {
+          if (isArtist) {
+            scope.song.artist = autocompleteListElement.children()[selectedIndex].innerText;
+          } else {
+            scope.song.album = autocompleteListElement.children()[selectedIndex].innerText;
+          }
+        }
+        // focus next input
+        var nextInput = (isArtist) ? document.getElementById('inputAlbum') : document.getElementById('inputSong');
+        scope.$apply(function() {
+          $timeout(function() { 
+            nextInput.focus();
+          }, 50);
+        });
+      };
+      var resetSelectedIndex = function() {
+        selectedIndex = 0;
+      };
+      var keydownHandler = function(e) {
+        // handles keydown events
+
+        // prevent default on special keys: down, up, and tab or enter
+        var k = e.which,
+          isAutocompleteHidden = autocompleteListElement.hasClass('u-hide');
+
+        if (isAutocompleteHidden) return;
+
+        if (k === 40) { // down
+          e.preventDefault();
+          if (selectedIndex >= (autocompleteListElement.children().length - 1)) return;
+          selectedIndex++;
+        } else if (k === 38) { // up
+          e.preventDefault();
+          if (selectedIndex == 0) return;
+          selectedIndex--;
+        } else if (k === 9 && e.shiftKey) { // shift + tab
+          return;
+        } else if (k === 9 || k === 13) { // tab or enter
+          e.preventDefault();
+          selectAutocompleteItem();
+        }
+      };
       var keyupHandler = function(e) {
         // handles keyup events
 
@@ -303,22 +345,42 @@ directives.directive('autocomplete', [
         }
 
         if (angular.isUndefined(songs)) {
-          console.log('songs is undefined');
+          console.log('songs is undefined'); // TO DO: make sure songs is never undefined
           return;
         }
 
-        // if it's a special character, do stuff
-        // TO DO
+        // return on special keyups
+        if (e.which === 27) { // esc
+          hideMatchesInView();
+          return;
+        }
+        if (e.which === 9) {
+          return; // tab
+        }
 
-        // else, then update matches
+        // update matches on valid characters
+        var validChars = [8,38,40,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,96,97,98,99,100,101,102,103,104,105,186,187,188,189,190,191,219,220,221,222],
+          isValidChar = validChars.some(function(char) { return (e.which === char) });
+
+        if (!isValidChar) return;
+
         updateMatches();
         appendMatchesToView();
+      };
+      var focusHandler = function(e) {
+        // reset selectedIndex
+        resetSelectedIndex();
+      };
+      var blurHandler = function(e) {
+        hideMatchesInView();
       };
 
       // initialization function
       var init = function() {
+        element.bind('keydown', keydownHandler);
         element.bind('keyup', keyupHandler);
-        // element.bind('blur', hideMatchesInView);
+        element.bind('focus', focusHandler);
+        element.bind('blur', blurHandler);
       };
       
       // start
