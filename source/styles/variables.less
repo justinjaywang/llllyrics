@@ -9,36 +9,32 @@
 
 // colors
 // : variables
-@color-gray-darkest:  rgba(0,0,0,0.75);
-@color-gray-darker:   rgba(0,0,0,0.6);
-@color-gray-dark:     rgba(0,0,0,0.5);
-@color-gray:          rgba(0,0,0,0.4);
-@color-gray-light:    rgba(0,0,0,0.32);
-@color-gray-lighter:  rgba(0,0,0,0.24);
-@color-gray-lightest: rgba(0,0,0,0.16);
-@color-gray-faint:    rgba(0,0,0,0.1);
-@color-gray-fainter:  rgba(0,0,0,0.05);
-@color-white:         rgb(255,255,255);
+@color-gray-darkest:  rgb(62,62,62); // 24%
+@color-gray:          rgb(173,173,173); // 68%
+@color-gray-light:    rgb(195,195,195); // 76%
+@color-gray-lightest: rgb(242,242,242); // 95%
+@color-white:         rgb(255,255,255); // 100%
 @color-accent:        rgb(128,149,255); // periwinkle
 // : applications
-@background-color--body:              @color-white;
-@background-color--page-header:       fade(@color-white, 95%);
-@background-color--input--edit:       @color-gray-fainter;
-@color--body:                         @color-gray-darkest;
-@color--a:                            inherit;
-@color--box-shadow--a:                @color-gray-light;
-@color--border--hr:                   @color-gray-lighter;
-@color--meta:                         @color-gray-light;
-@color--navBar:                       @color-gray-lighter;
-@color--navBar-item--affirmative:     @color-accent;
-@color--navBar-title:                 @color-gray-darkest;
-@color--placeholder:                  @color-gray-light;
-@color--page-footer:                  @color-gray-lighter;
-@color--box-shadow--page-header:      @color-gray-lighter;
-@color--border-bottom--input--search: @color-gray-lightest;
-@color--noResults-text:               @color-gray-light;
-@color--noResults-input:              @color-gray-darkest;
-@color--box-shadow--noResults-link:   @color-gray-lightest;
+@background-color--body:                        @color-white;
+@background-color--page-header:                 fade(@background-color--body, 95%);
+@background-color--input--edit:                 @color-gray-lightest;
+@color--body:                                   @color-gray-darkest;
+@color--a:                                      inherit;
+// @color--box-shadow--a:                          fade(@color--a, 60%);
+@color--meta:                                   @color-gray;
+@color--navBar:                                 @color-gray-light;
+@color--navBar-item--affirmative:               @color-accent;
+@color--navBar-title:                           @color-gray-darkest;
+@color--placeholder:                            @color-gray;
+@color--page-footer:                            @color-gray-light;
+@color--box-shadow--page-header:                @color-gray-light;
+@color--noResults-text:                         @color-gray;
+@color--noResults-input:                        @color-gray-darkest;
+@color--box-shadow--noResults-link:             fade(@color--noResults-text, 60%);
+@background-color--autocomplete:                @color-gray-lightest;
+@background-color--autocomplete-item--selected: @color-accent;
+@color--autocomplete-item--selected:            @color-white;
 
 // sizing
 @size-tera:         3;
@@ -155,14 +151,14 @@
 // : variables
 @container-gutter: @size-rem-base;
 // : applications
-@width--container:        100%;
-@max-width--container:    @width-screen-md-min;
-@padding-left--container: @container-gutter;
-@width--page-header:      100%;
-@height--page-header:     2.5rem;
-@width--navBar:           @width--page-header;
-@width--input--artist:    10rem;
-@width--input--album:     18rem;
+@width--container:              100%;
+@max-width--container:          @width-screen-md-min;
+@padding-left--container:       @container-gutter;
+@width--page-header:            100%;
+@height--page-header:           2.5rem;
+@width--navBar:                 @width--page-header;
+@width--article-artist--edit:   36%;
+@width--article-album--edit:    54%;
 
 // spacing
 @margin-top--page-main:          (1.5rem + @height--page-header);
@@ -184,14 +180,15 @@
 @padding-bottom--page-footer:    @size-rem-base;
 
 // miscellaneous
-@border-bottom--input--search: 1px solid @color--border-bottom--input--search;
 @box-shadow--page-header:      0 0 1px @color--box-shadow--page-header;
 @box-shadow--noResults-link:   inset 0 -1px @color--box-shadow--noResults-link;
-@top--navBar-action--active:   1px;
 
 // transitions
 @transition-timing--page-header:      250ms;
 @transition-timing--textarea--lyrics: 150ms;
 
 // content
-@content--navBar-title: 'llllyrics';
+@content--navBar-title:               'llllyrics';
+@content--navBar-titleLoader:         'lllloading';
+@content--navBar-titleLoader-ellipse: '.';
+@content--separator:                  ' · ';

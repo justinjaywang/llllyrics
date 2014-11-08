@@ -185,14 +185,10 @@ p {
   content: @content--navBar-title;
 }
 .navBar-titleLoader:before {
-  content: 'lllloading';
+  content: @content--navBar-titleLoader;
 }
 .navBar-titleLoader-ellipse:before {
-  content: '.';
-}
-.navBar-action:active {
-  position: relative;
-  top: @top--navBar-action--active;
+  content: @content--navBar-titleLoader-ellipse;
 }
 // : search
 .searchField {
@@ -235,31 +231,28 @@ p {
   font-size: @font-size--article-meta;
 }
 .article-meta > * {
+  position: relative;
   display: inline-block;
 }
 .article-album--view:before,
 .article-meta-separator:before,
 .card-album:before {
-  content: ' · ';
+  content: @content--separator;
 }
 .article-lyrics {
   white-space: pre-wrap;
   margin-top: @margin-top--article-lyrics;
   margin-bottom: @margin-bottom--article-lyrics;
 }
-.input--artist,
-.autocomplete--artist {
-  width: @width--input--artist;
-  max-width: 100%;
+.article-artist--edit {
+  width: @width--article-artist--edit;
 }
-.input--album,
-.autocomplete--album {
-  width: @width--input--album;
-  max-width: 100%;
+.article-album--edit {
+  width: @width--article-album--edit;
 }
 .autocomplete {
   position: absolute;
-  background: #f2f2f2; // TEMP
+  background-color: @background-color--autocomplete;
 }
 .autocomplete-item {
   .text-overflow();
@@ -268,8 +261,8 @@ p {
   cursor: pointer;
 }
 .autocomplete-item.selected {
-  background: @color-accent; // TEMP
-  color: #fff; // TEMP
+  background-color: @background-color--autocomplete-item--selected;
+  color: @color--autocomplete-item--selected;
 }
 .textarea--lyrics {
   resize: none;
@@ -284,11 +277,6 @@ p {
     background-color: @background-color--input--edit;
   }
 }
-// .shadow { // TEMP
-//   &:extend(textarea);
-//   &:extend(.textarea);
-//   &:extend(.textarea--lyrics);
-// }
 
 // responsiveness
 // : small screens
@@ -297,14 +285,3 @@ p {
     font-size: @font-size--html-sm;
   }
 }
-// : extra small screens
-// @media (max-width: @width-screen-xs-max) {
-//   html {
-//     font-size: @font-size--html-xs;
-//   }
-// }
-
-// temp
-// button[disabled] {
-//   color: magenta;
-// }
