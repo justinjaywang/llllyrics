@@ -10,19 +10,19 @@
 
     <section class="cards">
       <ul class="searchResults-list" ng-show="(searchType === searchTypes.all)">
-        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(q, searchTypes.all) | limitTo:resultLimit as filteredSongsAll track by song._id.$oid"></li>
+        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in globals.songs | filter:filterSearch(q, searchTypes.all) | limitTo:resultLimit as filteredSongsAll track by song._id.$oid"></li>
       </ul>
 
       <ul class="searchResults-list searchResults-list--artist" ng-show="(searchType === searchTypes.artist)">
-        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(q, searchTypes.artist) | limitTo:resultLimit as filteredSongsArtist track by song._id.$oid"></li>
+        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in globals.songs | filter:filterSearch(q, searchTypes.artist) | limitTo:resultLimit as filteredSongsArtist track by song._id.$oid"></li>
       </ul>
 
       <ul class="searchResults-list searchResults-list--album" ng-show="(searchType === searchTypes.album)">
-        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(q, searchTypes.album) | limitTo:resultLimit as filteredSongsAlbum track by song._id.$oid"></li>
+        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in globals.songs | filter:filterSearch(q, searchTypes.album) | limitTo:resultLimit as filteredSongsAlbum track by song._id.$oid"></li>
       </ul>
 
       <ul class="searchResults-list searchResults-list--song" ng-show="(searchType === searchTypes.song)">
-        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(q, searchTypes.song) | limitTo:resultLimit as filteredSongsSong track by song._id.$oid"></li>
+        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in globals.songs | filter:filterSearch(q, searchTypes.song) | limitTo:resultLimit as filteredSongsSong track by song._id.$oid"></li>
       </ul>
 
       <ul class="searchResults-list searchResults-list--lyrics" ng-show="(searchType === searchTypes.lyrics)">

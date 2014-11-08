@@ -8,7 +8,13 @@
             <span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span>
           </span>
         </li>
-        <li class="navBar-item navBar-item--left" ng-if="!isActiveCtrl('SearchCtrl')">
+        <li class="navBar-item navBar-item--left" ng-if="isActiveCtrl('ViewCtrl')">
+          <a href="/" class="navBar-action navBar-title" ng-show="isDoneQuerying"></a>
+          <span class="navBar-action navBar-title navBar-titleLoader" ng-hide="isDoneQuerying">
+            <span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span>
+          </span>
+        </li>
+        <li class="navBar-item navBar-item--left" ng-if="!(isActiveCtrl('SearchCtrl') || isActiveCtrl('ViewCtrl'))">
           <a href="/" class="navBar-action navBar-title"></a>
         </li>
         <!-- SearchCtrl -->

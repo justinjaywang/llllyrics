@@ -34,14 +34,11 @@ controllers.controller('SearchCtrl', [
     var determineSearchType = function() {
       // updates searchType based on prefixes
       if (angular.isUndefined($scope.q)) {
-        console.log('$scope.q undefined in changeSearchType'); // TEMP
+        console.log('$scope.q undefined in changeSearchType');
         return;
       }
       var q = $scope.q;
-      if (q === '') {
-        // empty search
-        changeSearchType($scope.searchTypes.all); // TO DO: change to empty, show something else
-      } else if (q.match(regexes.artist)) {
+      if (q.match(regexes.artist)) {
         // artist search
         changeSearchType($scope.searchTypes.artist);
       } else if (q.match(regexes.album)) {
@@ -62,7 +59,7 @@ controllers.controller('SearchCtrl', [
     };
     var setTitle = function(q) {
       if (q) {
-        Page.setTitle(q + ' — llllyrics search');
+        Page.setTitle(q + ' — llllyrics');
       } else {
         Page.setTitle('llllyrics');
       }
@@ -222,10 +219,9 @@ controllers.controller('SearchCtrl', [
     };
 
     // query function
-    var querySong = function() {
+    var querySongs = function() {
       Song.query(function(songs) {
-        console.log('successful query'); // TEMP
-        $scope.songs = songs;
+        $scope.globals.songs = songs;
         $scope.isDoneQuerying = true;
         $timeout(function() {
           focusInputSearch();
@@ -233,7 +229,7 @@ controllers.controller('SearchCtrl', [
       }, function(err) {
         console.log(err);
       });
-    }
+    };
 
     // location functions
     $scope.clearSearch = function() {
@@ -265,7 +261,7 @@ controllers.controller('SearchCtrl', [
 
     // initialization function
     var init = function() {
-      querySong();
+      querySongs();
       getQueryParams();
     };
 
@@ -284,14 +280,25 @@ controllers.controller('ViewCtrl', [
     // get function
     var getSongById = function(songId) {
       Song.get({id: songId}, function(song) {
+        // get song, set title, then query songs
         $scope.song = song;
-        Page.setTitle('"' + song.song + '" by ' + song.artist);    
+        Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
+        querySongs();
       }, function(err) {
         $scope.errorId = songId;
         Page.setTitle('llllyrics' + err.status);
         console.log(err);
       });
-    }
+    };
+    // query function
+    var querySongs = function() {
+      Song.query(function(songs) {
+        $scope.globals.songs = songs;
+        $scope.isDoneQuerying = true;
+      }, function(err) {
+        console.log(err);
+      });
+    };
 
     // initialization function
     var init = function() {
@@ -300,6 +307,8 @@ controllers.controller('ViewCtrl', [
 
     // initialize
     if ($scope.globals.isAwaitingReload) {
+      // if just saved a song,
+      // then reload page
       $scope.globals.isAwaitingReload = false;
       $window.location.reload();
     } else {
@@ -320,7 +329,7 @@ controllers.controller('AddCtrl', [
       }, function(err) {
         console.log(err);
       });
-    }
+    };
     var focusInputArtist = function() {
       document.getElementById('inputArtist').focus();
     };
@@ -329,7 +338,7 @@ controllers.controller('AddCtrl', [
     var init = function() {
       Page.setTitle('add llllyrics');
       focusInputArtist();
-    }
+    };
 
     // initialize
     init();
@@ -344,12 +353,12 @@ controllers.controller('EditCtrl', [
   function($scope, $location, $routeParams, Page, Song) {
     $scope.isClean = function() {
       return angular.equals(self.original, $scope.song);
-    }
+    };
     $scope.destroy = function() {
       $scope.song.destroy(function() {
         $location.path('/');
       });
-    }
+    };
     $scope.save = function() {
       $scope.song.update(function(song) {
         $scope.globals.isAwaitingReload = true;
@@ -357,15 +366,14 @@ controllers.controller('EditCtrl', [
       }, function(err) {
         console.log(err);
       });
-    }
+    };
 
     // initialization function
     var init = function() {
       Song.get({id: $routeParams.songId}, function(song){
         self.original = song;
         $scope.song = new Song(self.original);
-        Page.setTitle('"' + song.song + '" by ' + song.artist + ' (edit)');
-
+        Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
       }, function(err){
         Page.setTitle(err.status + ' — llllyrics');
         console.log(err);

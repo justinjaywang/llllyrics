@@ -234,7 +234,11 @@ p {
 .article-meta {
   font-size: @font-size--article-meta;
 }
-.article-album:before,
+.article-meta > * {
+  display: inline-block;
+}
+.article-album--view:before,
+.article-meta-separator:before,
 .card-album:before {
   content: ' · ';
 }
@@ -243,13 +247,25 @@ p {
   margin-top: @margin-top--article-lyrics;
   margin-bottom: @margin-bottom--article-lyrics;
 }
-.input--artist {
+.input--artist,
+.autocomplete--artist {
   width: @width--input--artist;
   max-width: 100%;
 }
-.input--album {
+.input--album,
+.autocomplete--album {
   width: @width--input--album;
   max-width: 100%;
+}
+.autocomplete {
+  position: absolute;
+  background: rgba(255,0,0,0.2); // TEMP
+}
+.autocomplete-item {
+  .text-overflow();
+}
+.autocomplete-item.selected {
+  background: rgba(0,0,255,0.2);
 }
 .textarea--lyrics {
   resize: none;

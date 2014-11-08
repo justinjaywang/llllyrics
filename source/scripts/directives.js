@@ -206,3 +206,115 @@ directives.directive('navigateBack', [
       });
     };
   }]);
+
+directives.directive('autocomplete', [
+  '$timeout',
+  '$compile',
+  function($timeout, $compile) {
+    return function(scope, element, attrs) {
+      // variables
+      var isArtist = (attrs.autocompleteField == 'artist'),
+        isAlbum = !isArtist,
+        autocompleteListElement = (isArtist) ? angular.element(document.getElementById('autocompleteArtist')) : angular.element(document.getElementById('autocompleteAlbum')),
+        songs = scope.globals.songs,
+        matches = [],
+        resultLimit = 5,
+        selectedIndex = 0,
+        prevKeyup = null,
+        currKeycup = null;
+
+      // functions
+      var resetMatches = function() {
+        matches = [];
+      };
+      var pushMatch = function(matches, match) {
+        var i = matches.indexOf(match);
+        if (i == -1) {
+          matches.push(match);
+        }
+      }
+      var isMatch = function(q, data) {
+        // returns true if query is a match in input data
+        if (angular.isUndefined(data)) {
+          return false;
+        } else {
+          return data.match(q);
+        }
+      };
+      var updateMatches = function() {
+        // updates matches array for input query
+        resetMatches();
+        var artistQuery = angular.lowercase(scope.song.artist);
+        if (isArtist) {
+          songs.forEach(function(song) {
+            if (matches.length >= resultLimit) return; // skip if already enough matches
+            var artistData = angular.lowercase(song.artist);
+            if (isMatch(artistQuery, artistData)) {
+              pushMatch(matches, song.artist);
+            }
+          });
+        } else { // isAlbum
+          songs.forEach(function(song) {
+            if (matches.length >= resultLimit) return; // skip if already enough matches
+            if (angular.isUndefined(song.album)) return; // skip if album not defined
+            var artistData = angular.lowercase(song.artist),
+              isArtistMatch = (artistQuery == artistData);
+            if (!isArtistMatch) return; // skip if not an artist match
+            var albumQuery = angular.lowercase(scope.song.album),
+              albumData = angular.lowercase(song.album),
+              isAlbumMatch = isMatch(albumQuery, albumData);
+            if (isAlbumMatch) {
+              pushMatch(matches, song.album);
+            }
+          });
+        }
+      };
+      var appendMatchesToView = function() {
+        // remove previous matches
+        removeMatchesFromView();
+        // appends new matches
+        matches.forEach(function(match, index) {
+          var autocompleteItemElement = angular.element('<li class="autocomplete-item">' + match + '</li>');
+          // var autocompleteItemElement = angular.element('<li info-type="' + type + '" change-input>' + element.key + '</li>'); // TO DO: change input directive
+          if (index == selectedIndex) autocompleteItemElement.addClass('selected');
+          autocompleteListElement.append($compile(autocompleteItemElement)(scope));
+        });
+        showMatchesInView();
+      };
+      var removeMatchesFromView = function() {
+        autocompleteListElement.empty();
+      };
+      var showMatchesInView = function() {
+        autocompleteListElement.removeClass('u-hide'); // TO DO: WIP decide if add or remove class
+      };
+      var hideMatchesInView = function() {
+        autocompleteListElement.addClass('u-hide'); // TO DO: WIP decide if add or remove class
+      };
+      var keyupHandler = function(e) {
+        // handles keyup events
+
+        // if stuff is undefined, then remove from view and return
+        if (angular.isUndefined(scope.song) ||
+          angular.isUndefined(scope.song.artist) ||
+          (isAlbum && (angular.isUndefined(scope.song.album) || angular.isUndefined(scope.song.album)))) {
+          hideMatchesInView();
+          return;
+        }
+
+        // if it's a special character, do stuff
+        // TO DO
+
+        // else, then update matches
+        updateMatches();
+        appendMatchesToView();
+      };
+
+      // initialization function
+      var init = function() {
+        element.bind('keyup', keyupHandler);
+      };
+      
+      // start
+      init();
+    };
+  }]);
