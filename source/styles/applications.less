@@ -42,6 +42,9 @@ a {
   color: @color--a;
   text-decoration: none;
 }
+.article a {
+  box-shadow: @box-shadow--article--a;
+}
 .input, .textarea, .button {
   border: none;
   margin: 0;
@@ -73,7 +76,6 @@ h4,
 h5,
 h6 {
   font-family: @font-family--headings;
-  font-weight: @font-weight--headings;
 }
 h1 {
   font-size: @font-size--h1;
@@ -90,16 +92,27 @@ h3 {
   line-height: @line-height--h3;
   letter-spacing: @letter-spacing--h3;
 }
+h1,
+h2,
+h3 {
+  font-weight: @font-weight--headings;
+}
 h4,
 h5,
 h6 {
   font-size: inherit;
-  line-height: inherit;
+  line-height: @line-height--subheadings;
   letter-spacing: inherit;
+  font-weight: @font-weight--subheadings;
 }
 p {
   font-size: @font-size--p;
   line-height: @line-height--p;
+}
+kbd {
+  font-family: @font-family--kbd;
+  font-size: @font-size--kbd;
+  background-color: @background-color--kbd;
 }
 
 // components
@@ -155,10 +168,6 @@ p {
 .navBar {
   color: @color--navBar;
   width: @width--navBar;
-}
-.navBar .icon {
-  font-size: @font-size--icon;
-  line-height: normal;
 }
 .navBar-list {
   position: relative;
@@ -276,6 +285,16 @@ p {
   &:focus {
     background-color: @background-color--input--edit;
   }
+}
+// : about
+.article-question {
+}
+.article-answer + .article-question {
+  margin-top: @margin-top--article-question; // TEMP
+}
+.article-answer {
+  // color: @color-gray;
+
 }
 
 // responsiveness

@@ -19,9 +19,9 @@
 @background-color--body:                        @color-white;
 @background-color--page-header:                 fade(@background-color--body, 95%);
 @background-color--input--edit:                 @color-gray-lightest;
+@background-color--kbd:                         @color-gray-lightest;
 @color--body:                                   @color-gray-darkest;
 @color--a:                                      inherit;
-// @color--box-shadow--a:                          fade(@color--a, 60%);
 @color--meta:                                   @color-gray;
 @color--navBar:                                 @color-gray-light;
 @color--navBar-item--affirmative:               @color-accent;
@@ -31,7 +31,8 @@
 @color--box-shadow--page-header:                @color-gray-light;
 @color--noResults-text:                         @color-gray;
 @color--noResults-input:                        @color-gray-darkest;
-@color--box-shadow--noResults-link:             fade(@color--noResults-text, 60%);
+@color--box-shadow--article--a:                 fade(@color-gray-darkest, 40%);
+@color--box-shadow--noResults-link:             fade(@color--noResults-text, 40%);
 @background-color--autocomplete:                @color-gray-lightest;
 @background-color--autocomplete-item--selected: @color-accent;
 @color--autocomplete-item--selected:            @color-white;
@@ -92,7 +93,7 @@
 @font-size--article-meta: @font-size-em-base;
 @font-size--page-header:  @font-size-em-base;
 @font-size--page-footer:  @font-size-em-base;
-@font-size--icon:         @font-size-em-larger;
+@font-size--kbd:          @font-size-em-small;
 // : font-family-variables
 @font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-serif:      "PT Serif", Georgia, "Times New Roman", Times, serif;
@@ -103,6 +104,7 @@
 @font-family--meta:        @font-family-serif;
 @font-family--page-header: @font-family-sans-serif;
 @font-family--page-footer: @font-family-sans-serif;
+@font-family--kbd:         @font-family-monospace;
 // : font-weight-variables
 @font-weight-bold:      700;
 @font-weight-semibold:  500;
@@ -111,8 +113,10 @@
 // : font-weight-applications
 @font-weight--body:        @font-weight-normal;
 @font-weight--headings:    @font-weight-semibold;
+@font-weight--subheadings: @font-weight-bold;
 @font-weight--meta:        @font-weight-normal;
 @font-weight--page-header: @font-weight-bold;
+@font-weight--page-footer: @font-weight-bold;
 @font-weight--page-footer: @font-weight-bold;
 // : line-height-variables
 @line-height-tightest: 1.1;
@@ -128,6 +132,7 @@
 @line-height--h2:               @line-height-normal;
 @line-height--h3:               @line-height-tighter;
 @line-height--p:                @line-height-loose;
+@line-height--subheadings:      @line-height-loose;
 @line-height--meta:             @line-height-base;
 @line-height--noResults-text:   @line-height-base;
 @line-height--page-header:      @line-height-base;
@@ -179,10 +184,12 @@
 @margin-left--footerNav-item:    @size-rem-smallest;
 @padding-top--input--search:     @padding-top--card-link;
 @padding-bottom--page-footer:    @size-rem-base;
+@margin-top--article-question:   (@font-size--p * @line-height--p);
 
 // miscellaneous
 @box-shadow--page-header:      0 0 1px @color--box-shadow--page-header;
 @box-shadow--noResults-link:   inset 0 -1px @color--box-shadow--noResults-link;
+@box-shadow--article--a:       inset 0 -1px @color--box-shadow--article--a;
 
 // transitions
 @transition-timing--page-header:      250ms;

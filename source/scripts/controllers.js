@@ -27,7 +27,7 @@ controllers.controller('TitleCtrl', [
         if (angular.isDefined(elementToFocus)) {
           $timeout(function() {
             elementToFocus.focus();
-          }, 250);
+          }, 150);
         }
       }, function(err) {
         console.log(err);
