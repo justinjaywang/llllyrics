@@ -25,6 +25,7 @@ body {
   .font-smoothing(antialiased);
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  z-index: @z-index--body;
 }
 .container {
   width: @width--container;
@@ -133,6 +134,7 @@ kbd {
   font-size: @font-size--page-header;
   line-height: @line-height--page-header;
   letter-spacing: @letter-spacing--page-header;
+  z-index: @z-index--page-header;
 }
 .page-header.isTransitioned {
   .transition-transform(@transition-timing--page-header);
@@ -262,6 +264,7 @@ kbd {
 .autocomplete {
   position: absolute;
   background-color: @background-color--autocomplete;
+  z-index: @z-index--autocomplete;
 }
 .autocomplete-item {
   .text-overflow();
