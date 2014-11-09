@@ -280,7 +280,7 @@ controllers.controller('SearchCtrl', [
 
     // location functions
     $scope.clearSearch = function() {
-      $location.search('q', null); // TO DO: pretty format URL
+      $location.search('q', null);
       getQueryParams();
       focusInputSearch();
     };
@@ -351,6 +351,7 @@ controllers.controller('AddCtrl', [
   'Song',
   function($scope, $window, $location, Page, Song) {
     $scope.save = function() {
+      $scope.song.lastModified = {'$date': new Date()};
       Song.save($scope.song, function(song) {
         $window.location = '/' + song._id.$oid;
       }, function(err) {
@@ -385,6 +386,7 @@ controllers.controller('EditCtrl', [
       });
     };
     $scope.save = function() {
+      $scope.song.lastModified = {'$date': new Date()};
       $scope.song.update(function(song) {
         $window.location = '/' + song._id.$oid;
       }, function(err) {

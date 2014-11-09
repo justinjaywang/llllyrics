@@ -27,11 +27,12 @@ services.factory('Song', ['$resource',
       }, 
       {
         get: { method: 'GET', params: {'fo': 1}, cache: 1},
-        query: { method: 'GET', params: {'l': 1000}, isArray: 1, cache: 1 },
-        queryArtist: { method: 'GET', params: {'l': 12, 'f': {'album': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
-        queryAlbum: { method: 'GET', params: {'l': 12, 'f': {'artist': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
-        querySong: { method: 'GET', params: {'l': 12, 'f': {'artist': 0, 'album': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
-        queryLyrics: { method: 'GET', params: {'l': 12, 'f': {'artist': 0, 'album': 0, 'song': 0}}, isArray: 1, cache: 1 },
+        query: { method: 'GET', params: {'l': 1000, 's': {'lastModified': -1}}, isArray: 1, cache: 1 },
+        // queryArtist: { method: 'GET', params: {'l': 12, 'f': {'album': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
+        // queryAlbum: { method: 'GET', params: {'l': 12, 'f': {'artist': 0, 'song': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
+        // querySong: { method: 'GET', params: {'l': 12, 'f': {'artist': 0, 'album': 0, 'lyrics': 0}}, isArray: 1, cache: 1 },
+        // queryLyrics: { method: 'GET', params: {'l': 12, 'f': {'artist': 0, 'album': 0, 'song': 0}}, isArray: 1, cache: 1 },
+        save: { method: 'POST' },
         update: { method: 'PUT' }
       }
     );
