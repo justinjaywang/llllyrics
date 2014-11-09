@@ -28,7 +28,7 @@
       </ul>
 
       <ul id="searchResultsListLyrics" class="searchResults-list searchResults-list--lyrics" ng-show="(searchType === searchTypes.lyrics)">
-        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in songs | filter:filterSearch(q, searchTypes.lyrics) | limitTo:resultLimit as filteredSongsLyrics track by song._id.$oid"></li>
+        <li class="card" ng-include="'views/partial--card.html'" ng-repeat="song in globals.songs | filter:filterSearch(q, searchTypes.lyrics) | limitTo:resultLimit as filteredSongsLyrics track by song._id.$oid"></li>
       </ul>
     </section>
 

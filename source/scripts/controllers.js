@@ -191,7 +191,7 @@ controllers.controller('SearchCtrl', [
       var albumData = formatData(song.album);
       var songData = formatData(song.song);
       var lyricsData = formatData(song.lyrics);
-      var allData = artistData + ' ' + albumData + ' ' + songData + ' ' + lyricsData;
+      var allData = artistData + '\s' + albumData + '\s' + songData + '\s' + lyricsData;
       // for every string in qArray, return true if matches all
       switch (searchType) {
         case $scope.searchTypes.all:
@@ -245,7 +245,6 @@ controllers.controller('SearchCtrl', [
     $scope.navigateToFirstResult = function(searchType) {
       // navigates to first search result if there are any
       // otherwise, navigate to add
-      console.log('ng-submit'); // TEMP
       var numResults = 0,
         resultsListElement;
       switch (searchType) {
