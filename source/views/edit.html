@@ -9,7 +9,7 @@
           <input id="inputArtist" class="input input--edit u-fillWidth" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist" autocomplete-type="artist" autocomplete>
           <ul id="autocompleteArtist" class="autocomplete autocomplete--artist u-fillWidth"></ul>
         </span>
-        <span class="article-meta-separator"></span>
+        <span class="meta-separator"></span>
         <span class="article-album article-album--edit" ng-class="{error: editForm.album.$invalid && !editForm.album.$pristine}">
           <input id="inputAlbum" class="input input--edit u-fillWidth" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album (optional)" autocomplete-type="album" autocomplete>
           <ul id="autocompleteAlbum" class="autocomplete autocomplete--album u-fillWidth"></ul>

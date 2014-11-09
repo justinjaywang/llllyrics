@@ -32,8 +32,8 @@
 @color--placeholder:                            @color-gray;
 @color--autocomplete-item--selected:            @color-white;
 @color--subtext:                                @color-gray;
-@color--underline:                              fade(@color--body, 50%);
-@color--underline--light:                       fade(@color--subtext, 50%);
+@color--underline:                              fade(@color--body, 40%);
+@color--underline--light:                       fade(@color--subtext, 40%);
 
 // sizing
 @size-tera:         3;
@@ -121,16 +121,16 @@
 @line-height-looser:   1.6;
 @line-height-normal:   normal;
 // : line-height-applications
-@line-height--body:             @line-height-base;
-@line-height--h1:               @line-height-normal;
-@line-height--h2:               @line-height-normal;
-@line-height--h3:               @line-height-tighter;
-@line-height--p:                @line-height-loose;
-@line-height--subheadings:      @line-height-loose;
-@line-height--meta:             @line-height-base;
-@line-height--page-header:      @line-height-base;
-@line-height--error-text:       @line-height-base;
-@line-height--underline:        @line-height-tighter;
+@line-height--body:        @line-height-base;
+@line-height--h1:          @line-height-normal;
+@line-height--h2:          @line-height-normal;
+@line-height--h3:          @line-height-tighter;
+@line-height--p:           @line-height-loose;
+@line-height--subheadings: @line-height-loose;
+@line-height--meta:        @line-height-base;
+@line-height--page-header: @line-height-base;
+@line-height--error-text:  @line-height-base;
+@line-height--underline:   @line-height-tighter;
 // : letter-spacing-variables
 @letter-spacing-tighter: -0.02em;
 @letter-spacing-tight:   -0.015em;
@@ -159,34 +159,34 @@
 // : variables
 @container-gutter: @size-rem-base;
 // : applications
-@width--container:              100%;
-@max-width--container:          @width-screen-md-min;
-@padding-left--container:       @container-gutter;
-@width--page-header:            100%;
-@height--page-header:           2.5rem;
-@width--navBar:                 @width--page-header;
-@width--article-artist--edit:   36%;
-@width--article-album--edit:    54%;
+@width--container:            100%;
+@max-width--container:        @width-screen-md-min;
+@padding-left--container:     @container-gutter;
+@width--page-header:          100%;
+@height--page-header:         2.5rem;
+@width--navBar:               @width--page-header;
+@width--article-artist--edit: 36%;
+@width--article-album--edit:  54%;
 
 // spacing
-@margin-top--page-main:                 (1.5rem + @height--page-header);
-@margin-bottom--page-main:              @size-rem-large;
-@margin-top--page-main--print:          @size-rem-large;
-@margin-top--searchField:               0;
-@margin-bottom--searchField:            0;
-@padding-top--card-link:                @size-rem-smaller;
-@padding-bottom--card-link:             @size-rem-smaller;
-@padding-top--noResults:                @padding-top--card-link;
-@padding-top--article-header:           @padding-top--card-link;
-@padding-bottom--article-header:        @padding-bottom--card-link;
-@margin-top--article-body:              (@size-rem-smaller + @padding-top--card-link);
-@margin-top--article-body--lyrics:      @size-rem-smaller;
-@margin-bottom--article-body:           (4rem + @height--page-header);
-@margin-top--searchResults:             @margin-top--article-body--lyrics;
-@margin-bottom--searchResults:          @margin-bottom--article-body;
-@margin-left--navBar-item:              @size-rem-smaller;
-@padding-top--input--search:            @padding-top--card-link;
-@margin-top--question:                  (@font-size--p * @line-height--p);
+@margin-top--page-main:            (1.5rem + @height--page-header);
+@margin-bottom--page-main:         @size-rem-large;
+@margin-top--page-main--print:     @size-rem-large;
+@margin-top--searchField:          0;
+@margin-bottom--searchField:       0;
+@padding-top--card-link:           @size-rem-smaller;
+@padding-bottom--card-link:        @size-rem-smaller;
+@padding-top--noResults:           @padding-top--card-link;
+@padding-top--article-header:      @padding-top--card-link;
+@padding-bottom--article-header:   @padding-bottom--card-link;
+@margin-top--article-body:         (@size-rem-smaller + @padding-top--card-link);
+@margin-top--article-body--lyrics: @size-rem-smaller;
+@margin-bottom--article-body:      (4rem + @height--page-header);
+@margin-top--searchResults:        @margin-top--article-body--lyrics;
+@margin-bottom--searchResults:     @margin-bottom--article-body;
+@margin-left--navBar-item:         @size-rem-smaller;
+@padding-top--input--search:       @padding-top--card-link;
+@margin-top--question:             (@font-size--p * @line-height--p);
 
 // miscellaneous
 @box-shadow--page-header: 0 0 1px @color--box-shadow--page-header;
@@ -200,4 +200,4 @@
 @content--navBar-title:               'llllyrics';
 @content--navBar-titleLoader:         'lllloading';
 @content--navBar-titleLoader-ellipse: '.';
-@content--separator:                  '\0020\00B7\0020';
+@content--meta-separator:             '\0020\00B7\0020';
