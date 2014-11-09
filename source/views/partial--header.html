@@ -33,7 +33,7 @@
           <button ng-click="save()" class="button navBar-action" ng-disabled="editForm.$invalid || isClean()">save</button>
         </li>
         <li class="navBar-item" ng-if="isActiveCtrl('EditCtrl')" ng-show="song._id.$oid">
-          <a ng-href="/{{song._id.$oid}}" class="navBar-action">cancel</a>
+          <a href="#" navigate-back class="navBar-action">cancel</a>
         </li>
         <!-- AddCtrl -->
         <li class="navBar-item navBar-item--affirmative" ng-if="isActiveCtrl('AddCtrl')" ng-show="editForm.$valid">
