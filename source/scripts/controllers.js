@@ -19,7 +19,6 @@ controllers.controller('TitleCtrl', [
     };
     // global variables and functions
     $scope.globals = {};
-    $scope.globals.isAwaitingReload = false;
     $scope.globals.querySongsGlobal = function(elementToFocus) {
       $scope.globals.isDoneQuerying = false;
       Song.query(function(songs) {
@@ -232,7 +231,7 @@ controllers.controller('SearchCtrl', [
       }
     };
 
-    // define filter function
+    // filter function
     $scope.filterSearch = function(q, searchType) {
       // gets called for each song to determine if q is a match
       var qString = formatInput(q, searchType);
@@ -242,9 +241,47 @@ controllers.controller('SearchCtrl', [
       };
     };
 
+    // submit function
+    $scope.navigateToFirstResult = function(searchType) {
+      // navigates to first search result if there are any
+      // otherwise, navigate to add
+      console.log('ng-submit'); // TEMP
+      var numResults = 0,
+        resultsListElement;
+      switch (searchType) {
+        case $scope.searchTypes.all:
+          numResults = $scope.filteredSongsAll.length;
+          resultsListElement = document.getElementById('searchResultsListAll');
+          break;
+        case $scope.searchTypes.artist:
+          numResults = $scope.filteredSongsArtist.length;
+          resultsListElement = document.getElementById('searchResultsListArtist');
+          break;
+        case $scope.searchTypes.album:
+          numResults = $scope.filteredSongsAlbum.length;
+          resultsListElement = document.getElementById('searchResultsListAlbum');
+          break;
+        case $scope.searchTypes.song:
+          numResults = $scope.filteredSongsSong.length;
+          resultsListElement = document.getElementById('searchResultsListSong');
+          break;
+        case $scope.searchTypes.lyrics:
+          numResults = $scope.filteredSongsLyrics.length;
+          resultsListElement = document.getElementById('searchResultsListLyrics');
+          break;
+      }
+      if (numResults && resultsListElement) {
+        var firstResultLinkElement = resultsListElement.firstElementChild.firstElementChild,
+          firstResultPath = firstResultLinkElement.attributes.href.value;
+        $location.search('q', null).path(firstResultPath);
+      } else {
+        $location.search('q', null).path('/add'); // remove query and navigate to add
+      }
+    };
+
     // location functions
     $scope.clearSearch = function() {
-      $location.search('q', ''); // TO DO: pretty format URL
+      $location.search('q', null); // TO DO: pretty format URL
       getQueryParams();
       focusInputSearch();
     };
@@ -253,21 +290,20 @@ controllers.controller('SearchCtrl', [
       // gets called on ngChange for search input
       // var searchInput = $scope.searchInput;
       // var formattedInput = formatInput(searchInput);
-      $location.search('q', $scope.searchInput).replace(); // TO DO: pretty format URL
+      var searchInput = $scope.searchInput,
+        queryParams = (searchInput) ? searchInput : null;
+      $location.search('q', queryParams).replace(); // TO DO: pretty format URL
       getQueryParams();
     };
     var getQueryParams = function() {
       // gets query parameters, sets page title, scope variables, and queries database
       var q = $location.search().q; // TO DO: pretty format URL
       setTitle(q);
-      if (angular.isDefined(q)) {
-        // set scope's searchInput and q
-        $scope.searchInput = q;
-        $scope.q = q;
-        // determine searchType
-        $scope.formattedQ = formatInput(q);
-        determineSearchType();
-      }
+      $scope.searchInput = q; // to populate input from query params
+      $scope.q = q; // for filter functions
+      $scope.formattedQ = formatInput(q); // to determine whether to show results or not
+      // determine searchType if q is defined
+      if (angular.isDefined(q)) determineSearchType();
     };
 
     // initialization function
@@ -305,26 +341,19 @@ controllers.controller('ViewCtrl', [
     };
 
     // initialize
-    if ($scope.globals.isAwaitingReload) {
-      // if just saved a song,
-      // then reload page
-      $scope.globals.isAwaitingReload = false;
-      $window.location.reload();
-    } else {
-      init();
-    }
+    init();
   }]);
 
 controllers.controller('AddCtrl', [
   '$scope',
+  '$window',
   '$location',
   'Page',
   'Song',
-  function($scope, $location, Page, Song) {
+  function($scope, $window, $location, Page, Song) {
     $scope.save = function() {
       Song.save($scope.song, function(song) {
-        $scope.globals.isAwaitingReload = true;
-          $location.path('/' + song._id.$oid);
+        $window.location = '/' + song._id.$oid;
       }, function(err) {
         console.log(err);
       });
@@ -342,23 +371,23 @@ controllers.controller('AddCtrl', [
 
 controllers.controller('EditCtrl', [
   '$scope',
+  '$window',
   '$location',
   '$routeParams',
   'Page',
   'Song',
-  function($scope, $location, $routeParams, Page, Song) {
+  function($scope, $window, $location, $routeParams, Page, Song) {
     $scope.isClean = function() {
       return angular.equals(self.original, $scope.song);
     };
     $scope.destroy = function() {
       $scope.song.destroy(function() {
-        $location.path('/');
+        $window.location = '/';
       });
     };
     $scope.save = function() {
       $scope.song.update(function(song) {
-        $scope.globals.isAwaitingReload = true;
-        $location.path('/' + song._id.$oid);
+        $window.location = '/' + song._id.$oid;
       }, function(err) {
         console.log(err);
       });
