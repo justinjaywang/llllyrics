@@ -6,13 +6,14 @@
     <div class="article-headerWrapper">
       <header class="article-header">
         <section class="article-meta">
-          <span class="article-artist">{{song.artist}}</span>
-          <span class="article-album article-album--view" ng-show="song.album">{{song.album}}</span>
+          <span class="article-artist article-meta--markup-link" ng-click="getMoreFromArtist(song.artist)">{{song.artist}}</span>
+          <span class="article-meta-separator" ng-show="song.album"></span>
+          <span class="article-album article-meta--markup-link" ng-show="song.album" ng-click="getMoreFromAlbum(song.album)">{{song.album}}</span>
         </section>
-        <h1 class="article-song">{{song.song}}</h1>
+        <h1 class="article-title">{{song.song}}</h1>
       </header>
     </div>
-    <p class="article-lyrics">{{song.lyrics}}</p>
+    <p class="article-body article-body--lyrics">{{song.lyrics}}</p>
   </article>
 
 </main>

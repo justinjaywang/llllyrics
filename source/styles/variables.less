@@ -20,21 +20,20 @@
 @background-color--page-header:                 fade(@background-color--body, 95%);
 @background-color--input--edit:                 @color-gray-lightest;
 @background-color--kbd:                         @color-gray-lightest;
+@background-color--autocomplete:                @color-gray-lightest;
+@background-color--autocomplete-item--selected: @color-accent;
 @color--body:                                   @color-gray-darkest;
 @color--a:                                      inherit;
 @color--meta:                                   @color-gray;
 @color--navBar:                                 @color-gray-light;
 @color--navBar-item--affirmative:               @color-accent;
 @color--navBar-title:                           @color-gray-darkest;
-@color--placeholder:                            @color-gray;
-@color--page-footer:                            @color-gray-light;
 @color--box-shadow--page-header:                @color-gray-light;
-@color--error-text:                             @color-gray;
-@color--box-shadow--article-link:               fade(@color-gray-darkest, 40%);
-@color--box-shadow--error-link:                 fade(@color--error-text, 40%);
-@background-color--autocomplete:                @color-gray-lightest;
-@background-color--autocomplete-item--selected: @color-accent;
+@color--placeholder:                            @color-gray;
 @color--autocomplete-item--selected:            @color-white;
+@color--subtext:                                @color-gray;
+@color--underline:                              fade(@color--body, 50%);
+@color--underline--light:                       fade(@color--subtext, 50%);
 
 // sizing
 @size-tera:         3;
@@ -91,7 +90,6 @@
 @font-size--card-meta:    @font-size-em-base;
 @font-size--article-meta: @font-size-em-base;
 @font-size--page-header:  @font-size-em-base;
-@font-size--page-footer:  @font-size-em-base;
 @font-size--kbd:          @font-size-em-small;
 // : font-family-variables
 @font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -102,7 +100,6 @@
 @font-family--headings:    @font-family-sans-serif;
 @font-family--meta:        @font-family-serif;
 @font-family--page-header: @font-family-sans-serif;
-@font-family--page-footer: @font-family-sans-serif;
 @font-family--kbd:         @font-family-monospace;
 // : font-weight-variables
 @font-weight-bold:      700;
@@ -115,8 +112,6 @@
 @font-weight--subheadings: @font-weight-bold;
 @font-weight--meta:        @font-weight-normal;
 @font-weight--page-header: @font-weight-bold;
-@font-weight--page-footer: @font-weight-bold;
-@font-weight--page-footer: @font-weight-bold;
 // : line-height-variables
 @line-height-tightest: 1.1;
 @line-height-tighter:  1.2;
@@ -134,8 +129,8 @@
 @line-height--subheadings:      @line-height-loose;
 @line-height--meta:             @line-height-base;
 @line-height--page-header:      @line-height-base;
-@line-height--page-footer:      @line-height-base;
 @line-height--error-text:       @line-height-base;
+@line-height--underline:        @line-height-tighter;
 // : letter-spacing-variables
 @letter-spacing-tighter: -0.02em;
 @letter-spacing-tight:   -0.015em;
@@ -149,7 +144,6 @@
 @letter-spacing--h3:          @letter-spacing-base;
 @letter-spacing--meta:        @letter-spacing-base;
 @letter-spacing--page-header: @letter-spacing-base;
-@letter-spacing--page-footer: @letter-spacing-base;
 
 // z-index
 // : variables
@@ -185,25 +179,22 @@
 @padding-top--noResults:                @padding-top--card-link;
 @padding-top--article-header:           @padding-top--card-link;
 @padding-bottom--article-header:        @padding-bottom--card-link;
-@margin-top--article-lyrics:            @size-rem-smaller;
-@margin-bottom--article-lyrics:         (4rem + @height--page-header);
-@margin-top--article-lyrics--editorial: (@size-rem-smaller + @padding-top--card-link);
-@margin-top--searchResults:             @margin-top--article-lyrics;
-@margin-bottom--searchResults:          @margin-bottom--article-lyrics;
+@margin-top--article-body:              (@size-rem-smaller + @padding-top--card-link);
+@margin-top--article-body--lyrics:      @size-rem-smaller;
+@margin-bottom--article-body:           (4rem + @height--page-header);
+@margin-top--searchResults:             @margin-top--article-body--lyrics;
+@margin-bottom--searchResults:          @margin-bottom--article-body;
 @margin-left--navBar-item:              @size-rem-smaller;
-@margin-left--footerNav-item:           @size-rem-smallest;
 @padding-top--input--search:            @padding-top--card-link;
-@padding-bottom--page-footer:           @size-rem-base;
-@margin-top--article-question:          (@font-size--p * @line-height--p);
+@margin-top--question:                  (@font-size--p * @line-height--p);
 
 // miscellaneous
-@box-shadow--page-header:  0 0 1px @color--box-shadow--page-header;
-@box-shadow--article-link: inset 0 -1px @color--box-shadow--article-link;
-@box-shadow--error-link:   inset 0 -1px @color--box-shadow--error-link;
+@box-shadow--page-header: 0 0 1px @color--box-shadow--page-header;
+@y--underline:            (@font-size--p * @line-height--underline);
 
 // transitions
-@transition-timing--page-header:      250ms;
-@transition-timing--textarea--lyrics: 150ms;
+@transition-timing--page-header:    250ms;
+@transition-timing--textarea--edit: 150ms;
 
 // content
 @content--navBar-title:               'llllyrics';

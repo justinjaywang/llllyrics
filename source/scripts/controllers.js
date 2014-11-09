@@ -317,12 +317,19 @@ controllers.controller('SearchCtrl', [
 
 controllers.controller('ViewCtrl', [
   '$scope',
-  '$window',
   '$location',
   '$routeParams',
   'Page',
   'Song',
-  function($scope, $window, $location, $routeParams, Page, Song) {
+  function($scope, $location, $routeParams, Page, Song) {
+    // more from functions
+    $scope.getMoreFromArtist = function(artist) {
+      $location.search('q', 'artist:' + artist).path('/');
+    };
+    $scope.getMoreFromAlbum = function(album) {
+      $location.search('q', 'album:' + album).path('/');
+    };
+
     // get function
     var getSongById = function(songId) {
       Song.get({id: songId}, function(song) {

@@ -6,21 +6,21 @@
     <header class="article-header">
       <section class="article-meta article-meta--edit">
         <span class="article-artist article-artist--edit" ng-class="{error: editForm.artist.$invalid && !editForm.artist.$pristine}">
-          <input id="inputArtist" class="input input--edit input--artist u-fillWidth" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist" autocomplete-type="artist" autocomplete>
+          <input id="inputArtist" class="input input--edit u-fillWidth" type="text" name="artist" ng-model="song.artist" required ng-maxlength="48" placeholder="Artist" autocomplete-type="artist" autocomplete>
           <ul id="autocompleteArtist" class="autocomplete autocomplete--artist u-fillWidth"></ul>
         </span>
         <span class="article-meta-separator"></span>
         <span class="article-album article-album--edit" ng-class="{error: editForm.album.$invalid && !editForm.album.$pristine}">
-          <input id="inputAlbum" class="input input--edit input--album u-fillWidth" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album (optional)" autocomplete-type="album" autocomplete>
+          <input id="inputAlbum" class="input input--edit u-fillWidth" type="text" name="album" ng-model="song.album" ng-maxlength="72" placeholder="Album (optional)" autocomplete-type="album" autocomplete>
           <ul id="autocompleteAlbum" class="autocomplete autocomplete--album u-fillWidth"></ul>
         </span>
       </section>
-      <h1 class="article-song article-song--edit">
-        <input id="inputSong" class="input input--edit input--song u-fillWidth" type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
+      <h1 class="article-title">
+        <input id="inputSong" class="input input--edit u-fillWidth" type="text" name="song" ng-model="song.song" required ng-maxlength="72" placeholder="Song title">
       </h1>
     </header>
-    <p class="article-lyrics article-lyrics--edit" id="articleLyricsEdit">
-      <textarea class="textarea textarea--lyrics u-fillWidth" name="lyrics" ng-model="song.lyrics" required placeholder="Lyrics" auto-grow></textarea>
+    <p class="article-body article-body--lyrics" id="articleLyricsEdit">
+      <textarea class="textarea textarea--edit u-fillWidth" name="lyrics" ng-model="song.lyrics" required placeholder="Lyrics" auto-grow></textarea>
     </p>
   </form>
 
