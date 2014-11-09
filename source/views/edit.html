@@ -1,6 +1,6 @@
 <ng-include src="'views/partial--header.html'"></ng-include>
 
-<main class="page-main container" ng-show="globals.isDoneQuerying">
+<main class="page-main container" ng-show="globals.isDoneQuerying && !globals.errorStatus">
 
   <form class="article article--edit" name="editForm">
     <header class="article-header">
@@ -25,3 +25,5 @@
   </form>
 
 </main>
+
+<ng-include src="'views/partial--error.html'"></ng-include>

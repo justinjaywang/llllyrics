@@ -43,9 +43,6 @@ a {
   color: @color--a;
   text-decoration: none;
 }
-.article a {
-  box-shadow: @box-shadow--article--a;
-}
 .input, .textarea, .button {
   border: none;
   margin: 0;
@@ -222,16 +219,8 @@ kbd {
 .card-meta {
   font-size: @font-size--card-meta;
 }
-.noResults-text {
-  color: @color--noResults-text;
-  padding-top: @padding-top--noResults-text;
-  line-height: @line-height--noResults-text;
-}
-.noResults-input {
-  color: @color--noResults-input;
-}
-.noResults-link {
-  box-shadow: @box-shadow--noResults-link;
+.noResults {
+  padding-top: @padding-top--noResults;
 }
 // : view and edit
 .article-header {
@@ -295,6 +284,17 @@ kbd {
 }
 .article-answer + .article-question {
   margin-top: @margin-top--article-question;
+}
+.article-link {
+  box-shadow: @box-shadow--article-link;
+}
+// : error
+.error-text {
+  color: @color--error-text;
+  line-height: @line-height--error-text;
+}
+.error-link {
+  box-shadow: @box-shadow--error-link;
 }
 
 // responsiveness

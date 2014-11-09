@@ -17,6 +17,7 @@ controllers.controller('TitleCtrl', [
       if (angular.isUndefined(current)) return;
       return (current.controller == controller);
     };
+    // global variables and functions
     $scope.globals = {};
     $scope.globals.isAwaitingReload = false;
     $scope.globals.querySongsGlobal = function(elementToFocus) {
@@ -24,6 +25,7 @@ controllers.controller('TitleCtrl', [
       Song.query(function(songs) {
         $scope.globals.songs = songs;
         $scope.globals.isDoneQuerying = true;
+        $scope.globals.errorStatus = ''; // set errorStatus to none
         if (angular.isDefined(elementToFocus)) {
           $timeout(function() {
             elementToFocus.focus();
@@ -32,6 +34,14 @@ controllers.controller('TitleCtrl', [
       }, function(err) {
         console.log(err);
       });
+    };
+    $scope.globals.getErrorHandler = function(err) {
+      // handle invalid get IDs from URL
+      var errorStatus = err.status;
+      Page.setTitle('llllyrics ' + errorStatus + ' error');
+      console.log(err);
+      $scope.globals.errorStatus = errorStatus;
+      $scope.globals.isDoneQuerying = true;
     };
   }]);
 
@@ -74,7 +84,7 @@ controllers.controller('SearchCtrl', [
     };
     var setTitle = function(q) {
       if (q) {
-        Page.setTitle(q + ' — llllyrics');
+        Page.setTitle(q + ' — llllyrics search');
       } else {
         Page.setTitle('llllyrics');
       }
@@ -285,11 +295,7 @@ controllers.controller('ViewCtrl', [
         $scope.song = song;
         Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
         $scope.globals.querySongsGlobal();
-      }, function(err) {
-        $scope.errorId = songId;
-        Page.setTitle('llllyrics' + err.status);
-        console.log(err);
-      });
+      }, $scope.globals.getErrorHandler);
     };
 
     // initialization function
@@ -366,10 +372,7 @@ controllers.controller('EditCtrl', [
         $scope.song = new Song(self.original);
         Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
         $scope.globals.querySongsGlobal();
-      }, function(err){
-        Page.setTitle(err.status + ' — llllyrics');
-        console.log(err);
-      });
+      }, $scope.globals.getErrorHandler);
     };
 
     // initialize

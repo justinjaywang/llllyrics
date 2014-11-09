@@ -30,13 +30,13 @@
       </ul>
     </section>
 
-    <section class="noResults" ng-show="globals.isDoneQuerying
+    <section class="noResults error" ng-show="globals.isDoneQuerying
                                         && (!filteredSongsAll || (filteredSongsAll.length == 0))
                                         && (!filteredSongsArtist || (filteredSongsArtist.length == 0))
                                         && (!filteredSongsAlbum || (filteredSongsAlbum.length == 0))
                                         && (!filteredSongsSong || (filteredSongsSong.length == 0))
                                         && (!filteredSongsLyrics || (filteredSongsLyrics.length == 0))">
-      <p class="noResults-text">No results found. <a class="noResults-link" href="/add">Add</a> these lyrics.</p>
+      <p class="error-text">No results found. <a class="error-link" href="/add">Add</a> these lyrics.</p>
     </section>
 
   </div>
