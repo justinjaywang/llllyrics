@@ -6,14 +6,14 @@
 *:after {
   .box-sizing(border-box);
 }
+html,
+body {
+  overflow-x: hidden;
+}
 html {
   font-size: @font-size--html;
-  position: relative;
-  min-height: 100%;
 }
 body {
-  height: 100%;
-  width: 100%;
   color: @color--body;
   background-color: @background-color--body;
   font-family: @font-family--body;
@@ -24,7 +24,6 @@ body {
   text-rendering: optimizeLegibility;
   .font-smoothing(antialiased);
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
   z-index: @z-index--body;
 }
 .container {
@@ -131,6 +130,7 @@ kbd {
 // components
 // : main
 .page-main {
+  height: 100%;
   margin-top: @margin-top--page-main;
   margin-bottom: @margin-bottom--page-main;
 }

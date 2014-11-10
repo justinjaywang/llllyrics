@@ -67,8 +67,10 @@ directives.directive('stickyHeader', [
         removeTransitionCounter = 0,
         transitionIntervals = Math.ceil(transitionDuration / scrollInterval);
 
+      var headerElement = angular.element(document.getElementById('stickyHeader'));
+
       var headerClasses = {};
-      headerClasses.isAffixed = true;
+      headerClasses.isAffixed = true; // TO DO: decide on defaults
       headerClasses.isShown = true;
       headerClasses.isTransitioned = false;
 
@@ -101,11 +103,11 @@ directives.directive('stickyHeader', [
         prevScrollTop = scrollTop;
         scrollTop = $window.pageYOffset;
         scrollBottom = scrollTop + windowHeight;
-        relativeScrollTop = scrollTop - prevScrollTop;
+        relativeScrollTop = scrollTop - prevScrollTop; // positive value = scrolled down
       };
 
       var applyClasses = function() {
-        var headerElement = angular.element(document.getElementById('stickyHeader'));
+        // apply classes to header element
         angular.forEach(headerClasses, function(val, key) {
           if (val) {
             headerElement.addClass(key);
@@ -116,9 +118,9 @@ directives.directive('stickyHeader', [
       };
 
       var updateClasses = function() {
-        // two sets of actions, depending on isTransitioned
+        // update header class booleans
         if (!headerClasses.isTransitioned) {
-          // not transitioned
+          // (1) not transitioned
           if (addTransition) {
             // if should addTransition,
             // then add transition and reset toggle
@@ -132,11 +134,11 @@ directives.directive('stickyHeader', [
             addTransition = true;
           } else if (headerClasses.isAffixed && (scrollTop <= 0)) {
             // if affixed and scrolled to top,
-            // then remove affix after timeout
+            // then remove affix
             headerClasses.isAffixed = false;
           }
         } else {
-          // transitioned
+          // (2) transitioned
           if ((scrollTop <= 0) && headerClasses.isShown) {
             // if scrolled to top and is shown,
             // then remove transition after allowing show transition to occur
