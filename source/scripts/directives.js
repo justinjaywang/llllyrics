@@ -52,8 +52,8 @@ directives.directive('stickyHeader', [
   function ($window, $document) {
     return function(scope, element, attrs) {
       // variables
-      var transitionDuration = 250,
-        scrollInterval = 100,
+      var transitionDuration = 300,
+        scrollInterval = 150,
         scrollIntervalId = 0,
         substantialScroll = 0,
         windowHeight = 0,
@@ -65,14 +65,9 @@ directives.directive('stickyHeader', [
         scrollBottom = 0,
         addTransition = false,
         removeTransitionCounter = 0,
-        transitionIntervals = Math.ceil(transitionDuration / scrollInterval);
-
-      var headerElement = angular.element(document.getElementById('stickyHeader'));
-
-      var headerClasses = {};
-      headerClasses.isAffixed = true; // TO DO: decide on defaults
-      headerClasses.isShown = true;
-      headerClasses.isTransitioned = false;
+        transitionIntervals = Math.ceil(transitionDuration / scrollInterval),
+        headerElement,
+        headerClasses = {};
 
       // construction
       var init = function() {
@@ -88,6 +83,9 @@ directives.directive('stickyHeader', [
         prevScrollTop = $window.pageYOffset;
         scrollTop = prevScrollTop;
         scrollBottom = scrollTop + windowHeight;
+        headerClasses.isAffixed = true; // TO DO: decide on defaults
+        headerClasses.isShown = true;
+        headerClasses.isTransitioned = false;
       };
 
       // updating
@@ -108,6 +106,7 @@ directives.directive('stickyHeader', [
 
       var applyClasses = function() {
         // apply classes to header element
+        headerElement = angular.element(document.getElementById('stickyHeader'));
         angular.forEach(headerClasses, function(val, key) {
           if (val) {
             headerElement.addClass(key);
