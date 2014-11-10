@@ -185,14 +185,17 @@ kbd {
 .navBar-title {
   color: @color--navBar-title;
 }
-.navBar-title:before {
+.navBar-title:not(.titleLoader):before {
   content: @content--navBar-title;
 }
-.navBar-titleLoader:before {
-  content: @content--navBar-titleLoader;
+.titleLoader:before {
+  content: @content--titleLoader;
 }
-.navBar-titleLoader-ellipse:before {
-  content: @content--navBar-titleLoader-ellipse;
+.titleLoader-ellipse:before {
+  content: @content--titleLoader-ellipse;
+}
+.navBar-title:not(.titleLoader) .titleLoader-ellipse {
+  display: none;
 }
 // : search
 .searchField {

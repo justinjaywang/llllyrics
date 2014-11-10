@@ -3,11 +3,12 @@
     <div class="container container--header">
       <ul class="navBar-list u-textAlignRight">
         <li class="navBar-item navBar-item--left">
-          <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title" ng-show="globals.isDoneQuerying" ng-if="isActiveCtrl('SearchCtrl')"></a>
-          <a href="/" class="navBar-action navBar-title" ng-show="globals.isDoneQuerying" ng-if="!isActiveCtrl('SearchCtrl')"></a>
-          <span class="navBar-action navBar-title navBar-titleLoader" ng-hide="globals.isDoneQuerying">
-            <span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span><span class="navBar-titleLoader-ellipse"></span>
-          </span>
+          <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title" ng-class="{titleLoader: !globals.isDoneQuerying}" ng-if="isActiveCtrl('SearchCtrl')">
+            <span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span>
+          </a>
+          <a href="/" class="navBar-action navBar-title" ng-class="{titleLoader: !globals.isDoneQuerying}" ng-if="!isActiveCtrl('SearchCtrl')">
+            <span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span>
+          </a>
         </li>
         <!-- SearchCtrl -->
         <li class="navBar-item" ng-if="isActiveCtrl('SearchCtrl')">
