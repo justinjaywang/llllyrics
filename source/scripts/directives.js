@@ -52,40 +52,45 @@ directives.directive('stickyHeader', [
   function ($window, $document) {
     return function(scope, element, attrs) {
       // variables
-      var transitionDuration = 300,
-        scrollInterval = 150,
-        scrollIntervalId = 0,
-        substantialScroll = 0,
+      var transitionDuration = 300, // TO DO: adjust value
+        scrollInterval = 150, // TO DO: adjust this value
         windowHeight = 0,
         bodyHeight = 0,
         headerHeight = 0,
+        headerBufferHeight = 0,
+        headerBufferMultiplier = 2,
         prevScrollTop = 0,
         scrollTop = 0,
         relativeScrollTop = 0,
         scrollBottom = 0,
-        addTransition = false,
-        removeTransitionCounter = 0,
-        transitionIntervals = Math.ceil(transitionDuration / scrollInterval),
         headerElement,
-        headerClasses = {};
+        headerClasses = {},
+        isPristine = true;
 
       // construction
       var init = function() {
-        scrollIntervalId = setInterval(updatePage, scrollInterval);
+        if ($window.scrollIntervalId) {
+          // clear previous scrollIntervalId
+          $window.prevScrollIntervalId = $window.scrollIntervalId;
+          clearInterval($window.prevScrollIntervalId);
+        }
+        $window.scrollIntervalId = setInterval(updatePage, scrollInterval);
         setInitialValues();
         bindWindowResize();
       };
 
       var setInitialValues = function() {
-        windowHeight = $window.innerHeight,
-        bodyHeight = $document[0].body.scrollHeight,
+        windowHeight = $window.innerHeight;
+        bodyHeight = $document[0].body.scrollHeight;
         headerHeight = element[0].offsetHeight;
+        headerBufferHeight = Math.ceil(headerHeight * headerBufferMultiplier);
         prevScrollTop = $window.pageYOffset;
         scrollTop = prevScrollTop;
         scrollBottom = scrollTop + windowHeight;
-        headerClasses.isAffixed = true; // TO DO: decide on defaults
-        headerClasses.isShown = true;
+        headerClasses.isAffixed = false;
+        headerClasses.isShown = false;
         headerClasses.isTransitioned = false;
+        isPristine = true;
       };
 
       // updating
@@ -117,58 +122,109 @@ directives.directive('stickyHeader', [
       };
 
       var updateClasses = function() {
-        // update header class booleans
-        if (!headerClasses.isTransitioned) {
-          // (1) not transitioned
-          if (addTransition) {
-            // if should addTransition,
-            // then add transition and reset toggle
-            headerClasses.isTransitioned = true;
-            addTransition = false;
-          } else if (!headerClasses.isAffixed && (scrollTop > headerHeight)) {
-            // if not affixed and scrolled below header,
-            // then affix and set addTransition to true for next call to updateClasses
-            headerClasses.isAffixed = true;
-            headerClasses.isShown = false;
-            addTransition = true;
-          } else if (headerClasses.isAffixed && (scrollTop <= 0)) {
-            // if affixed and scrolled to top,
-            // then remove affix
-            headerClasses.isAffixed = false;
-          }
+        // update header classes isAffixed, isShown, and isTransitioned
+
+        var isAtTop = (scrollTop <= 0),
+          isTallEnough = (bodyHeight > (windowHeight + headerBufferHeight)),
+          isAtBottom = (scrollBottom >= bodyHeight) && isTallEnough,
+          isBelowHeader = (scrollTop > headerHeight),
+          isBelowHeaderBuffer = (scrollTop > headerBufferHeight),
+          hasScrolledDown = (relativeScrollTop > 0),
+          hasScrolledUp = (relativeScrollTop < 0);
+
+        if (isAtTop && isPristine) {
+          // (1a) if at top, is pristine
+          // then remove affix, hide, remove transition, make not pristine, return
+          // console.log('1a');
+          headerClasses.isAffixed = false;
+          headerClasses.isShown = false;
+          headerClasses.isTransitioned = false;
+          isPristine = false;
+          return;
+        } else if (isAtTop && !headerClasses.isAffixed && (headerClasses.isShown || headerClasses.isTransitioned)) {
+          // (1b) if at top, not affixed, shown or transitioned
+          // then hide and remove transition
+          // console.log('1b');
+          headerClasses.isShown = false;
+          headerClasses.isTransitioned = false;
+        } else if (isAtTop && !headerClasses.isAffixed) {
+          // (1c) if at top, not affixed,
+          // then return
+          // console.log('1c');
+          return;
+        } else if (isAtTop && headerClasses.isTransitioned) {
+          // (1d) if at top, (affixed), transitioned,
+          // then remove transition, go to (1e)
+          // console.log('1d');
+          headerClasses.isTransitioned = false;
+        } else if (isAtTop) {
+          // (1e) if at top, (affixed), (not transitioned),
+          // then remove affix, hide, make not pristine, go to (1c)
+          // console.log('1e');
+          headerClasses.isAffixed = false;
+          headerClasses.isShown = false;
+          isPristine = false;
+        } else if (isPristine && !headerClasses.isAffixed) {
+          // (2a) if pristine, (not affixed),
+          // then affix, go to (2b)
+          // console.log('2a');
+          headerClasses.isAffixed = true;
+        } else if (isPristine) {
+          // (2b) if pristine, (affixed), (not shown), (not transitioned),
+          // then show, transition, and make not pristine
+          // console.log('2b');
+          headerClasses.isShown = true;
+          headerClasses.isTransitioned = true;
+          isPristine = false;
+        } else if (isAtBottom && !headerClasses.isAffixed) {
+          // (3a) if at bottom, not affixed,
+          // then affix, go to (3b)
+          // console.log('3a');
+          headerClasses.isAffixed = true;
+        } else if (isAtBottom && !headerClasses.isShown) {
+          // (3b) if at bottom, (affixed), not shown, (may or may not be transitioned),
+          // then show, transition, go to (3c)
+          // console.log('3b');
+          headerClasses.isShown = true;
+          headerClasses.isTransitioned = true;
+        } else if (isAtBottom) {
+          // (3c) if at bottom, (affixed), (shown), (transitioned),
+          // then return
+          // console.log('3c');
+          return;
+        } else if (hasScrolledDown && !(headerClasses.isAffixed && headerClasses.isShown && headerClasses.isTransitioned)) {
+          // (4a) if scrolled down, not affixed, not shown, not transitioned
+          // then return
+          // console.log('4a');
+          return;
+        } else if (hasScrolledDown && (headerClasses.isAffixed && headerClasses.isShown && headerClasses.isTransitioned) && isBelowHeader) {
+          // (4b) if scrolled down, affixed, shown, transitioned, is below header
+          // then hide
+          // console.log('4b');
+          headerClasses.isShown = false;
+        } else if (hasScrolledUp && !headerClasses.isAffixed && isBelowHeaderBuffer) {
+          // (5a) if scrolled up, not affixed, is below header,
+          // then affix, go to (5c)
+          // console.log('5a');
+          headerClasses.isAffixed = true;
+        } else if (hasScrolledUp && (headerClasses.isShown && headerClasses.isTransitioned)) {
+          // (5b) if scrolled up, (affixed), shown, transitioned,
+          // then return
+          // console.log('5b');
+          return;
+        } else if (hasScrolledUp && !headerClasses.isShown) {
+          // (5c) if scrolled up, (affixed), not shown, (may or may not be transitioned),
+          // then show, transition, go to (5b)
+          // console.log('5c');
+          headerClasses.isShown = true;
+          headerClasses.isTransitioned = true;
         } else {
-          // (2) transitioned
-          if ((scrollTop <= 0) && headerClasses.isShown) {
-            // if scrolled to top and is shown,
-            // then remove transition after allowing show transition to occur
-            removeTransitionCounter++;
-            if (removeTransitionCounter >= transitionIntervals) {
-              headerClasses.isTransitioned = false;
-              removeTransitionCounter = 0;
-            }
-          } else if ((scrollTop <= 0) && !headerClasses.isShown) {
-            // if scrolled to top and is not shown,
-            // then finish showing
-            headerClasses.isShown = true;
-          } else if ((scrollTop <= headerHeight) && !headerClasses.isShown) {
-            // if scrolled within header and is not shown,
-            // then remove affix and remove transition
-            headerClasses.isAffixed = false;
-            headerClasses.isTransitioned = false;
-          } else if (scrollBottom >= bodyHeight) {
-            // if scrolled to bottom,
-            // then show
-            headerClasses.isShown = true;
-          } else if (headerClasses.isShown && (relativeScrollTop > 0)) {
-            // if shown and scrolled down,
-            // then remove show
-            headerClasses.isShown = false;
-          } else if (!headerClasses.isShown && (relativeScrollTop < -substantialScroll)) {
-            // if not shown and scrolled up substantially,
-            // then show
-            headerClasses.isShown = true;
-          }
+          // else,
+          // then return
+          // console.log('else');
+          return;
         }
+
         applyClasses();
       };
 
