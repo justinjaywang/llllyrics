@@ -4,9 +4,12 @@
 
 ### Tasks
 
-- Update Angular version and use Bower to manage
-- Line wrap bug for album on view page
-- Better, less ghetto, more efficient search
-- Play mode, maybe
-- Themes, maybe
+- Prettier query URLs
+- Query timeout error
+- Bug: save edit, navigate back doesn't autogrow
+
+### Possible features
+
+- Play mode
+- Themes
 - Database stats
