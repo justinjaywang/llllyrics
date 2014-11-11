@@ -52,8 +52,7 @@ directives.directive('stickyHeader', [
   function ($window, $document) {
     return function(scope, element, attrs) {
       // variables
-      var transitionDuration = 300, // TO DO: adjust value
-        scrollInterval = 150, // TO DO: adjust this value
+      var scrollInterval = 150,
         windowHeight = 0,
         bodyHeight = 0,
         headerHeight = 0,
