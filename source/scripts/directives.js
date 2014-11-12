@@ -5,27 +5,33 @@
 var directives = angular.module('directives', []);
 
 directives.directive('autoGrow', [
-  function() {
+  '$timeout',
+  function($timeout) {
     return function(scope, element, attrs) {
+      // height variables
       var h = element[0].offsetHeight,
         minHeight = h*2,
         extraPadding = h;
 
-      var $shadow = angular.element('<span></span>').css({
+      // shadow element
+      var $shadow = angular.element('<span class="shadow"></span>').css({
         position: 'fixed',
         width: element[0].offsetWidth + 'px',
         visibility: 'hidden'
       });
 
-      angular.element(document.getElementById('articleLyricsEdit')).append($shadow);
-   
-      var update = function() {
-        var times = function(string, number) {
-          for (var i = 0, r = ''; i < number; i++) {
-            r += string;
-          }
-          return r;
+      angular.element(document.body).append($shadow);
+
+      // helper function
+      var times = function(string, number) {
+        for (var i = 0, r = ''; i < number; i++) {
+          r += string;
         }
+        return r;
+      };
+
+      // update textarea height function
+      var update = function() {
         var val = element.val().replace(/</g, '&lt;')
           .replace(/>/g, '&gt;')
           .replace(/&/g, '&amp;')
@@ -36,14 +42,13 @@ directives.directive('autoGrow', [
         $shadow.html(val);
 
         element.css('height', Math.max($shadow[0].offsetHeight + extraPadding, minHeight) + 'px');
-      }
+      };
 
-      element.bind('input', update);
-
-      scope.$watch(attrs.ngModel, function(val) {
+      // update on ng-model change
+      scope.$watch(attrs.ngModel, function() {
         update();
-      }, true);
-    }
+      });
+    };
   }]);
 
 directives.directive('stickyHeader', [
