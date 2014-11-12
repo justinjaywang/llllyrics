@@ -6,8 +6,6 @@
 
 - Prettier query URLs
 - Query timeout error
-- Bug: save edit, navigate back doesn't autogrow
-- Bug: touch screen sticky header
 
 ### Possible features
 
