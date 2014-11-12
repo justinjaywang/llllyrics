@@ -68,6 +68,7 @@ directives.directive('stickyHeader', [
 
       // construction
       var init = function() {
+        if (isTouchDevice) return;
         if ($window.scrollIntervalId) {
           // clear previous scrollIntervalId
           $window.prevScrollIntervalId = $window.scrollIntervalId;
@@ -232,6 +233,13 @@ directives.directive('stickyHeader', [
         angular.element($window).bind('resize', function() {
           setInitialValues();
         });
+      };
+
+      // detect touch device
+      var isTouchDevice = function() {
+        return (('ontouchstart' in window)
+          || (navigator.MaxTouchPoints > 0)
+          || (navigator.msMaxTouchPoints > 0));
       };
 
       // start
