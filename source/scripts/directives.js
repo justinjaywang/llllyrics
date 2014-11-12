@@ -68,7 +68,7 @@ directives.directive('stickyHeader', [
 
       // construction
       var init = function() {
-        if (isTouchDevice) return;
+        if (isTouchDevice()) return;
         if ($window.scrollIntervalId) {
           // clear previous scrollIntervalId
           $window.prevScrollIntervalId = $window.scrollIntervalId;
