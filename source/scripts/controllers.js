@@ -41,6 +41,7 @@ controllers.controller('TitleCtrl', [
       console.log(err);
       $scope.globals.errorStatus = errorStatus;
       $scope.globals.isDoneQuerying = true;
+      $scope.globals.hasJustSaved = false;
     };
   }]);
 
@@ -317,11 +318,12 @@ controllers.controller('SearchCtrl', [
 
 controllers.controller('ViewCtrl', [
   '$scope',
+  '$window',
   '$location',
   '$routeParams',
   'Page',
   'Song',
-  function($scope, $location, $routeParams, Page, Song) {
+  function($scope, $window, $location, $routeParams, Page, Song) {
     // more from functions
     $scope.getMoreFromArtist = function(artist) {
       $location.search('q', 'artist:"' + artist + '"').path('/');
@@ -342,6 +344,10 @@ controllers.controller('ViewCtrl', [
 
     // initialization function
     var init = function() {
+      if ($scope.globals.hasJustSaved) {
+        $window.location.reload(true);
+        $scope.globals.hasJustSaved = false;
+      }
       $scope.globals.isDoneQuerying = false;
       getSongById($routeParams.songId);
     };
@@ -395,7 +401,13 @@ controllers.controller('EditCtrl', [
     $scope.save = function() {
       $scope.song.lastModified = {'$date': new Date()};
       $scope.song.update(function(song) {
-        $window.location = '/' + song._id.$oid;
+        if ($window.history.length != 1) {
+          $scope.globals.isDoneQuerying = false;
+          $scope.globals.hasJustSaved = true;
+          $window.history.back(); // navigate back to prevent edit page in history stack
+        } else {
+          $window.location = '/' + song._id.$oid; // go to view page
+        }
       }, function(err) {
         console.log(err);
       });
