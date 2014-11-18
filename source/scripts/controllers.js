@@ -25,12 +25,7 @@ controllers.controller('TitleCtrl', [
         $scope.globals.songs = songs;
         $scope.globals.isDoneQuerying = true;
         $scope.globals.errorStatus = ''; // set errorStatus to none
-        if (typeof callback === 'function') {
-          // console.log('gets here');
-          callback();
-        } else {
-          console.log('not function: ' + callback);
-        }
+        if (typeof callback === 'function') callback();
       }, function(err) {
         $scope.globals.errorHandler(err);
         console.log(err);
@@ -38,9 +33,12 @@ controllers.controller('TitleCtrl', [
     };
     $scope.globals.errorHandler = function(err) {
       // handle query errors
-      var errorStatus = err.status;
+      var errorStatus = '404';
+      if (angular.isDefined(err)) {
+        console.log(err);
+        errorStatus = err.status;
+      }
       Page.setTitle('llllyrics ' + errorStatus + ' error');
-      console.log(err);
       $scope.globals.errorStatus = errorStatus;
       $scope.globals.isDoneQuerying = true;
       $scope.globals.hasJustSaved = false;
@@ -349,8 +347,12 @@ controllers.controller('ViewCtrl', [
         var song = $scope.globals.songs.filter(function(song) {
           return song._id.$oid === $routeParams.songId;
         })[0];
-        Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
-        $scope.song = song;
+        if (song) {
+          Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
+          $scope.song = song;
+        } else {
+          $scope.globals.errorHandler();
+        }
       });
     };
 
@@ -422,9 +424,13 @@ controllers.controller('EditCtrl', [
         var song = $scope.globals.songs.filter(function(song) {
           return song._id.$oid === $routeParams.songId;
         })[0];
-        self.original = song;
-        $scope.song = new Song(self.original);
-        Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
+        if (song) {
+          self.original = song;
+          $scope.song = new Song(self.original);
+          Page.setTitle('"' + song.song + '" by ' + song.artist + ' — llllyrics');
+        } else {
+          $scope.globals.errorHandler();
+        }
       });
     };
 
