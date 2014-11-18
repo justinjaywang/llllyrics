@@ -441,9 +441,8 @@ controllers.controller('EditCtrl', [
 
 controllers.controller('AboutCtrl', [
   '$scope',
-  '$location',
   'Page',
-  function($scope, $location, Page) {
+  function($scope, Page) {
     Page.setTitle('about llllyrics');
     $scope.globals.querySongs();
   }]);
