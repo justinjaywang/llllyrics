@@ -33,3 +33,10 @@ var filters = angular.module('filters', []);
 //     });
 //   };
 // });
+
+// filters.filter('getSongById', function() {
+//   return function(songs, songId) {
+//     console.log(songs);
+//     console.log(songId);
+//   };
+// });
