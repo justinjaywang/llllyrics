@@ -92,7 +92,7 @@ controllers.controller('SearchCtrl', [
     };
     var focusInputSearch = function() {
       var inputSearchElement = document.getElementById('inputSearch');
-      if (inputSearchElement) { inputSearchElement.focus(); }
+      if (inputSearchElement) inputSearchElement.focus();
     };
 
     // define all variables
@@ -364,9 +364,10 @@ controllers.controller('AddCtrl', [
   '$scope',
   '$window',
   '$location',
+  '$timeout',
   'Page',
   'Song',
-  function($scope, $window, $location, Page, Song) {
+  function($scope, $window, $location, $timeout, Page, Song) {
     $scope.save = function() {
       $scope.song.lastModified = {'$date': new Date()};
       Song.save($scope.song, function(song) {
@@ -376,10 +377,20 @@ controllers.controller('AddCtrl', [
       });
     };
 
+    // focus input function
+    var focusInputArtist = function() {
+      var inputArtistElement = document.getElementById('inputArtist');
+      if (inputArtistElement) inputArtistElement.focus();
+    };
+
     // initialization function
     var init = function() {
       Page.setTitle('add llllyrics');
-      $scope.globals.querySongs(document.getElementById('inputArtist'));
+      $scope.globals.querySongs(function() {
+        $timeout(function() {
+          focusInputArtist();
+        }, 0);
+      });
     };
 
     // initialize
