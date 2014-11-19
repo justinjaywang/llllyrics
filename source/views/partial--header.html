@@ -6,7 +6,7 @@
           <a href="#" ng-click="clearSearch()" class="navBar-action navBar-title" ng-class="{titleLoader: !globals.isDoneQuerying}" ng-if="isActiveCtrl('SearchCtrl')">
             <span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span>
           </a>
-          <a href="/" class="navBar-action navBar-title" ng-class="{titleLoader: !globals.isDoneQuerying}" ng-if="!isActiveCtrl('SearchCtrl')">
+          <a href="#" navigate-back class="navBar-action navBar-title" ng-class="{titleLoader: !globals.isDoneQuerying}" ng-if="!isActiveCtrl('SearchCtrl')">
             <span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span><span class="titleLoader-ellipse"></span>
           </a>
         </li>
