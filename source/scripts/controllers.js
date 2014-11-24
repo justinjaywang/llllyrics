@@ -331,10 +331,12 @@ controllers.controller('ViewCtrl', [
   function($scope, $window, $location, $routeParams, Page) {
     // more from functions
     $scope.getMoreFromArtist = function(artist) {
-      $location.search('q', 'artist:"' + artist + '"').path('/');
+      $scope.globals.latestQuery = 'artist:"' + artist + '"';
+      $location.search('q', $scope.globals.latestQuery).path('/');
     };
     $scope.getMoreFromAlbum = function(album) {
-      $location.search('q', 'album:"' + album + '"').path('/');
+      $scope.globals.latestQuery = 'album:"' + album + '"';
+      $location.search('q', $scope.globals.latestQuery).path('/');
     };
 
     // initialization function
