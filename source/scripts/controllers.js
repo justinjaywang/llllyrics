@@ -43,6 +43,9 @@ controllers.controller('TitleCtrl', [
       $scope.globals.isDoneQuerying = true;
       $scope.globals.hasJustSaved = false;
     };
+    $scope.globals.clearPreviousQuery = function() {
+      $scope.globals.previousQuery = null;
+    };
   }]);
 
 controllers.controller('SearchCtrl', [
@@ -293,6 +296,7 @@ controllers.controller('SearchCtrl', [
       // var formattedInput = formatInput(searchInput);
       var searchInput = $scope.searchInput,
         queryParams = (searchInput) ? searchInput : null;
+      $scope.globals.previousQuery = queryParams;
       $location.search('q', queryParams).replace(); // TO DO: pretty format URL
       getQueryParams();
     };
@@ -416,9 +420,9 @@ controllers.controller('EditCtrl', [
     $scope.save = function() {
       $scope.song.lastModified = {'$date': new Date()};
       $scope.song.update(function(song) {
+        $scope.globals.isDoneQuerying = false;
+        $scope.globals.hasJustSaved = true;
         if ($window.history.length != 1) {
-          $scope.globals.isDoneQuerying = false;
-          $scope.globals.hasJustSaved = true;
           $window.history.back(); // navigate back to prevent edit page in history stack
         } else {
           $window.location = '/' + song._id.$oid; // go to view page

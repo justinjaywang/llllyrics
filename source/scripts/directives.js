@@ -262,6 +262,16 @@ directives.directive('focus', [
     };
   }]);
 
+directives.directive('navigateHome', [
+  '$location',
+  function($location) {
+    return function(scope, element, attrs) {
+      element.on('click', function() {
+        $location.search('q', scope.globals.previousQuery).path('/');
+      });
+    };
+  }]);
+
 directives.directive('navigateBack', [
   '$window',
   function($window) {
