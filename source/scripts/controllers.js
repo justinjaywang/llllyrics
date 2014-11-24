@@ -120,7 +120,7 @@ controllers.controller('SearchCtrl', [
     // : instantiate search type
     changeSearchType('$');
     // : limit variable
-    $scope.resultLimit = 48;
+    $scope.resultLimit = 72;
 
     // define filterSearch helper functions
     var formatInput = function(searchInput, searchType) {
