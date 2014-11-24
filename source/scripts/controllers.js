@@ -43,9 +43,6 @@ controllers.controller('TitleCtrl', [
       $scope.globals.isDoneQuerying = true;
       $scope.globals.hasJustSaved = false;
     };
-    $scope.globals.clearPreviousQuery = function() {
-      $scope.globals.previousQuery = null;
-    };
   }]);
 
 controllers.controller('SearchCtrl', [
@@ -296,7 +293,7 @@ controllers.controller('SearchCtrl', [
       // var formattedInput = formatInput(searchInput);
       var searchInput = $scope.searchInput,
         queryParams = (searchInput) ? searchInput : null;
-      $scope.globals.previousQuery = queryParams;
+      $scope.globals.latestQuery = queryParams;
       $location.search('q', queryParams).replace(); // TO DO: pretty format URL
       getQueryParams();
     };
@@ -347,6 +344,13 @@ controllers.controller('ViewCtrl', [
         $window.location.reload(true);
         $scope.globals.hasJustSaved = false;
       }
+      var q = $location.search().q;
+      if (angular.isDefined(q)) {
+        // if query parameter,
+        // then latestQuery and remove from URL
+        $scope.globals.latestQuery = q;
+        $location.search('q', null).replace();
+      }
       $scope.globals.querySongs(function() {
         var song = $scope.globals.songs.filter(function(song) {
           return song._id.$oid === $routeParams.songId;
@@ -367,15 +371,18 @@ controllers.controller('ViewCtrl', [
 controllers.controller('AddCtrl', [
   '$scope',
   '$window',
-  '$location',
   '$timeout',
   'Page',
   'Song',
-  function($scope, $window, $location, $timeout, Page, Song) {
+  function($scope, $window, $timeout, Page, Song) {
     $scope.save = function() {
       $scope.song.lastModified = {'$date': new Date()};
       Song.save($scope.song, function(song) {
-        $window.location = '/' + song._id.$oid;
+        $scope.globals.isDoneQuerying = false;
+        $scope.globals.hasJustSaved = true;
+        var q = $scope.globals.latestQuery;
+        $window.location = (angular.isDefined(q) && q) ? '/' + song._id.$oid + '?q=' + q :
+                                                         '/' + song._id.$oid;
       }, function(err) {
         console.log(err);
       });
@@ -404,11 +411,10 @@ controllers.controller('AddCtrl', [
 controllers.controller('EditCtrl', [
   '$scope',
   '$window',
-  '$location',
   '$routeParams',
   'Page',
   'Song',
-  function($scope, $window, $location, $routeParams, Page, Song) {
+  function($scope, $window, $routeParams, Page, Song) {
     $scope.isClean = function() {
       return angular.equals(self.original, $scope.song);
     };
@@ -422,11 +428,9 @@ controllers.controller('EditCtrl', [
       $scope.song.update(function(song) {
         $scope.globals.isDoneQuerying = false;
         $scope.globals.hasJustSaved = true;
-        if ($window.history.length != 1) {
-          $window.history.back(); // navigate back to prevent edit page in history stack
-        } else {
-          $window.location = '/' + song._id.$oid; // go to view page
-        }
+        var q = $scope.globals.latestQuery;
+        $window.location = (angular.isDefined(q) && q) ? '/' + song._id.$oid + '?q=' + q :
+                                                         '/' + song._id.$oid;
       }, function(err) {
         console.log(err);
       });

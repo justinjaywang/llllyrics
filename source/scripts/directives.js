@@ -267,7 +267,7 @@ directives.directive('navigateHome', [
   function($location) {
     return function(scope, element, attrs) {
       element.on('click', function() {
-        $location.search('q', scope.globals.previousQuery).path('/');
+        $location.search('q', scope.globals.latestQuery).path('/');
       });
     };
   }]);
