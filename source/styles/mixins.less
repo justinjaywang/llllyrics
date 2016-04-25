@@ -98,12 +98,9 @@
 // anchor markups
 .underline(@y) {
   background-repeat: repeat-x;
-  background-size: 2px 2px;
+  background-size: 1px 1px;
   background-position: 0 @y;
 }
 .underline-color(@color) {
-  background-image: -webkit-linear-gradient(top,  rgba(0, 0, 0, 0) 50%,  @color 50%);
-  background-image: -moz-linear-gradient(top,  rgba(0, 0, 0, 0) 50%,  @color 50%);
-  background-image: -o-linear-gradient(top,  rgba(0, 0, 0, 0) 50%,  @color 50%);
-  background-image: linear-gradient(to bottom,  rgba(0, 0, 0, 0) 50%,  @color 50%);
+  background-image: linear-gradient(@color, @color);
 }
